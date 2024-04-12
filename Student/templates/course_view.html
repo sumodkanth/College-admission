@@ -1,0 +1,46 @@
+
+{% extends 'studentindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+</head>
+<body>
+<div class="card" style="background-color: gray;">
+                  <div class="card-body">
+                    <h4 class="card-title" style="color: white;">All courses</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped" style="color: black;">
+                        <thead>
+                          <tr>
+                              <th> Course Id</th>
+                            <th> Course </th>
+                            <th> Department </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in course_data %}
+                          <tr>
+                            <td> {{i.CourseId}}</td>
+                            <td> {{i.CourseName}}</td>
+                            <td> {{i.DeptId.DeptName}}</td>
+
+
+                            <td>
+                                <a href="{% url 'course_view_single' course_id=i.CourseId %}">More details...</i></a>&nbsp;&nbsp;
+                            </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

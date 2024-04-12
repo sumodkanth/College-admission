@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>{% if request.session.username %}
+<div class="card">
+                  <div class="card-body"  style="background-color: #afbbc4;">
+                    <h4  style="color: black;">LIST OF STUDENTS LIST IN '{{training_name}}' </h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Training</th>
+                                <th>Course</th>
+
+
+<!--                                <th>Actions</th> &lt;!&ndash; New column for delete button &ndash;&gt;-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for stats in status %}
+                            <tr>
+                                <td>{{ stats.StudentId }}</td>
+                                <td>{{ stats.newsId.news_Title }}</td>
+                                <td>{{ stats.StudentId.CourseId.CourseName }}</td>
+
+
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+{% endif %}
+</body>
+</html>
+{% endblock %}

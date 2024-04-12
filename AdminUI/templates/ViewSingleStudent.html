@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card-body" style="background-color: #afbbc4;">
+    <h4 class="card-title">Edit Student</h4>
+    <br>
+    <form action="{% url 'update_student' dataid=data.StudentId %}" class="forms-sample" enctype="multipart/form-data"
+          method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputName1">First Name</label>
+            <input class="form-control" id="exampleInputName1" name="fname" type="text" value="{{data.FirstName}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Last Name</label>
+            <input class="form-control" name="lname" type="text" value="{{data.LastName}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Date of Birth</label>
+            <input class="form-control" name="dob" type="text" value="{{data.DateOfBirth}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Enrollment Id</label>
+            <input class="form-control" name="enid" type="text" value="{{data.EnrollmentID}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Enrollment Date</label>
+            <input class="form-control" name="endate" type="text" value="{{data.EnrollDate}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Course</label>
+            <select class="form-control" name="course" style="background-color: gray; border: 1px solid black; color: white;">
+                {% for i in course_data %}
+                <option value="{{i.CourseName}}">{{i.CourseName}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Gender</label>
+            <select class="form-control" id="exampleInputName2" name="gender" style="background-color: gray; border: 1px solid black; color: white;">
+                <option value="{{data.Gender}}">{{data.Gender}}</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Contact Number</label>
+            <input class="form-control" name="contact" type="tel" value="{{data.ContactNo}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Email</label>
+            <input class="form-control" name="email" type="tel" value="{{data.Email}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Address</label>
+            <textarea class="form-control" name="address" style="background-color: gray; border: 1px solid black; color: white;">{{data.Address}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Guardian Name</label>
+            <input class="form-control" name="gname" type="text" value="{{data.GuardianName}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Guardian Contact Number</label>
+            <input class="form-control" name="gcontact" type="tel" value="{{data.GuardianContact}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Image</label>
+            <img height="100px" src="{{data.Image.url}}" width="100px"><br>
+            <input class="form-control" name="img" type="file" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+
+        <button class="btn btn-primary mr-2" type="submit">Update</button>
+    </form>
+</div>
+</body>
+</html>
+{% endblock %}

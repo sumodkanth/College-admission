@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% extends 'faculty_index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">List of Student in {{course}}</h4>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> Student Id</th>
+                    <th> Enrollment Id</th>
+                    <th> Student First Name</th>
+                    <th> Student Last Name</th>
+                    <th> Email</th>
+                    <th> Contact</th>
+                    <th> More</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in data %}
+                <tr>
+                    <td> {{i.StudentId}}</td>
+                    <td> {{i.EnrollmentID}}</td>
+                    <td> {{i.FirstName}}</td>
+                    <td> {{i.LastName}}</td>
+                    <td> {{i.Email}}</td>
+                    <td> {{i.ContactNo}}</td>
+                    <td>
+                        <a href="{% url 'faculty_student_single' dataid=i.StudentId %}">More details...</i></a>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

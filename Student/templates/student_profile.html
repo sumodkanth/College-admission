@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    
+{% block content %}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card" style="background-color:gray;">
+        <div class="card-body">
+            <h4 class="card-title">Your Profile</h4>
+            <p class="card-description"></p>
+            <form class="forms-sample" >
+                <div style="text-align:center;">
+                    <img src="{{name.Image.url}}" alt="" class="img-lg rounded-circle" >
+                    <p class="card-description" style="color:#ffffff;"> Student Id : {{name.StudentId}} </p>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Course Name :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{course.CourseName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Department Name :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{dept.DeptName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">First Name :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.FirstName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Last Name :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.LastName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Gender :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.Gender}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Date of Birth :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.DateOfBirth}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Email Id :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.Email}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Mobile No:</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.ContactNo}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label" for="">Address:</label>
+
+                                <div class="col-sm-9">
+                                    <label class="col-form-label-sm" for="">{{name.Address}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label" >Guardian Contact No:</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.GuardianContact}}</label>
+                                </div>
+                            </div>
+                             <div class="form-group row" style="color: ffffff;">
+                                <label class="col-sm-3 col-form-label">Guardian Name:</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.GuardianName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ;">
+                                <label class="col-sm-3 col-form-label">PanCard No:</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.Pancard}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" style="color: ;">
+                                <label class="col-sm-3 col-form-label">Aadhaar No :</label>
+                                <div class="col-sm-9">
+                                    <label class="col-form-label">{{name.adhaar}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'stud_edit' %}"  class="btn btn-primary mr-2">Edit
+                    </a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

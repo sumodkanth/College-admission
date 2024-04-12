@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>{% if request.session.username %}
+<div class="card-body" style="background-color: gray;">
+    <h4 class="card-title">Add Job</h4>
+    <br>
+    <form action="{% url 'job_save' %}" class="forms-sample" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputName1">Job Title</label>
+            <input class="form-control" id="exampleInputName1" name="title" type="text"  style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Company Name</label>
+            <input class="form-control" id="exampleInputName2" name="cname" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Location</label>
+            <input class="form-control" name="location" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Qualification</label>
+            <input class="form-control" name="qualification" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Description</label>
+            <textarea class="form-control" name="description" style="background-color: gray; border: 1px solid black; color: white;"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Email</label>
+            <input class="form-control" name="email" type="email" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Image</label>
+            <input class="form-control" name="image" type="file" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+       <!-- Dynamic input field for interview steps -->
+        <div id="interview-steps-container">
+            <div class="form-group interview-step">
+                <label for="exampleInputName1">Interview Step 1</label>
+                <input class="form-control" name="interview_step[]" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="add-interview-step">Add Interview Step</button>
+
+
+        <button class="btn btn-primary mr-2" type="submit">Submit</button>
+    </form>
+</div>
+<script>
+    document.getElementById('add-interview-step').addEventListener('click', function() {
+        var container = document.getElementById('interview-steps-container');
+        var div = document.createElement('div');
+        div.classList.add('form-group', 'interview-step');
+        var label = document.createElement('label');
+        label.textContent = 'Interview Step ' + (container.childElementCount + 1);
+        var input = document.createElement('input');
+        input.classList.add('form-control');
+        input.setAttribute('name', 'interview_step[]');
+        input.setAttribute('type', 'text');
+        input.style.backgroundColor = 'gray';
+        input.style.border = '1px solid black';
+        input.style.color = 'white';
+        div.appendChild(label);
+        div.appendChild(input);
+        container.appendChild(div);
+    });
+</script>{% endif %}
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="card" style="background-color: gray;">
+    <div class="card-body">
+      <h4 class="card-title" style="color: white;">Notifications</h4>
+        <div class="table-responsive">
+        <table class="table table-striped" style="color: black;">
+          <thead>
+            <tr >
+              <th> News Id</th>
+              <th> Title </th>
+              <th> Location </th>
+              <th> Date </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for i in obj %}
+          <tr >
+
+              <td> {{i.newsId}}</td>
+              <td> {{i.news_Title}}</td>
+              <td> {{i.news_Location}}</td>
+              <td> {{i.news_date}}</td>
+              <td>
+                <a href="{% url 'notification_single2' news_id=i.newsId %}">More details...</i></a>&nbsp;&nbsp;
+            </td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+</body>
+</html>

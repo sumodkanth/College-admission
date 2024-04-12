@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="col-12 grid-margin stretch-card">
+    <div class="card" style="background-color: gray;">
+        <div class="card-body">
+            <h4 class="card-title">Edit Your Profile</h4>
+            <p class="card-description"></p>
+            <form class="forms-sample" method="POST" action="{% url 'stud_save' %}" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <div style="text-align:center;">
+                    <img class="img-lg rounded-circle" src="{{name.Image.url}}" alt="">
+                    <p class="card-description">Student Id : {{name.StudentId}}</p>
+                    <input type="hidden" class="form-control" value="{{name.StudentId}}" name="StudentId" style="background-color: gray;">
+
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">First Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" value="{{name.FirstName}}" name="FirstName" style="background-color: gray;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Last Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" value="{{name.LastName}}" name="LastName" style="background-color: gray;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Gender</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="Gender" style="background-color: gray; border: 1px solid black; color: white;">
+                                        <option>{{name.Gender}}</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Date of Birth</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control"  value="{{name.DateOfBirth}}" name="DateOfBirth" style="background-color: gray;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Email Id</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" value="{{name.Email}}" name="Email" style="background-color: gray;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Mobile No:</label>
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" value="{{name.ContactNo}}" name="ContactNo" style="background-color: gray;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="exampleTextarea1">Address</label>
+
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="exampleTextarea1" rows="4" name="Address" style="background-color: gray;">{{name.Address}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Guardian Name:</label>
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" value="{{name.GuardianName}}" name="GuardianName" style="background-color: gray;">
+                                </div>
+                                </div>
+                                <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Guardian Contact No:</label>
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" value="{{name.GuardianContact}}" name="GuardianContact" style="background-color: gray;">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">PanCard No:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" value="{{name.Pancard}}" name="Pancard" style="background-color: gray;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Aadhaar No :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" value="{{name.adhaar}}" name="adhaar" style="background-color: gray;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>File upload</label>
+                        <div>
+                        <input type="file" name="Image">
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-dark">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

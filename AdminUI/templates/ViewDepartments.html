@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 class="card-title" style="color:black;">List of Departments</h4>
+                    <div class="table-responsive">
+                      <table class="table table-striped" style="color: black;">
+                        <thead>
+                          <tr>
+                            <th> Department Id </th>
+                            <th> Department Name </th>
+                            <th> Action </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in data%}
+                          <tr>
+                            <td> {{i.DeptId}}</td>
+                            <td> {{i.DeptName}}</td>
+                            <td>
+                                <a href="{% url 'edit_dept' dataid=i.DeptId %}"><i class="menu-icon fa fa-edit" style="color:green"></i></a>&nbsp;&nbsp;
+                                <a href="{% url 'delete_dept' dataid=i.DeptId %}"><i class="menu-icon fa fa-trash" style="color:red"></i></a>
+                            </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

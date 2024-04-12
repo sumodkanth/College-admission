@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card-body" style="background-color: #afbbc4;">
+    <h4 class="card-title">Add Placement</h4>
+    <br>
+    <form action="{% url 'add_placed' %}" class="forms-sample" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputName1">STUDENT NAME:</label>
+            <input class="form-control" id="exampleInputName1" name="p_name" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">COMPANY NAME:</label>
+            <input class="form-control" id="exampleInputName2" name="p_company" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        
+        <div class="form-group">
+            <label for="exampleInputName1">DESIGNATION</label>
+            <input class="form-control" name="p_des" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">DEPARTMENT</label>
+            <textarea class="form-control" name="p_dis" style="background-color: gray; border: 1px solid black; color: white;"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputName1">IMAGE</label>
+            <input class="form-control" name="p_img" type="file" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+
+        <button class="btn btn-primary mr-2" type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>
+{% endblock %}

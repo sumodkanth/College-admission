@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% extends 'faculty_index.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="row ">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{{s_data.FirstName}} {{s_data.LastName}}</h2>
+                <div class="dropdown-divider"></div>
+
+                <div class="mtop3">
+                    <img alt="image" class="img-lg rounded-circle" src="{{s_data.Image.url}}">
+                </div>
+
+                <div class="row">
+                    <div class="mtop3 col-lg-3">
+                        <label>ID</label>
+                    </div>
+                    <div class="mtop3 col-lg-3">
+                        <h5>{{s_data.StudentId}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Name</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{s_data.FirstName}} {{s_data.LastName}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Course</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{course.CourseName}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Contact</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{s_data.ContactNo}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Guardian</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{s_data.GuardianName}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Guardian Contact</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{s_data.GuardianContact}}</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{s_data.Email}}</h5>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

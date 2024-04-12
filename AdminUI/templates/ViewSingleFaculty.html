@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card-body" style="background-color: #afbbc4;">
+                    <h4 class="card-title">Edit Faculty Details</h4>
+    <br>
+                    <form class="forms-sample" method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                      <div class="form-group">
+                        <label for="exampleInputName1">Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="name" value="{{data.Name}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Joined</label>
+                        <input type="text" class="form-control"  name="date" value="{{data.Joined}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Date of Birth</label>
+                        <input type="text" class="form-control"  name="dob" value="{{dat.DoB}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Department</label>
+                            <select class="form-control"  name="dept" style="background-color: gray; border: 1px solid black; color: white;">
+                                <option value="{{i.data.DeptId.DeptName}}">{{data.DeptId.DeptName}}</option>
+                                {% for i in dep_data %}
+                                <option value="{{i.CourseName}}">{{i.DeptName}}</option>
+                                {% endfor %}
+                            </select>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Designation</label>
+                        <select name="designation" class="form-control" style="background-color: gray; border: 1px solid black; color: white;">
+                                <option value="{{data.Designation}}">{{data.Designation}}</option>
+                                <option value="Lecturer">Lecturer</option>
+                                <option value="Guest Lecturer">Guest Lecturer</option>
+                                <option value="Lab Assistant">Lab Assistant</option>
+                                <option value="Accountant">Accountant</option>
+                                <option value="Associate Professor">Associate Professor</option>
+                                <option value="Assistant Professor">Assistant Professor</option>
+                                <option value="Librarian">Librarian</option>
+                            </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Contact</label>
+                        <input type="tel" class="form-control"  name="contact" value="{{data.Contact}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">AltContact</label>
+                        <input type="tel" class="form-control"  name="altcontact" value="{{dat.AltContact}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Email</label>
+                        <input type="email" class="form-control"  name="email" value="{{dat.Email}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Address</label>
+                            <textarea class="form-control"  name="address" style="background-color: gray; border: 1px solid black; color: white;">{{dat.Address}}</textarea>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Bank</label>
+                        <input type="text" class="form-control"  name="bank" value="{{dat.Bank}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Account Number</label>
+                        <input type="text" class="form-control"  name="accno" value="{{dat.Acc_Number}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">IFSC</label>
+                        <input type="text" class="form-control"  name="ifsc" value="{{dat.IFSC}}" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Image</label>
+                           <img src="{{dat.Image.url}}" width="100px" height="100px"><br>
+                        <input type="file" class="form-control"  name="img" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mr-2">Update</button>
+                    </form>
+                  </div>
+</body>
+</html>
+{% endblock %}

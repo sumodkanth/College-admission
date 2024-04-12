@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>{% if request.session.username %}
+<div class="card-body" style="background-color: gray;">
+    <h4 class="card-title">Add Training</h4>
+    <br>
+    <form action="{% url 'news_save' %}" class="forms-sample" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputName1">Title</label>
+            <input class="form-control" id="exampleInputName1" name="news_Title" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Location</label>
+            <input class="form-control" id="exampleInputName2" name="news_Location" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        
+        <div class="form-group">
+            <label for="exampleInputName1">Date</label>
+            <input class="form-control" name="news_date" type="text" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Description</label>
+            <textarea class="form-control" name="Description" style="background-color: gray; border: 1px solid black; color: white;"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputName1">Image</label>
+            <input class="form-control" name="image" type="file" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+
+        <button class="btn btn-primary mr-2" type="submit">Submit</button>
+    </form>
+</div>{% endif %}
+</body>
+</html>
+{% endblock %}

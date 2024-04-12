@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'adminindex.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #afbbc4;;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, textarea, input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        select {
+            height: 38px;
+        }
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Add Question</h2>
+    <form id="questionForm" method="post"  enctype="multipart/form-data" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <label for="course">Select Course:</label>
+        <select id="course" name="course">
+            <option value="">Select the course</option>
+            {% for course in data %}
+            <option value="{{ course.CourseName }}">{{ course.CourseName }}</option>
+            {% endfor %}
+        </select>
+        <label for="question" >Question:</label>
+        <textarea id="question" name="question" rows="4" cols="50"></textarea>
+        <label>Choices:</label>
+        <input type="text" name="choice[]" placeholder="Choice 1">
+        <input type="text" name="choice[]" placeholder="Choice 2">
+        <input type="text" name="choice[]" placeholder="Choice 3">
+        <input type="text" name="choice[]" placeholder="Choice 4">
+        <label for="correct_choice">Correct Choice:</label>
+        <select id="correct_choice" name="correct_choice">
+            <option value="">Select</option>
+            {% for i in "1234" %}
+            <option value="{{ forloop.counter0 }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var course = document.getElementById("course").value;
+        var question = document.getElementById("question").value;
+        var choices = document.getElementsByName("choice[]");
+        var correctChoice = document.getElementById("correct_choice").value;
+
+        if (course === "" || question === "") {
+            alert("Please select a course and enter a question.");
+            return false;
+        }
+
+        for (var i = 0; i < choices.length; i++) {
+            if (choices[i].value === "") {
+                alert("Please fill all choices.");
+                return false;
+            }
+        }
+
+        if (correctChoice === "") {
+            alert("Please select the correct choice.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+</body>
+{% endblock %}
+</html>

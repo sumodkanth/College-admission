@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card-body"  style="background-color: #afbbc4;">
+    <h4 class="card-title">Edit Job Post</h4>
+    <br>
+    <form action="{% url 'update_job' job_id=job_data.JobId %}" class="forms-sample" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputName1">Job Title</label>
+            <input class="form-control" id="exampleInputName1" name="title" type="text" value="{{job_data.Title}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Company Name</label>
+            <input class="form-control" id="exampleInputName2" name="cname" type="text" value="{{job_data.Company}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Location</label>
+            <input class="form-control" name="location" type="text" value="{{job_data.Location}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Qualification</label>
+            <input class="form-control" name="qualification" type="text" value="{{job_data.Qualification}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Description</label>
+            <textarea class="form-control" name="description" style="background-color: gray; border: 1px solid black; color: white;">{{job_data.Description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Email</label>
+            <input class="form-control" name="email" type="email" value="{{job_data.Email}}" style="background-color: gray; border: 1px solid black; color: white;">
+        </div>
+
+        <button class="btn btn-primary mr-2" type="submit">Update</button>
+        <a class="btn btn-success mr-2" href="{% url 'job_applications' job_id=job_data.JobId %}">View Applications</a>
+    </form>
+            <div>
+
+</div>
+</body>
+</html>
+{% endblock %}

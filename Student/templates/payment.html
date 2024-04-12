@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+    {% extends 'studentindex.html' %}
+    {% load static %}
+    {% block content %}
+    <section class="p-1 p-md-1">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-lg-8 col-xl-5">
+                <div class="card rounded-5">
+                    <div class="card-body p-4" style="background-color: gray;">
+                        <div class="text-center mb-4">
+                            <h3 style="color: black;">PAYMENT GATEWAY</h3>
+                        </div>
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <div class="card-types">
+                                <label class="card-type">
+                                    <input type="radio" name="card_type" value="mastercard" checked>
+                                    <img src="{% static 'images/mastercard.png' %}" alt="Mastercard" style="width: 200px; height: 180px;">
+                                </label>
+                                <label class="card-type">
+                                    <input type="radio" name="card_type" value="visa">
+                                    <img src="{% static 'images/visa.png' %}" alt="Visa" style="width: 200px; height: 100px;">
+                                </label>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <div class="border rounded-3  text-white py-2 px-3">
+                                    15000 RS
+                                    <input type="hidden" id="payable_amount" name="payable_amount" value="15000">
+                                </div>
+                                <label class="form-label" for="formControlLgXsd" style="color: black;">Admission Amount to be paid</label>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <input class="form-control form-control-lg" type="text" id="formControlLgXsd" name="cardholder_name"  style=" border: 1px solid black; color: white;" placeholder="Anna Doe">
+                                <label class="form-label" for="formControlLgXsd" style="color: black;">Cardholder's Name</label>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-7">
+                                    <div class="form-outline">
+                                        <input class="form-control form-control-lg" type="text" id="formControlLgXM" name="card_number" style=" border: 1px solid black; color: white;" placeholder="1111 2222 3333 4444">
+                                        <label class="form-label" for="formControlLgXM" style="color: black;">Card Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-outline">
+                                        <input class="form-control form-control-lg" type="text" id="formControlLgExpk" name="expiration_date" style=" border: 1px solid black; color: white;" placeholder="MM/YYYY">
+                                        <label class="form-label" for="formControlLgExpk" style="color: black;">Expire</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-2">
+                                    <div class="form-outline">
+                                        <input class="form-control form-control-lg" type="text" id="formControlLgcvv" name="cvv" style=" border: 1px solid black; color: white;" placeholder="CVV" >
+                                        <label class="form-label" for="formControlLgcvv" style="color: black;">CVV</label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <button type="submit" class="btn btn-danger btn-lg btn-block">Proceed to payment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.5/inputmask.min.js"></script>
+    {% if show_alert %}
+        <script>
+            swal('Payment done successfully!', '', 'success');
+
+
+        </script>
+    {% endif %}
+</body>
+</html>

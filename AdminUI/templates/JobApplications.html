@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 class="card-title">List of Student in {{course}}</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped" style="color: black;">
+                        <thead>
+                          <tr>
+                            <th> Student ID</th>
+                            <th> Student Name</th>
+                            <th> Course</th>
+                            <th> Resume </th>
+                            <th> Status </th>
+                            <th> More </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in applications %}
+                          <tr>
+
+                            <td> {{i.StudentId.StudentId}}</td>
+                            <td> {{i.StudentId.FirstName}} {{i.StudentId.LastName}}</td>
+                            <td> {{i.StudentId.CourseId.CourseName}}</td>
+                            <td><a href="{% url 'resume_download' job_id=i.JobId.JobId stud_id=i.StudentId.StudentId  %}">Download Resume</a></td>
+
+                            <td>
+                                <a href="{% url 'application_single' dataid=i.StudentId.StudentId %}">More details...</i></a>&nbsp;&nbsp;
+                            </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

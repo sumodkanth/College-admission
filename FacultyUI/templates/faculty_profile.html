@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="row ">
+    <div class="col-12 grid-margin">
+        <div class="card" style="background-color: gray;">
+            <div class="card-body" style="color:black;">
+                <h2 class="card-title" style="color:black;">Profile</h2>
+                <div class="dropdown-divider"></div>
+
+                <div class="mtop3">
+                    {% if f_data.Photo %}
+                    <img alt="image" class="img-lg rounded-circle" src="{{f_data.Photo.url}}">
+                    {% else %}
+                    <a href="{% url 'faculty_profile_edit' %}">
+                        <button class="btn btn-primary btn-rounded">Upload Photo</button>
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="mtop3 col-lg-3">
+                        <label>ID</label>
+                    </div>
+                    <div class="mtop3 col-lg-3">
+                        <h5>{{f_data.FacultyID.FacultyID}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Name</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{enroll_data.Name}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Department</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{dept_data.DeptName}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Designation</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{enroll_data.Designation}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Joining Date</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{enroll_data.Joined}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Date of Birth</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{f_data.DoB}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Contact</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{enroll_data.Contact}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Alternate Contact</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{f_data.AltContact}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Communication Address</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{f_data.Address}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{f_data.Email}}</h5>
+                    </div>
+                </div>
+
+                <h2 class="card-title mtop3" style="color:black;">Bank Details</h2>
+                <div class="dropdown-divider"></div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Bank Name</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{f_data.Bank}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>Account Number</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{f_data.Acc_Number}}</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mtop2 col-lg-3">
+                        <label>IFSC</label>
+                    </div>
+                    <div class="mtop2 col-lg-3">
+                        <h5>{{f_data.IFSC}}</h5>
+                    </div>
+                </div>
+
+                <div class="mtop3" style="text-align:right;">
+                    <a href="{% url 'faculty_profile_edit' %}">
+                        <button class="btn btn-primary btn-rounded btn-lg">Update Profile</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

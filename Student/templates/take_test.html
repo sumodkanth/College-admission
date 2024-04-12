@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'studentindex.html' %}
+    {% load static %}
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Test</title>
+    <style>
+        /* Add your CSS styles here */
+        .card {
+            background-color: #afbbc4;
+        }
+        .card-title {
+            color: black;
+        }
+        .question {
+            color: black;
+        }
+        .choice {
+            padding-left: 30px;
+        }
+        #countdown {
+            position: fixed;
+            top: 100px;
+            right: 40px;
+            z-index: 9999;
+            background-color: rgba(245, 157, 122);
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title" style="color: black;">{{ course.CourseName }} Test</h3>
+            <form id="testForm" method="post"  action="{% url 'take_test' course_id=course.CourseName %}">
+                {% csrf_token %}
+
+
+                <ol class="question">
+                    {% for question in questions %}
+                    <li>
+                        <h4>{{ question.question_text }}</h4>
+
+                            {% for choice in question.choice_set.all %}
+
+                                <input class="choice" type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">{{ choice.choice_text }}<br>
+
+                            {% endfor %}
+
+                    </li>
+                      {% endfor %}
+                </ol>
+
+
+
+                <br>
+                <div class="col">
+                    <input class="btn btn-info mt-4 mb-4 mx-auto" type="submit" value="Submit">
+                </div>
+                     <div id="countdown" ></div>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Countdown timer
+        var timeLeft = 30; //  minutes in seconds
+        var timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                var minutes = Math.floor(timeLeft / 60);
+                var seconds = timeLeft % 60;
+                document.getElementById('countdown').innerText = minutes + 'm ' + seconds + 's';
+
+                if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('testForm').submit();
+                }
+            }, 1000);
+        }
+
+        startTimer();
+    </script>
+</body>
+{% endblock %}
+</html>

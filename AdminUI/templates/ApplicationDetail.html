@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  </head>
+<body>
+<div class="card-body" style="background-color: gray;">
+    <h4 class="card-title">Student Detail</h4>
+    <br>
+        <div class="row">
+            <label  class="col-lg-3">First Name</label>
+            <h5 class="col-lg-3">{{data.FirstName}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Last Name</label>
+            <h5 class="col-lg-3">{{data.LastName}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Date of Birth</label>
+            <h5 class="col-lg-3">{{data.DateOfBirth}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Enrollment Id</label>
+            <h5 class="col-lg-3">{{data.EnrollmentID}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Enrollment Date</label>
+            <h5 class="col-lg-3">{{data.EnrollDate}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Course</label>
+                        <h5 class="col-lg-3">{{data.CourseId.CourseName}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Gender</label>
+                       <h5 class="col-lg-3">{{data.Gender}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Contact Number</label>
+            <h5 class="col-lg-3">{{data.ContactNo}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Email</label>
+            <h5 class="col-lg-3">{{data.Email}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Address</label>
+            <h5 class="col-lg-3">{{data.Address}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Guardian Name</label>
+            <h5 class="col-lg-3">{{data.GuardianName}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Guardian Contact Number</label>
+            <h5 class="col-lg-3">{{data.GuardianContact}}</h5>
+        </div>
+        <div class="row">
+            <label class="col-lg-3">Image</label>
+            <img class="img-lg rounded-circle" src="{{data.Image.url}}" width="100px">
+        </div>
+
+
+
+
+
+
+</div>
+<script>
+    function updateStatus(status) {
+        // Update the progress bar and handle the status (selected or rejected)
+        var progressBar = document.querySelector('.progress-bar');
+        if (status === 'selected') {
+            progressBar.style.width = '100%';
+            progressBar.classList.remove('bg-danger');
+            progressBar.classList.add('bg-info');
+        } else if (status === 'rejected') {
+            progressBar.style.width = '100%';
+            progressBar.classList.remove('bg-info');
+            progressBar.classList.add('bg-danger');
+        }
+    }
+</script>
+
+</body>
+</html>
+{% endblock %}

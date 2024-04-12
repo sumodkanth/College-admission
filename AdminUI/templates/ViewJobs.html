@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 class="card-title">All Jobs</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped" style="color: black;">
+                        <thead>
+                          <tr>
+                              <th> </th>
+                              <th> Job Id</th>
+                            <th> Title </th>
+                            <th> Company Name </th>
+                            <th> Location </th>
+                            <th> Email </th>
+                            <th> More </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in job_data %}
+                          <tr>
+                              <td><a href="{% url 'job_delete' data_id=i.JobId %}"><i class="fa fa-window-close"></i></a>
+                            </td>
+                            <td> {{i.JobId}}</td>
+                            <td> {{i.Title}}</td>
+                            <td> {{i.Company}}</td>
+                            <td> {{i.Location}}</td>
+                            <td> {{i.Email}}</td>
+                            <td>
+                                <a href="{% url 'view_job_single' data_id=i.JobId  %}">More details...</i></a>&nbsp;&nbsp;
+
+                            </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div><br>
+                    <div>
+                    <!-- Add a button for status update -->
+                        <a href="{% url 'job_details'  %}">
+                            <button class="btn btn-danger mr-2 btn-rounded">View Status details</button>
+                        </a>
+                    </div>
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

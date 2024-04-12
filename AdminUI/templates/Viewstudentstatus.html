@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card">
+                  <div class="card-body"  style="background-color: #afbbc4;">
+                    <h4 class="card-title" style="color: black;">LIST OF STUDENT STATUS IN {{course_name}}</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Job</th>
+                                <th>Company</th>
+                                <th>Interview Status</th>
+                                <th>Last Updated</th>
+<!--                                <th>date and time</th>-->
+
+                                <th>Actions</th> <!-- New column for delete button -->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for status in job_statuses %}
+                            <tr>
+                                <td>{{ status.Student }}</td>
+                                <td>{{ status.job.Title }}</td>
+                                <td>{{ status.job.Company }}</td>
+                                <td>{{ status.status_text }}</td>
+                                <td>{{ status.timestamp }}</td>
+<!--                                <td>{{ status.date_time }}</td>-->
+
+                                <td>
+                                    <form action="{% url 'delete_status' status.pk %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

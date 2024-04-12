@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 class="card-title" style="color:black;">List of Students</h4>
+                      <form method="post" action="{% url 'search_students' %}">
+                          {% csrf_token%}
+                          <div class="form-group">
+                        <label>Select Course</label>
+                        <select class="form-control"  name="course" style="background-color: gray; border: 1px solid black; color: white;">
+                                {% for i in data %}
+                                <option value="{{i.CourseName}}">{{i.CourseName}}</option>
+                                {% endfor %}
+                            </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Select Enrolled Year</label>
+                        <select class="form-control"  name="year" style="background-color: gray; border: 1px solid black; color: white;">
+                                {% for i in years %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary mr-2">Search</button>
+                      </form>
+
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

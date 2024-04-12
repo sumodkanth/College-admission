@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="row ">
+    <div class="col-12 grid-margin">
+        <div class="card" style="background-color: gray;">
+            <div class="card-body">
+                <h2 class="card-title">Edit Profile</h2>
+                <div class="dropdown-divider"></div>
+                <form action="{% url 'faculty_profile_save' %}" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <div class="mtop3">
+                        {% if f_data.Photo %}
+                        <img alt="image" class="img-lg rounded-circle" src="{{f_data.Photo.url}}">
+                        <label class="btn btn-primary btn-rounded">Update Photo<input hidden name="image"
+                                                                                      type="file"></label>
+                        {% else %}
+                        <label class="btn btn-primary btn-rounded">Upload Photo<input hidden id="imageInput"
+                                                                                      name="image"
+                                                                                      type="file"></label>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>ID</label>
+                        </div>
+                        <div class="mtop3 col-lg-3">
+                            <h5>{{f_data.FacultyID.FacultyID}}</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Name</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" name="name" placeholder="Name" type="text"
+                                   value="{{enroll_data.Name}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Department</label>
+                        </div>
+                        <div class="mtop3 col-lg-3">
+                            <h5>{{enroll_data.Department}}</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Designation</label>
+                        </div>
+                        <div class="mtop3 col-lg-3">
+                            <h5>{{enroll_data.Designation}}</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Joining Date</label>
+                        </div>
+                        <div class="mtop3 col-lg-3">
+                            <h5>{{enroll_data.Joined}}</h5>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Date of Birth</label>
+                        </div>
+                        {% if f_data.DoB %}
+                        <div class="mtop3 col-lg-6">
+                            <h5>{{f_data.DoB}}</h5>
+                        </div>
+                        {% else %}
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" id="birthdate" min="" name="dob" type="date"
+                                   value="{{f_data.DoB}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Contact</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" name="contact"
+                                   type="tel" value="{{enroll_data.Contact}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Alternate Contact</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" name="altcontact" type="tel"
+                                   value="{{f_data.AltContact}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Communication Address</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <textarea class="form-control" name="address" style="background-color: gray; border: 1px solid black; color: white;">{{f_data.Address}}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Email</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" name="email" placeholder="domain@example.com" type="email"
+                                   value="{{f_data.Email}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                    </div>
+
+                    <h2 class="card-title mtop3">Bank Details</h2>
+                    <div class="dropdown-divider"></div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Bank Name</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" name="bank" type="text" value="{{f_data.Bank}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>Account Number</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" name="accnum" type="text" value="{{f_data.Acc_Number}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mtop3 col-lg-3">
+                            <label>IFSC</label>
+                        </div>
+                        <div class="mtop3 col-lg-6">
+                            <input class="form-control" name="ifsc" type="text" value="{{f_data.IFSC}}" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                    </div>
+
+                    <div class="mtop3" style="text-align:right;">
+                        <a>
+                            <button class="btn btn-primary btn-rounded btn-lg" id="submitButton">Submit</button>
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+</body>
+
+</html>

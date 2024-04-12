@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="col-12 grid-margin stretch-card">
+    <div class="card" style="background-color:gray;">
+        <div class="card-body" style="color:white;">
+            <h4 class="card-title">Notification Details</h4>
+            <p class="card-description"></p>
+            <form class="forms-sample" method="post" action="{% url 'stud_notification'  %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+
+                                <div class="col-sm-9">
+                                    <img src="{{news_data.news_image.url}}" alt="Image" class="img-fluid" style="width:500px;height:250px;" >
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Title :</label>
+                                <div class="col-sm-9">
+                                    <h5 class="col-form-label">{{news_data.news_Title}}</h5>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Location :</label>
+                                <div class="col-sm-9">
+                                    <h5 class="col-form-label">{{news_data.news_Location}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Date :</label>
+                                <div class="col-sm-9">
+                                    <h5 class="col-form-label">{{news_data.news_date}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Description:</label>
+
+                                <div class="col-sm-9">
+                                    <label class="col-form-label-sm"><h6>{{news_data.Description}}</h6></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'stud_notification' %}"  class="btn btn-primary mr-2">BACK
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+</body>
+</html>

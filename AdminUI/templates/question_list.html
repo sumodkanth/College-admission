@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'adminindex.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+                .delete-btn {
+            background: none;
+            border: none;
+            color: red; /* You can change the color as needed */
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            color: darkred; /* Change the color on hover if desired */
+        }
+                .add-btn {
+            background: none;
+            border: none;
+            color: green; /* You can change the color as needed */
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            color: darkgreen; /* Change the color on hover if desired */
+        }
+    </style>
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+    <div class="card-body">
+    <h4 class="card-title" style="color:black;">Uploaded Questions </h4>
+        <div class="table-responsive">
+    <table class="table table-striped" style="color: black;">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr>
+                <td>{{ question.question_text }}</td>
+                <td>{{ question.course }}</td>
+                <td>
+                    <form action="{% url 'delete_question' question.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        </div>
+         <button class="add-btn" onclick="location.href='{% url 'add_question' %}'"><i class="fas fa-plus-circle"></i> Add Question</button>
+    </div>
+</div>
+</body>
+{% endblock %}
+</html>

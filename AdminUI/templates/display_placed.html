@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 class="card-title" style="color:black;">Placement Details</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped" style="color: black;">
+                        <thead style="color: black;">
+                          <tr>
+                            <th>Photo</th>
+                            <th> Id</th>
+                            <th>Name</th>
+                            <th> Location </th>
+                            <th> Title </th>
+                            <th>Department</th>
+                            <th> Action </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <td><img height="100px" src="{{i.p_img.url}}" width="100px"><br></td>
+                            <td> {{i.p_id}}</td>
+                            <td> {{i.p_name}}</td>
+                            <td> {{i.p_company}}</td>
+                            <td> {{i.p_des}}</td>
+                            <td> {{i.p_dis}}</td>
+<!--                            <td> {{i.p_img.url}}</td>-->
+
+                            <td><a href="{% url 'placed_delete' data_id=i.p_id %}"><i class="fa fa-window-close"></i></a></td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

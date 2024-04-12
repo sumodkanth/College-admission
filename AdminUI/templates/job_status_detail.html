@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+
+                      <div class="table-responsive">
+                        <h2>Job Status Details</h2>
+                        <table class="table table-striped" style="color: black;">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Updated time</th>
+                                    <th>Student</th>
+                                    <th>Job</th>
+                                    <th>Company</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in job_status %}
+                                <tr>
+                                    <td>{{ i.status_text }}</td>
+                                    <td>{{ i.timestamp }}</td>
+                                    <td>{{ i.Student }}</td>
+                                    <td>{{ i.job }}</td>
+                                    <td>{{ i.job.Company }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        </div>
+
+  </div>
+</div>
+</body>
+</html>
+{% endblock %}

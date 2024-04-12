@@ -1,0 +1,49 @@
+
+{% extends 'studentindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+</head>
+<body>
+<div class="card" style="background-color: gray;">
+                  <div class="card-body">
+                    <h4 class="card-title" style="color: white;">All Jobs</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped" style="color: black;">
+                        <thead>
+                          <tr>
+                              <th> Job Id</th>
+                            <th> Title </th>
+                            <th> Company Name </th>
+                            <th> Location </th>
+                            <th> Email </th>
+                            <th> More </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in job_data %}
+                          <tr>
+                            <td> {{i.JobId}}</td>
+                            <td> {{i.Title}}</td>
+                            <td> {{i.Company}}</td>
+                            <td> {{i.Location}}</td>
+                            <td> {{i.Email}}</td>
+                            <td>
+                                <a href="{% url 'jobs_view_single' job_id=i.JobId %}">More details...</i></a>&nbsp;&nbsp;
+                            </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

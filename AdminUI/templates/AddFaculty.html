@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>{% if request.session.username %}
+<div class="card-body" style="background-color: gray;">
+                    <h4 class="card-title">Add Faculty</h4>
+    <br>
+                    <form class="forms-sample" method="post" action="{% url 'submit_faculty' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                      <div class="form-group">
+                        <label for="exampleInputName1"> Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="name" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+
+                        <div class="form-group">
+                        <label for="exampleInputName1">Joined Date</label>
+                        <input type="date" class="form-control"  name="date" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleInputName1">Department</label>
+                        <select class="form-control"  name="dept" style="background-color: gray; border: 1px solid black; color: white;">
+                                {% for i in data %}
+                                <option value="{{i.DeptName}}">{{i.DeptName}}</option>
+                                {% endfor %}
+                            </select>
+                      </div>
+                        <div class="form-group">
+                            <label for="exampleInputName1" >Contact Number</label>
+                            <input type="tel" class="form-control"  name="contact" style="background-color: gray; border: 1px solid black; color: white;">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputName1">Designation</label>
+                            <select name="designation" class="form-control" style="background-color: gray; border: 1px solid black; color: white;">
+                                <option value="HOD">HOD</option>
+                                <option value="Lecturer">Lecturer</option>
+                                <option value="Guest Lecturer">Guest Lecturer</option>
+                                <option value="Lab Assistant">Lab Assistant</option>
+                                <option value="Accountant">Accountant</option>
+                                <option value="Associate Professor">Associate Professor</option>
+                                <option value="Assistant Professor">Assistant Professor</option>
+                                <option value="Librarian">Librarian</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">
+                                <input class="checkbox" type="checkbox"name="admin_status" value="True"> Is Admin(If Yes, Please tick checkbox) <i class="input-helper"></i></label>
+                        </div>
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    </form>
+                  </div>{% endif %}
+</body>
+</html>
+{% endblock %}

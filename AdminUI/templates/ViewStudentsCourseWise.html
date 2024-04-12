@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title" style="color: black;">List of Student in {{course}}</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                              <th> </th>
+                              <th> Student Id</th>
+                            <th> Enrollment Id</th>
+                            <th> Student First Name </th>
+                            <th> Student Last Name </th>
+                            <th> Email </th>
+                            <th> Contact </th>
+                            <th> More </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in data %}
+                          <tr>
+                              <td><a href="{% url 'delete_student' dataid=i.StudentId %}"><i class="fa fa-window-close"></i></a>
+                            </td>
+                            <td> {{i.StudentId}}</td>
+                            <td> {{i.EnrollmentID}}</td>
+                            <td> {{i.FirstName}}</td>
+                            <td> {{i.LastName}}</td>
+                            <td> {{i.Email}}</td>
+                            <td> {{i.ContactNo}}</td>
+                            <td>
+                                <a href="{% url 'view_single_student' dataid=i.StudentId %}">More details...</i></a>&nbsp;&nbsp;
+                            </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>{% if request.session.username %}
+
+        <div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 class="card-title" style="color:black;">LIST OF STUDENT STATUS</h4>
+                      <form method="post" action="{% url 'search_studentstatus' %}">
+                          {% csrf_token%}
+                          <div class="form-group">
+                        <label>Select Course</label>
+                        <select class="form-control"  name="course" style="background-color: gray; border: 1px solid black; color: white;">
+                                {% for i in data %}
+                                <option value="{{i.CourseName}}">{{i.CourseName}}</option>
+                                {% endfor %}
+                            </select>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mr-2">Search</button>
+                      </form>
+
+                  </div>
+
+                </div><br>
+
+
+                  <div class="card" style="background-color: #afbbc4;">
+
+                      <div class="card-body">
+                    <h4 class="card-title" style="color:black;">LIST OF STUDENTS APPLIED FOR TRAINING</h4>
+                      <form method="post" action="{% url 'search_trainings' %}">
+                          {% csrf_token%}
+                          <div class="form-group">
+                        <label>Select Course</label>
+                        <select class="form-control"  name="training" style="background-color: gray; border: 1px solid black; color: white;">
+                                {% for i in data2 %}
+                                <option value="{{i.newsId.news_Title}}" style="height:60px;">{{i.newsId.news_Title}}</option>
+                                {% endfor %}
+                            </select>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mr-2">Search</button>
+                      </form>
+
+                  </div>
+                  </div>
+{% else %}
+<p style="color:black; font-size:30px;">Please Login to Access this page</p>
+{% endif %}
+</body>
+</html>
+{% endblock %}

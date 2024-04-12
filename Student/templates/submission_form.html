@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Submission Form</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div class="card-body" style="background-color: gray;">
+    <h4 class="card-title">Submission Form for {{course_data.CourseName}}</h4><br>
+    <form  class="forms-sample" method="post" action="{% url 'course_submission'%}"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="student_name" class="form-label" style="color: white;">Student Name:</label>
+            <input type="text" class="form-control" id="student_name" style="background-color: gray; border: 1px solid black; color: white;" name="student_name" required>
+        </div>
+        <div class="form-group">
+            <label for="phone_number" class="form-label" >Phone Number:</label>
+            <input type="text" class="form-control" id="phone_number" style="background-color: gray; border: 1px solid black; color: white;" name="phone_number" required>
+        </div>
+        <div class="form-group">
+            <label for="email" class="form-label" style="color: white;">Email:</label>
+            <input type="email" class="form-control" id="email" style="background-color: gray; border: 1px solid black; color: white;" name="email" required>
+        </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" class="form-control"  name="dob" style="background-color: gray; border: 1px solid black; color: white;">
+                    </div>
+                        <div class="form-group">
+                        <label for="Course">Course</label>
+                        <select class="form-control"  name="course" style="background-color: gray; border: 1px solid black; color: white;">
+                                <option value="">Select course</option>
+                                <option value="{{course_data.CourseName}}">{{course_data.CourseName}}</option>
+
+                        </select>
+                        </div>
+                        <div class="form-group">
+                        <label  style="color: white;">Gender</label>
+                            <select name="gender" class="form-control" style="background-color: gray; border: 1px solid black; color: white;" >
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                            <div class="form-group">
+                        <label >Religion</label>
+                        <input type="text" class="form-control"  name="rname" style="background-color: gray; border: 1px solid black; color: white;" required>
+                      </div>
+                                    <div class="form-group">
+                        <label >District</label>
+                            <select name="dictname" class="form-control" style="background-color: gray; border: 1px solid black; color: white;" >
+                                <option value="">Select District</option>
+                                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                <option value="Kollam">Kollam</option>
+                                <option value="Pathanamthitta">Pathanamthitta</option>
+                                <option value="Alappuzha">Alappuzha</option>
+                                <option value="Kottayam">Kottayam</option>
+                                <option value="Idukki">Idukki</option>
+                                <option value="Ernakulam">Ernakulam</option>
+                                <option value="Thrissur">Thrissur</option>
+                                <option value="Palakkad">Palakkad</option>
+                                <option value="Malappuram">Malappuram</option>
+                                <option value="Kozhikode">Kozhikode</option>
+                                <option value="Wayanad">Wayanad</option>
+                                <option value="Kannur">Kannur</option>
+                                <option value="Kasaragod">Kasaragod</option>
+
+                            </select>
+
+                      </div>
+
+                                <div class="form-group">
+                        <label  >Address</label>
+                            <textarea class="form-control"  name="address" style="background-color: gray; border: 1px solid black; color: white;"></textarea>
+                      </div>
+                    <div class="form-group">
+                        <label >Guardian Name</label>
+                        <input type="text" class="form-control"  name="gname" style="background-color: gray; border: 1px solid black; color: white;" required>
+                      </div>
+        <div class="form-group">
+            <label for="plus_two_certificate" class="form-label" style="color: white;">Plus Two Certificate:</label>
+            <input type="file" class="form-control" id="plus_two_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="plus_two_certificate" required accept=".pdf">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Plus Two mark %</label>
+            <input type="tel" class="form-control"  name="plustwomark" style="background-color: gray; border: 1px solid black; color: white;" required>
+        </div>
+        <div class="form-group">
+            <label for="sslc_certificate" class="form-label" style="color: white;">SSLC Certificate:</label>
+            <input type="file" class="form-control" id="sslc_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="sslc_certificate" required accept=".pdf">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">SSLC mark %</label>
+            <input type="tel" class="form-control"  name="sslcmark" style="background-color: gray; border: 1px solid black; color: white;" required>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Upload passport size photo</label>
+            <input type="file" class="form-control"  name="img" style="background-color: gray; border: 1px solid black; color: white;">
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock %}

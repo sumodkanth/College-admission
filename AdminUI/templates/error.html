@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<div class="card-body" style="background-color: gray;">
+    <h1>Error occurred</h1>
+    <p style="font-size:20px; color:red;">{{ error }}</p>
+    <a href="{% url 'add_student2' %}" class="btn btn-primary">Try Again</a>
+
+  </div>
+</body>
+</html>
+{% endblock %}

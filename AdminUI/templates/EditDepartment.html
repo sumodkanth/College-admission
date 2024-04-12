@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card-body" style="background-color: gray;">
+                    <h4 class="card-title">Add Department</h4>
+    <br>
+                    <form class="forms-sample" method="post" action="{% url 'update_dept' dataid=data.DeptId %}">
+                        {% csrf_token %}
+                      <div class="form-group">
+                        <label for="exampleInputName1">Department Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="deptname" value="{{data.DeptName}}">
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    </form>
+                  </div>
+</body>
+</html>
+{% endblock %}

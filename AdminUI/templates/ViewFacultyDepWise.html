@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends 'adminindex.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+<div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 class="card-title" >List of Employees in {{dept}}</h4>
+                      <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                              <th> </th>
+                              <th> Faculty Id</th>
+                            <th> Faculty Name </th>
+                            <th> Joined Date </th>
+                            <th> Designation </th>
+                            <th> Contact </th>
+                            <th> More </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in data %}
+                          <tr>
+                              <td><a href=""><i class="fa fa-window-close"></i></a>
+                            </td>
+                            <td> {{i.FacultyID}}</td>
+                            <td> {{i.Name}}</td>
+                            <td> {{i.Joined}}</td>
+                            <td> {{i.Designation}}</td>
+                            <td> {{i.Contact}}</td>
+                            <td>
+                                <a href="{% url 'view_single_faculty' dataid=i.FacultyID%}">More details...</i></a>&nbsp;&nbsp;
+                            </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+</body>
+</html>
+{% endblock %}
