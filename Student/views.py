@@ -662,7 +662,7 @@ def payment_page(request, course_id):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
     name = CourseenrollmentDB.objects.get(Email=stud_id)
-    course = CourseDB.objects.get(CourseName=course_id)
+    # course = CourseDB.objects.get(CourseName=course_id)
     if request.method == 'POST':
         # Handle payment logic here using the provided payment details
         cardholder_name = request.POST.get('cardholder_name')
@@ -688,7 +688,7 @@ def payment_page(request, course_id):
 
         messages.success(request, 'Payment done successfully!')
         return redirect(studentindx)  # You can redirect or render a success page here
-
+#hello
     context = {'course': course,
                'name':name}
     return render(request, 'payment.html', context)
