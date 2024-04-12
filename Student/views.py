@@ -661,7 +661,7 @@ def take_test(request, course_id):
 def payment_page(request, course_id):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
-    # name = CourseenrollmentDB.objects.get(Email=stud_id)
+    name = CourseenrollmentDB.objects.get(Email=stud_id)
     course = CourseDB.objects.get(CourseName=course_id)
     if request.method == 'POST':
         # Handle payment logic here using the provided payment details
