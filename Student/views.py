@@ -26,7 +26,10 @@ from django.shortcuts import get_object_or_404
 from AdminUI.models import JobApplications
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
-
+from django.template.loader import render_to_string
+from django.views.generic import View
+from wkhtmltopdf.views import PDFTemplateView
+import pdfkit
 
 # Create your views here.x
 def redirect_authenticated_user(view_func):
@@ -573,7 +576,7 @@ def faculty_registration(request):
 def submission_form(request,course):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        course_data = CourseDB.objects.get(CourseName=course)
+        course_data = CourseDB.objects.get(CourseId=course)
         name = StudentDB.objects.get(Email=stud_id)
         if request.method == "POST":
             return render(request, "submission_form.html",{'name':name,'course_data':course_data})
@@ -589,6 +592,7 @@ def course_submission(request):
         email = request.POST.get("email")
         dob = request.POST.get("dob")
         coursee = request.POST.get("course")
+        courseid = request.POST.get("course_id")
         gender = request.POST.get("gender")
         religion = request.POST.get("rname")
         district = request.POST.get("dictname")
@@ -599,11 +603,13 @@ def course_submission(request):
         sslc = request.FILES["sslc_certificate"]
         sslcmark = request.POST.get("sslcmark")
         im = request.FILES['img']
-        course_data = CourseDB.objects.get(CourseName=coursee)
+        course_data1 = CourseDB.objects.get(CourseId=courseid)
 
 
 
-        obj = CourseenrollmentDB(StudentName=sname,  CourseId=course_data, Religion=religion,District=district,
+
+
+        obj = CourseenrollmentDB(StudentName=sname,  CourseId=course_data1, Religion=religion,District=district,
                         DateOfBirth=dob, Gender=gender, Email=email, ContactNo=contacts, Address=address,
                         GuardianName=gname, Image=im,Plustwo=plustwo, SSLC=sslc, Plustwomark= plustwomark, SSLCMark= sslcmark)
         obj.save()
@@ -620,7 +626,7 @@ def take_test(request, course_id):
     course = CourseDB.objects.get(CourseName=course_id)
     questions = list(MultipleChoiceQuestion.objects.filter(course=course))
     random.shuffle(questions)
-    questions = questions[:5]  # Select five random questions
+    questions = questions[:10]  # Select five random questions
 
     if request.method == 'POST':
         score = 0
@@ -643,11 +649,18 @@ def take_test(request, course_id):
             test_result.save()
 
         # Send email to the user
-        subject = 'Test Result'
-        message = f'Hello {name},\n\nYour score for the {course.CourseName} test is: {score}. Your interview is scheduled for April 25th at 10.30 am in the college office.'
-        from_email = settings.EMAIL_HOST_USER
-        to_email = [name.Email]  # Assuming email is stored in the Email field of the StudentDB model
-        send_mail(subject, message, from_email, to_email, fail_silently=False)
+        if score >= 6:
+            subject = 'Test Result'
+            message = f'Hello {name},\n\nCongratulations! Your score for the {course.CourseName} test is: {score}. You have successfully qualified for the interview scheduled for April 25th at 10:30 am in the college office. Keep up the good work!'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [name.Email]  # Assuming email is stored in the Email field of the StudentDB model
+            send_mail(subject, message, from_email, to_email, fail_silently=False)
+        else:
+            subject = 'Test Result'
+            message = f'Hello {name},\n\nWe appreciate your efforts in taking the {course.CourseName} test. Your score this time was: {score}. Don\'t be discouraged! We believe in your potential. Keep practicing and improving. Better luck next time!'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [name.Email]  # Assuming email is stored in the Email field of the StudentDB model
+            send_mail(subject, message, from_email, to_email, fail_silently=False)
 
         return redirect(course_view)
 
@@ -661,12 +674,14 @@ def take_test(request, course_id):
 def payment_page(request, course_id):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
-    name = CourseenrollmentDB.objects.get(Email=stud_id)
-    # course = CourseDB.objects.get(CourseName=course_id)
+
+    name1 = CourseenrollmentDB.objects.get(Email=stud_id)
+    course = CourseDB.objects.get(CourseId=course_id)
     if request.method == 'POST':
         # Handle payment logic here using the provided payment details
         cardholder_name = request.POST.get('cardholder_name')
         card_number = request.POST.get('card_number')
+        cardtype = request.POST.get('card_type')
         expiration_date = request.POST.get('expiration_date')
         cvv = request.POST.get('cvv')
         amount_received = request.POST.get('payable_amount')
@@ -678,8 +693,8 @@ def payment_page(request, course_id):
             cvv=cvv,
             amount_received=amount_received,
             course=course,
-
-
+            student=name1,
+            card_type=cardtype
         )
 
         # Associate the payment with the order
@@ -687,8 +702,20 @@ def payment_page(request, course_id):
         course.save()
 
         messages.success(request, 'Payment done successfully!')
-        return redirect(studentindx)  # You can redirect or render a success page here
-#hello
+        return redirect('receipt', payment_id=payment.id)  # You can redirect or render a success page here
+
     context = {'course': course,
                'name':name}
     return render(request, 'payment.html', context)
+
+
+def receipt_page(request, payment_id):
+    stud_id = request.session["username"]
+    name = StudentDB.objects.get(Email=stud_id)
+    payment = get_object_or_404(Payment, pk=payment_id)
+
+    # Fetch user information related to the payment
+    user_info = CourseenrollmentDB.objects.get(StudentName=payment.student)
+
+    return render(request, 'receipt.html', {'payment': payment, 'user_info': user_info,'name':name})
+

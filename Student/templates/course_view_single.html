@@ -15,40 +15,44 @@
         <div class="card-body">
             <h4 class="card-title" style="color: black;">Course Details</h4>
             <p class="card-description"></p>
-        <form class="forms-sample" method="post" action="{% url 'submission_form' course=course_data.CourseName %}"    enctype="multipart/form-data">
+        <form class="forms-sample" method="post" action="{% url 'submission_form' course=course_data.CourseId %}"    enctype="multipart/form-data">
             {% csrf_token %}
                 <div class="card-body">
                     <h4 class="card-title"></h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Course name :</label>
-                                <div class="col-sm-9">
-                                    <h5 class="col-form-label">{{course_data.CourseName}}</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Department Name :</label>
-                                <div class="col-sm-9">
-                                    <h5 class="col-form-label">{{course_data.DeptId.DeptName}}</h5>
-                                </div>
-                            </div>
+                                        <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Course name :</label>
+                        <div class="col-sm-9">
+                            <h6 class="fw-bold">{{ course_data.CourseName }}</h6>
                         </div>
                     </div>
-
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Description:</label>
-
-                                <div class="col-sm-9">
-                                    <label class="col-form-label-sm"><h6>{{course_data.Description}}</h6></label>
-                                </div>
-                            </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Department Name :</label>
+                        <div class="col-sm-9">
+                            <h6 class="fw-bold">{{ course_data.DeptId.DeptName }}</h6>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Description:</label>
+                        <div class="col-sm-9">
+                            <p style="font-size:15px;">{{ course_data.Description }}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Duration:</label>
+                        <div class="col-sm-9">
+                            <p style="font-size:15px;">{{ course_data.Duration }}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Total Cost:</label>
+                        <div class="col-sm-9">
+                            <p style="font-size:15px;">{{ course_data.Cost }}</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Admission Fee:</label>
+                        <div class="col-sm-9">
+                            <p style="font-size:15px;">{{ course_data.AdmissionFee }}</p>
                         </div>
                     </div>
 
@@ -70,7 +74,7 @@
             <a href="{% url 'take_test' course_id=course_data.CourseName  %}">
                 <button class="btn btn-primary mr-2 btn-rounded" >Take test</button></a>
 
-            <a href="{% url 'payment_page' course_id=course_data.CourseName  %}">
+            <a href="{% url 'payment_page' course_id=course_data.CourseId  %}">
                 <button class="btn btn-primary mr-2 btn-rounded" >Course Payment</button></a>
 
             <div>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 50px;
+
+            background-color: #f2f2f2;
+        }
+
+        .container {
+
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3, h4, h5, h6,p,a {
+            color:black;
+            margin-top: 0;
+        }
+
+        .invoice-header, .invoice-footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        strong,div,span{
+        color:black;
+            }
+        .invoice-wrapper {
+            padding: 20px;
+            border-top: 2px solid #ddd;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .invoice-details {
+            margin-bottom: 20px;
+        }
+
+        .invoice-details span {
+            font-weight: bold;
+        }
+
+        table {
+            color:black;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th:last-child, td:last-child {
+            text-align: right;
+        }
+
+        .total {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .extra-notes {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .print-receipt {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .print-receipt a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .print-receipt a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="invoice-header">
+        <h1>Payment Receipt</h1>
+    </div>
+
+    <div class="invoice-wrapper">
+        <div class="invoice-details">
+            <p><span>Hi </span><strong>{{ user_info.StudentName }}</strong>,</p>
+            <p>This is the receipt for a payment of <strong>{{ payment.amount_received }}</strong> RS for your course {{ payment.course }}</p>
+        </div>
+<div class="invoice-details">
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <p>Payment No.</p>
+            <strong>{{ payment.id }}</strong>
+        </div>
+        <div>
+            <p>Payment Date</p>
+            <strong>{{ payment.timestamp }}</strong>
+        </div>
+    </div>
+</div>
+<hr style="margin-top: 20px; margin-bottom: 20px; border-top: 1px solid #ddd;">
+<div class="invoice-details">
+    <div class="address-section" style="display: flex; justify-content: space-between;">
+        <div class="address-info">
+            <span>From:</span><br>
+            <p>{{ user_info.Address }}</p>
+            <p><a>{{ user_info.Email }}</a></p>
+        </div>
+        <div class="address-info">
+            <span>Payment To:</span><br>
+            <p>Christ College Irinjalakkuda</p>
+            <p><a>juanfer@gmail.com</a></p>
+        </div>
+    </div>
+</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Admission fee</td>
+                    <td>1</td>
+                    <td>{{ payment.amount_received }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="total">
+            <div class="extra-notes">
+
+            </div>
+            <div>Total: <span>{{ payment.amount_received }}</span></div>
+        </div>
+    </div>
+
+
+
+    <div class="footer">
+        Copyright © 2024. christ college irinjalakkuda
+    </div>
+</div>
+    <div class="print-receipt">
+        <a id="printButton" onclick="printPage()"><i class="fa fa-print"></i> Print</a>
+    </div>
+
+        <script>
+            function printPage() {
+                var printButton = document.getElementById("printButton");
+                printButton.style.pointerEvents = "none";
+                window.print();
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</body>
+</html>

@@ -54,5 +54,6 @@ urlpatterns = [
     path('course_submission/', views.course_submission, name="course_submission"),
     path('take-test/<str:course_id>/', views.take_test, name='take_test'),
     path('payment_page/<str:course_id>/', views.payment_page, name='payment_page'),
+    path('receipt/<int:payment_id>/', views.receipt_page, name='receipt'),
 
 ]

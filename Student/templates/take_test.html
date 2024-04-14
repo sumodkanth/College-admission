@@ -36,7 +36,7 @@
 <body>
     <div class="card">
         <div class="card-body">
-            <h3 class="card-title" style="color: black;">{{ course.CourseName }} Test</h3>
+            <h3 class="card-title" style="color: black;">{{ course.CourseName }} TEST</h3>
             <form id="testForm" method="post"  action="{% url 'take_test' course_id=course.CourseName %}">
                 {% csrf_token %}
 
@@ -50,7 +50,7 @@
 
                                 <input class="choice" type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">{{ choice.choice_text }}<br>
 
-                            {% endfor %}
+                            {% endfor %}<br>
 
                     </li>
                       {% endfor %}
@@ -58,7 +58,7 @@
 
 
 
-                <br>
+
                 <div class="col">
                     <input class="btn btn-info mt-4 mb-4 mx-auto" type="submit" value="Submit">
                 </div>
@@ -68,7 +68,7 @@
     </div>
     <script>
         // Countdown timer
-        var timeLeft = 30; //  minutes in seconds
+        var timeLeft = 600; //  minutes in seconds
         var timerInterval;
 
         function startTimer() {

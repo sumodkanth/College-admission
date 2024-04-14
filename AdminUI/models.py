@@ -17,6 +17,9 @@ class CourseDB(models.Model):
     CourseName = models.CharField(max_length=20)
     DeptId = models.ForeignKey(DepartmentDB, on_delete=models.CASCADE,null=True,blank=True)
     Description = models.TextField()
+    Duration = models.CharField(max_length=50, null=True, blank=True)
+    Cost = models.CharField(max_length=20, null=True, blank=True)
+    AdmissionFee = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return self.CourseName
@@ -140,12 +143,12 @@ class TrainingDB(models.Model):
     newsId = models.ForeignKey(newsDB, on_delete=models.CASCADE)
     # StudentId = models.ForeignKey(StudentDB, on_delete=models.CASCADE)
     Email = models.ForeignKey(StudentDB, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"Status: {self.StudentId} "
+
 
 class CourseenrollmentDB(models.Model):
     StudentName = models.CharField(max_length=100)
     CourseId = models.ForeignKey(CourseDB, on_delete=models.CASCADE)
+
     Religion = models.CharField(max_length=100)
     District = models.CharField(max_length=100)
     DateOfBirth = models.DateField()
@@ -191,14 +194,15 @@ class TestResult(models.Model):
 
 
 class Payment(models.Model):
-    student = models.ForeignKey(CourseenrollmentDB, on_delete=models.CASCADE)
+    student = models.ForeignKey(CourseenrollmentDB, on_delete=models.CASCADE, null=True, blank=True)
     course = models.ForeignKey(CourseDB, on_delete=models.CASCADE)
     amount_received = models.DecimalField(max_digits=10, decimal_places=2)
     cardholder_name = models.CharField(max_length=100)
+    card_type = models.CharField(max_length=100, null=True, blank=True)
     card_number = models.CharField(max_length=16)
     expiration_date = models.CharField(max_length=7)  # You might want to store this as a DateField if you need to perform date-related operations
     cvv = models.CharField(max_length=4)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.student.name} - {self.course.name} - {self.amount_received}"
+        return f"  {self.course.CourseName} - {self.amount_received} Paid"
