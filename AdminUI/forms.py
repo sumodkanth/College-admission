@@ -15,3 +15,5 @@ class ChoiceForm(forms.ModelForm):
     class Meta:
         model = Choice
         fields = ['choice_text', 'is_correct']
+
+

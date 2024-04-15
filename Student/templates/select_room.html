@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <div class="card" style="background-color: #afbbc4;">
+                  <div class="card-body">
+                    <h4 style="color:black;">Select Room Type</h4>
+                    <form action="{% url 'available_rooms' %}" method="GET">
+                        <label for="room_type">Room Type:</label>
+                        <select id="room_type" name="room_type" class="form-control" style="background-color: gray; border: 1px solid black; color: white;">
+                            <option value="single">Single</option>
+                            <option value="shared">Shared</option>
+                        </select>
+                        <br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+
+
+
+
+                  </div>
+
+                </div>
+</body>
+</html>
+{% endblock %}

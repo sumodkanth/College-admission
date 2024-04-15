@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DepartmentDB, CourseDB, StudentDB, FacultyEnrollmentDB, JobsDB, InterviewStep, JobApplications, newsDB, newsDB2, placed_studdb, Marquee, JobStatus2,TrainingDB,CourseenrollmentDB,MultipleChoiceQuestion,Choice,TestResult, Payment
+from .models import DepartmentDB, CourseDB, StudentDB, FacultyEnrollmentDB, JobsDB, InterviewStep, JobApplications, newsDB, newsDB2, placed_studdb, Marquee, JobStatus2,TrainingDB,CourseenrollmentDB,MultipleChoiceQuestion,Choice,TestResult, Payment,HostelRoom,BusBooking
 
 # Register your models here.
 admin.site.register(DepartmentDB)
@@ -20,5 +20,7 @@ admin.site.register(MultipleChoiceQuestion)
 admin.site.register(Choice)
 admin.site.register(TestResult)
 admin.site.register(Payment)
+admin.site.register(HostelRoom)
+admin.site.register(BusBooking)
 
 

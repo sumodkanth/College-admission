@@ -6,8 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from AdminUI.models import StudentDB, DepartmentDB, CourseDB, JobsDB, JobApplications, newsDB, placed_studdb, Marquee, \
-    newsDB2, InterviewStep, JobStatus2,TrainingDB,FacultyEnrollmentDB,CourseenrollmentDB, MultipleChoiceQuestion, Choice, TestResult,Payment
-from .forms import SelectionStatusForm
+    newsDB2, InterviewStep, JobStatus2,TrainingDB,FacultyEnrollmentDB,CourseenrollmentDB, MultipleChoiceQuestion, Choice, TestResult,Payment,HostelRoom, Booking,BusBooking
+from .forms import SelectionStatusForm,BookingForm
 from django.contrib.auth.decorators import login_required
 import FacultyUI.views
 import AdminUI.views
@@ -96,12 +96,13 @@ def main_page(request):
 
 def recruiter(request):
     stud_id = request.session.get("username")
+    placed_posts = placed_studdb.objects.order_by('p_id')[0:30]
     job_data = JobsDB.objects.all()
     if stud_id:
         name = StudentDB.objects.get(Email=stud_id)
-        return render(request, "1_recruiter.html", {"name": name, 'job_data': job_data})
+        return render(request, "1_recruiter.html", {"name": name, 'job_data': job_data,'placed_posts':placed_posts})
     else:
-        return render(request, "1_recruiter.html", {'job_data': job_data})
+        return render(request, "1_recruiter.html", {'job_data': job_data,'placed_posts':placed_posts})
 
 
 def placement(request):
@@ -286,19 +287,38 @@ def jobs_view_single(request, job_id):
         messages.error(request, 'Please log in to view this page.')
         return render(request, "main_login.html")
 
+
 def course_view_single(request, course_id):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        name =StudentDB.objects.get(Email=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         course_data = CourseDB.objects.get(CourseId=course_id)
-        applied = CourseenrollmentDB.objects.filter(Email=stud_id, CourseId=course_id).exists()
 
-        return render(request, "course_view_single.html",
-                      {'course_data': course_data, 'name':name,'applied':applied})
+        applied = CourseenrollmentDB.objects.filter(Email=stud_id, CourseId=course_id).exists()
+        course_data2 = CourseenrollmentDB.objects.filter(CourseId=course_id, Email=stud_id).first()
+
+
+        payed = Payment.objects.filter(student=course_data2,course=course_id).exists()
+
+
+
+
+        try:
+            score = TestResult.objects.get(StudentName=name, course=course_data)
+        except TestResult.DoesNotExist:
+            score = None
+
+
+        return render(request, "course_view_single.html", {
+            'course_data': course_data,
+            'name': name,
+            'applied': applied,
+            'score': score,
+            'payed': payed
+        })
     else:
         messages.error(request, 'Please log in to view this page.')
         return render(request, "main_login.html")
-
 def job_apply(request, job_id):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
@@ -613,7 +633,7 @@ def course_submission(request):
                         DateOfBirth=dob, Gender=gender, Email=email, ContactNo=contacts, Address=address,
                         GuardianName=gname, Image=im,Plustwo=plustwo, SSLC=sslc, Plustwomark= plustwomark, SSLCMark= sslcmark)
         obj.save()
-        return redirect(course_view)
+        return redirect("take_test",course_id=course_data1.CourseName)
 
     # views.py
 
@@ -626,7 +646,7 @@ def take_test(request, course_id):
     course = CourseDB.objects.get(CourseName=course_id)
     questions = list(MultipleChoiceQuestion.objects.filter(course=course))
     random.shuffle(questions)
-    questions = questions[:10]  # Select five random questions
+    questions = questions[:15]  # Select five random questions
 
     if request.method == 'POST':
         score = 0
@@ -649,7 +669,7 @@ def take_test(request, course_id):
             test_result.save()
 
         # Send email to the user
-        if score >= 6:
+        if score >= 12:
             subject = 'Test Result'
             message = f'Hello {name},\n\nCongratulations! Your score for the {course.CourseName} test is: {score}. You have successfully qualified for the interview scheduled for April 25th at 10:30 am in the college office. Keep up the good work!'
             from_email = settings.EMAIL_HOST_USER
@@ -719,3 +739,156 @@ def receipt_page(request, payment_id):
 
     return render(request, 'receipt.html', {'payment': payment, 'user_info': user_info,'name':name})
 
+def selectroom(request):
+    stud_id = request.session["username"]
+    name = StudentDB.objects.get(Email=stud_id)
+    return render(request,'select_room.html',{'name':name})
+
+def available_rooms(request):
+    stud_id = request.session["username"]
+    name = StudentDB.objects.get(Email=stud_id)
+    room_type = request.GET.get('room_type')
+    available_rooms = HostelRoom.objects.filter(room_type=room_type, is_available=True)
+    return render(request, 'available_rooms.html', {'available_rooms': available_rooms,'name':name})
+
+
+def book_room(request, room_id):
+    room = HostelRoom.objects.get(pk=room_id)
+
+    # Update room availability
+    room.is_available = False
+    room.save()
+
+    return redirect('available_rooms')
+
+
+def make_payment(request, room_id):
+    stud_id = request.session["username"]
+    name = StudentDB.objects.get(Email=stud_id)
+    room = HostelRoom.objects.get(pk=room_id)
+    name1 = CourseenrollmentDB.objects.get(Email=stud_id)
+    if request.method == 'POST':
+        # Retrieve form data
+        cardholder_name = request.POST['cardholder_name']
+        card_type = request.POST['card_type']
+        card_number = request.POST['card_number']
+        expiration_date = request.POST['expiration_date']
+        cvv = request.POST['cvv']
+        amount_received = room.room_rent  # Assuming the room rent is the amount to be paid
+
+        # Create Payment instance
+        payment = Payment.objects.create(
+            rooms=room,
+            amount_received=amount_received,
+            cardholder_name=cardholder_name,
+            card_type=card_type,
+            card_number=card_number,
+            expiration_date=expiration_date,
+            cvv=cvv,
+            student=name1
+        )
+
+        # Update room availability
+        room.is_available = False
+        room.save()
+        messages.success(request, 'Payment done successfully!')
+        # Redirect to a success page or do further processing
+        return redirect('receipt2', payment_id=payment.id)  # Redirect to a success page
+
+    return render(request, 'payment_form.html', {'room': room,'name':name})
+
+def receipt_page2(request, payment_id):
+    stud_id = request.session["username"]
+    name = StudentDB.objects.get(Email=stud_id)
+    payment = get_object_or_404(Payment, pk=payment_id)
+
+    # Fetch user information related to the payment
+    user_info = CourseenrollmentDB.objects.get(StudentName=payment.student)
+
+    return render(request, 'receipt2.html', {'payment': payment, 'user_info': user_info,'name':name})
+
+def bus_booking(request):
+    if 'username' in request.session:
+        stud_id = request.session["username"]
+
+        name = StudentDB.objects.get(Email=stud_id)
+
+        return render(request, "busbooking.html",{'name':name})
+    else:
+        messages.error(request, 'Please log in to view this page.')
+        return redirect('main_login')
+
+
+def booking_submission(request):
+    stud_id = request.session["username"]
+    if request.method == "POST":
+
+        sname = request.POST.get("student_name")
+        btime = request.POST.get("bustime")
+        pickloc = request.POST.get("picklocation")
+        droploc = request.POST.get("droplocation")
+        busfair = request.POST.get("busfee")
+        user_info = StudentDB.objects.get(Email=stud_id)
+
+
+
+
+
+
+
+        booking  = BusBooking(student=sname,  pickup_location=pickloc, destination=droploc,bus_timing=btime,
+                        bus_fair=busfair,student_id=user_info)
+        booking.save()
+
+        return redirect(make_payments)
+
+def make_payments(request):
+    stud_id = request.session["username"]
+    name = StudentDB.objects.get(Email=stud_id)
+    bus = BusBooking.objects.get(student_id=name)
+    name1 = CourseenrollmentDB.objects.get(Email=stud_id)
+    # booking=name1.id
+
+
+    if request.method == "POST":
+
+        # Retrieve form data
+        cardholder_name = request.POST['cardholder_name']
+        card_type = request.POST['card_type']
+        card_number = request.POST['card_number']
+        expiration_date = request.POST['expiration_date']
+        cvv = request.POST['cvv']
+        amount_received = bus.bus_fair # Assuming the room rent is the amount to be paid
+
+        # Create Payment instance
+        payment = Payment.objects.create(
+            bus=bus,
+            amount_received=amount_received,
+            cardholder_name=cardholder_name,
+            card_type=card_type,
+            card_number=card_number,
+            expiration_date=expiration_date,
+            cvv=cvv,
+            student=name1
+        )
+
+        bus.payment = payment
+
+        payment.save()
+
+        messages.success(request, 'Payment done successfully!')
+        # Redirect to a success page or do further processing
+        return redirect('bus_receipt', payment_id=payment.id)  # Redirect to a success page
+
+    return render(request, 'bus_payment_form.html', {'booking': bus, 'name': name})
+
+
+def bus_receipt(request, payment_id):
+    stud_id = request.session["username"]
+    name = StudentDB.objects.get(Email=stud_id)
+    payment = get_object_or_404(Payment, pk=payment_id)
+
+    # Fetch user information related to the payment
+    user_info = CourseenrollmentDB.objects.get(StudentName=payment.student)
+
+    return render(request, 'bus_receipt.html', {'payment': payment, 'user_info': user_info,'name':name})

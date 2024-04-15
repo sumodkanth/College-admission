@@ -56,4 +56,13 @@ urlpatterns = [
     path('payment_page/<str:course_id>/', views.payment_page, name='payment_page'),
     path('receipt/<int:payment_id>/', views.receipt_page, name='receipt'),
 
+    path('select-room/', views.selectroom, name='select_room'),
+    path('available-rooms/', views.available_rooms, name='available_rooms'),
+    path('book_room/<int:room_id>/', views.book_room, name='book_room'),
+    path('make_payment/<int:room_id>/', views.make_payment, name='make_payment'),
+    path('receipt2/<int:payment_id>/', views.receipt_page2, name='receipt2'),
+    path('bus_booking/', views.bus_booking, name='bus_booking'),
+    path('booking_submission/', views.booking_submission, name='booking_submission'),
+    path('make_payments/', views.make_payments, name='make_payments'),
+    path('bus_receipt/<int:payment_id>/', views.bus_receipt, name='bus_receipt'),
 ]

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Submission Form</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div class="card-body" style="background-color: gray;">
+    <h4 class="card-title">Bus booking form</h4><br>
+    <form  class="forms-sample" method="post" action="{% url 'booking_submission'%}"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="student_name" class="form-label" style="color: white;">Student Name:</label>
+            <input type="text" class="form-control" id="student_name" style="background-color: gray; border: 1px solid black; color: white;" name="student_name" required>
+        </div>
+
+
+        <div class="form-group">
+            <label >Bus timing</label>
+                <select name="bustime" class="form-control" style="background-color: gray; border: 1px solid black; color: white;" >
+                    <option value="">Select time</option>
+                    <option value="7:00am">7:00am</option>
+                    <option value="8:30am">8:30am</option>
+                </select>
+
+        </div>
+        <div class="form-group">
+            <label for="picklocation" class="form-label" >Pickup location:</label>
+            <input type="text" class="form-control" id="picklocation" style="background-color: gray; border: 1px solid black; color: white;" name="picklocation" required>
+        </div>
+        <div class="form-group">
+            <label for="droplocation" class="form-label" >Drop location:</label>
+            <input type="text" class="form-control" id="droplocation" style="background-color: gray; border: 1px solid black; color: white;" name="droplocation" required>
+        </div>
+
+
+
+        <div class="form-group">
+            <label >Bus Fair</label><div class="border rounded-3  text-white py-2 px-3">
+            <input type="hidden" class="form-control"  name="busfee" style="background-color: gray; border: 1px solid black; color: white;" value="1500" required>1500 rs</div>
+          </div>
+
+
+
+
+
+
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock %}

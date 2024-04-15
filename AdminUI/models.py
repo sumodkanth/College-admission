@@ -190,12 +190,14 @@ class TestResult(models.Model):
     course = models.ForeignKey(CourseDB, on_delete=models.CASCADE)
     score = models.IntegerField()
     def __str__(self):
-        return f"Score of {self.StudentName} in {self.course}"
+        return f"{self.score} "
 
 
 class Payment(models.Model):
     student = models.ForeignKey(CourseenrollmentDB, on_delete=models.CASCADE, null=True, blank=True)
-    course = models.ForeignKey(CourseDB, on_delete=models.CASCADE)
+    course = models.ForeignKey(CourseDB, on_delete=models.CASCADE,null=True, blank=True)
+    rooms = models.ForeignKey('HostelRoom', on_delete=models.CASCADE,null=True, blank=True)
+    bus = models.ForeignKey('BusBooking', on_delete=models.CASCADE,null=True, blank=True)
     amount_received = models.DecimalField(max_digits=10, decimal_places=2)
     cardholder_name = models.CharField(max_length=100)
     card_type = models.CharField(max_length=100, null=True, blank=True)
@@ -205,4 +207,44 @@ class Payment(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"  {self.course.CourseName} - {self.amount_received} Paid"
+        return f" {self.amount_received} Paid"
+
+class HostelRoom(models.Model):
+    ROOM_TYPES = (
+        ('single', 'Single'),
+        ('shared', 'Shared'),
+    )
+
+    room_number = models.CharField(max_length=50)
+    room_type = models.CharField(max_length=50, choices=ROOM_TYPES)
+    is_available = models.BooleanField(default=True)
+    room_rent = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"  {self.room_type} room number {self.room_number}"
+
+
+class Booking(models.Model):
+    user = models.ForeignKey(CourseenrollmentDB, on_delete=models.CASCADE, null=True, blank=True)
+    room = models.ForeignKey(HostelRoom, on_delete=models.CASCADE, null=True, blank=True)
+    booking_date = models.DateField()
+
+    def save(self, *args, **kwargs):
+        self.room.is_available = False  # Set room availability to False when booked
+        self.room.save()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.room.room_number}"
+
+class BusBooking(models.Model):
+    student_id = models.ForeignKey(StudentDB, on_delete=models.CASCADE, null=True, blank=True)
+    student = models.CharField(max_length=100)
+
+    pickup_location = models.CharField(max_length=200)
+    destination = models.CharField(max_length=200)
+    bus_timing = models.CharField(max_length=20)
+    bus_fair = models.CharField(max_length=20)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.student_id} "

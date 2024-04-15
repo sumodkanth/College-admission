@@ -71,12 +71,26 @@
                 </div>
             </form>
 
-            <a href="{% url 'take_test' course_id=course_data.CourseName  %}">
-                <button class="btn btn-primary mr-2 btn-rounded" >Take test</button></a>
+<!--                <a href="{% url 'take_test' course_id=course_data.CourseName  %}">-->
+<!--                <button class="btn btn-primary mr-2 btn-rounded" >Take test</button></a>-->
 
-            <a href="{% url 'payment_page' course_id=course_data.CourseId  %}">
-                <button class="btn btn-primary mr-2 btn-rounded" >Course Payment</button></a>
+                    {% if score.score > 12 %}
+                        <button class="btn btn-success mr-2 btn-rounded" disabled>Passed</button>
+                        {% if not payed %}
+                            <a href="{% url 'payment_page' course_id=course_data.CourseId %}">
+                                <button class="btn btn-primary mr-2 btn-rounded">Course Payment</button>
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <button class="btn btn-primary mr-2 btn-rounded" disabled>Not Passed</button>
+                    {% endif %}
+{% if payed %}
+            <a href="{% url 'select_room'   %}">
+                <button class="btn btn-primary mr-2 btn-rounded" >select room</button></a>
 
+            <a href="{% url 'bus_booking'   %}">
+                <button class="btn btn-primary mr-2 btn-rounded" >bus booking</button></a>
+{% endif %}
             <div>
 
             </div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Rooms</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="card" style="background-color: gray;">
+  <div class="card-body">
+    <h4 class="card-title" style="color: white;">Available Rooms</h4>
+    <div class="table-responsive">
+    <table  class="table table-striped" style="color: black;">
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Room Type</th>
+                <th>Room Rent</th>
+                <th>Action</th> <!-- New column for booking action -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in available_rooms %}
+            <!-- Table body rows -->
+            <tr>
+                <td>{{ room.room_number }}</td>
+                <td>{{ room.get_room_type_display }}</td>
+                <td>{{ room.room_rent }}</td>
+                <td>
+                    <a href="{% url 'make_payment' room.id %}">pay</a> <!-- Link to book room -->
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No available rooms.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}
