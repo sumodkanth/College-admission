@@ -55,6 +55,20 @@
                             <p style="font-size:15px;">{{ course_data.AdmissionFee }}</p>
                         </div>
                     </div>
+                                        <!-- Static instructions for MCQ test -->
+
+                    <div class="row mb-3" style="background-color: #f04035; padding: 20px; border-radius: 10px;">
+                        <h4 style="color: white; text-align: center;">*NOTE</h4>
+                        <hr style="border-color: white;">
+                        <div class="col-sm-12">
+                            <p style="color: white; font-size: 16px; text-align: left;">
+                                <strong>Instructions for MCQ Test:</strong><br>
+                                This is to inform you that there will be an MCQ test conducted after applying for the course to assess your knowledge of the course you applied for.
+                                There will be 15 questions asked, and each question carries 1 mark. You need to score 12 marks to pass this test. The duration to complete this test will be 1 minute.
+                                Passed candidates will receive an email regarding their scheduled date for the interview to complete the process.
+                            </p>
+                        </div>
+                    </div>
 
                     {% if applied %}
                         <button class="btn btn-primary mr-2 btn-rounded" disabled>Applied</button>
@@ -84,16 +98,14 @@
                     {% else %}
                         <button class="btn btn-primary mr-2 btn-rounded" disabled>Not Passed</button>
                     {% endif %}
-{% if payed %}
-            <a href="{% url 'select_room'   %}">
-                <button class="btn btn-primary mr-2 btn-rounded" >select room</button></a>
+                    {% if payed %}
+                                <a href="{% url 'select_room'   %}">
+                                    <button class="btn btn-primary mr-2 btn-rounded" >select room</button></a>
 
-            <a href="{% url 'bus_booking'   %}">
-                <button class="btn btn-primary mr-2 btn-rounded" >bus booking</button></a>
-{% endif %}
-            <div>
+                                <a href="{% url 'bus_booking'   %}">
+                                    <button class="btn btn-primary mr-2 btn-rounded" >bus booking</button></a>
+                    {% endif %}
 
-            </div>
         </div>
     </div>
 </div>
