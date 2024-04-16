@@ -11,7 +11,7 @@
 <body>
 <div class="card">
                   <div class="card-body"  style="background-color: #afbbc4;">
-                    <h4 class="card-title" style="color: black;">LIST OF STUDENT STATUS IN {{course_name}}</h4>
+                    <h4 class="card-title" style="color: black;">LIST OF STUDENTS APPLIED IN {{course_name}}</h4>
                       <div class="table-responsive">
                       <table class="table table-striped">
                             <thead>
@@ -29,7 +29,7 @@
                             <tbody>
                             {% for status in job_statuses %}
                             <tr>
-                                <td>{{ status.Student }}</td>
+                                <td>{{ status.StudentName }}</td>
                                 <td>{{ status.job.Title }}</td>
                                 <td>{{ status.job.Company }}</td>
                                 <td>{{ status.status_text }}</td>

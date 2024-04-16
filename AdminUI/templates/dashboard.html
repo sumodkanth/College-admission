@@ -32,26 +32,26 @@
                 </div><br>
 
 
-                  <div class="card" style="background-color: #afbbc4;">
+<!--                  <div class="card" style="background-color: #afbbc4;">-->
 
-                      <div class="card-body">
-                    <h4 class="card-title" style="color:black;">LIST OF STUDENTS APPLIED FOR TRAINING</h4>
-                      <form method="post" action="{% url 'search_trainings' %}">
-                          {% csrf_token%}
-                          <div class="form-group">
-                        <label>Select Course</label>
-                        <select class="form-control"  name="training" style="background-color: gray; border: 1px solid black; color: white;">
-                                {% for i in data2 %}
-                                <option value="{{i.newsId.news_Title}}" style="height:60px;">{{i.newsId.news_Title}}</option>
-                                {% endfor %}
-                            </select>
-                      </div>
+<!--                      <div class="card-body">-->
+<!--                    <h4 class="card-title" style="color:black;">LIST OF STUDENTS APPLIED FOR TRAINING</h4>-->
+<!--                      <form method="post" action="{% url 'search_trainings' %}">-->
+<!--                          {% csrf_token%}-->
+<!--                          <div class="form-group">-->
+<!--                        <label>Select Course</label>-->
+<!--                        <select class="form-control"  name="training" style="background-color: gray; border: 1px solid black; color: white;">-->
+<!--                                {% for i in data2 %}-->
+<!--                                <option value="{{i.newsId.news_Title}}" style="height:60px;">{{i.newsId.news_Title}}</option>-->
+<!--                                {% endfor %}-->
+<!--                            </select>-->
+<!--                      </div>-->
 
-                      <button type="submit" class="btn btn-primary mr-2">Search</button>
-                      </form>
+<!--                      <button type="submit" class="btn btn-primary mr-2">Search</button>-->
+<!--                      </form>-->
 
-                  </div>
-                  </div>
+<!--                  </div>-->
+<!--                  </div>-->
 {% else %}
 <p style="color:black; font-size:30px;">Please Login to Access this page</p>
 {% endif %}

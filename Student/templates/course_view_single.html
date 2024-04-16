@@ -10,16 +10,14 @@
 </head>
 <body>
 {% block content %}
-<div class="col-12 grid-margin stretch-card">
+<div class="col-13 grid-margin stretch-card">
     <div class="card" style="background-color: gray;">
         <div class="card-body">
             <h4 class="card-title" style="color: black;">Course Details</h4>
-            <p class="card-description"></p>
-        <form class="forms-sample" method="post" action="{% url 'submission_form' course=course_data.CourseId %}"    enctype="multipart/form-data">
-            {% csrf_token %}
+            <form class="forms-sample" method="post" action="{% url 'submission_form' course=course_data.CourseId %}" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="card-body">
-                    <h4 class="card-title"></h4>
-                                        <div class="row mb-3">
+                    <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Course name :</label>
                         <div class="col-sm-9">
                             <h6 class="fw-bold">{{ course_data.CourseName }}</h6>
@@ -55,50 +53,45 @@
                             <p style="font-size:15px;">{{ course_data.AdmissionFee }}</p>
                         </div>
                     </div>
-                                        <!-- Static instructions for MCQ test -->
-
-
-
                     {% if applied %}
-                        <button class="btn btn-primary mr-2 btn-rounded" disabled>Applied</button>
-
+                    <button class="btn btn-success mr-2 btn-rounded" disabled>Applied</button>
                     {% else %}
-
-
                     <button class="btn btn-primary mr-2 btn-rounded">Apply course</button>
-
                     {% endif %}
-
-
-
                 </div>
             </form>
-
-<!--                <a href="{% url 'take_test' course_id=course_data.CourseName  %}">-->
-<!--                <button class="btn btn-primary mr-2 btn-rounded" >Take test</button></a>-->
-
-                    {% if score.score > 12 %}
-                        <button class="btn btn-success mr-2 btn-rounded" disabled>Passed</button>
-                        {% if not payed %}
-                            <a href="{% url 'payment_page' course_id=course_data.CourseId %}">
-                                <button class="btn btn-primary mr-2 btn-rounded">Course Payment</button>
-                            </a>
-                        {% endif %}
-                    {% else %}
-                        <button class="btn btn-primary mr-2 btn-rounded" disabled>Not Passed</button>
-                    {% endif %}
-                    {% if payed %}
-                                <a href="{% url 'select_room'   %}">
-                                    <button class="btn btn-primary mr-2 btn-rounded" >select room</button></a>
-
-                                <a href="{% url 'bus_booking'   %}">
-                                    <button class="btn btn-primary mr-2 btn-rounded" >bus booking</button></a>
-                    {% endif %}
-
+            <div style="padding-top:0px;">
+                {% if score.score > 12 %}
+                <button class="btn btn-success mr-2 btn-rounded" disabled>Passed</button>
+                {% if not payed %}
+                <a href="{% url 'payment_page' course_id=course_data.CourseId %}">
+                    <button class="btn btn-danger mr-2 btn-rounded">Course Payment</button>
+                </a>
+                {% else %}
+                <button class="btn btn-success mr-2 btn-rounded" disabled>Course payment completed</button>
+                {% endif %}
+                {% else %}
+                <!-- <button class="btn btn-primary mr-2 btn-rounded" disabled>Not Passed</button> -->
+                {% endif %}
+                {% if payed %}
+                {% if not room %}
+                <a href="{% url 'select_room' %}">
+                    <button class="btn btn-primary mr-2 btn-rounded">Select room</button>
+                </a>
+                {% endif %}
+                {% if not bus %}
+                <a href="{% url 'bus_booking' %}">
+                    <button class="btn btn-primary mr-2 btn-rounded">Bus booking</button>
+                </a>
+                {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
-                    <div class="row mb-3" style="background-color: #f04035; padding: 15px; border-radius: 10px;">
+
+
+                    <div class="row mb-3" style="background-color: #f04035;  padding: 15px; border-radius: 10px;">
                         <h4 style="color: white; text-align: center;">*NOTE</h4>
                         <hr style="border-color: white;">
                         <div class="col-sm-12">

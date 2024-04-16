@@ -293,11 +293,15 @@ def course_view_single(request, course_id):
         name = StudentDB.objects.get(Email=stud_id)
         course_data = CourseDB.objects.get(CourseId=course_id)
 
-        applied = CourseenrollmentDB.objects.filter(Email=stud_id, CourseId=course_id).exists()
-        course_data2 = CourseenrollmentDB.objects.filter(CourseId=course_id, Email=stud_id).first()
 
+        applied = CourseenrollmentDB.objects.filter(Email=stud_id).exists()
+        course_data2 = CourseenrollmentDB.objects.filter(CourseId=course_id, Email=stud_id).first()
+        # booking_id = Booking.objects.get(user=applied)
+        # bus_id = BusBooking.objects.all()
 
         payed = Payment.objects.filter(student=course_data2,course=course_id).exists()
+        # payed2 = Payment.objects.filter(student=course_data2,rooms=booking_id).exists()
+        # payed3 = Payment.objects.filter(student=course_data2,bus=bus_id).exists()
 
 
 
@@ -313,11 +317,14 @@ def course_view_single(request, course_id):
             'name': name,
             'applied': applied,
             'score': score,
-            'payed': payed
+            'payed': payed,
+
         })
     else:
         messages.error(request, 'Please log in to view this page.')
         return render(request, "main_login.html")
+
+
 def job_apply(request, job_id):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)

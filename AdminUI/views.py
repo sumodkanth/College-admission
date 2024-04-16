@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from AdminUI.models import DepartmentDB, CourseDB, StudentDB, FacultyEnrollmentDB, JobsDB, JobApplications, newsDB, \
-    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice
+    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice,CourseenrollmentDB
 from FacultyUI.models import FacultyDB
 from .forms import MarqueeForm
 import pandas as pd
@@ -712,7 +712,7 @@ def search_studentstatus(request):
         name = FacultyEnrollmentDB.objects.get(Email=fac_name)
 
         # Filter job statuses based on the selected course
-        job_statuses = JobStatus2.objects.filter(course__CourseName=course_name)
+        job_statuses = CourseenrollmentDB.objects.filter(CourseId__CourseName=course_name)
 
         context = {
             'course_name': course_name,
