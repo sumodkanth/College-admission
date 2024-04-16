@@ -103,61 +103,61 @@
           <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
           </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{% url 'statussearch' %}">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-account-multiple"></i>
-              </span>
-              <span class="menu-title">Students</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_student' %}" >Add Students</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_student2' %}">Add Students using Excel</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'view_students' %}">View Students</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item menu-items">
-              <a class="nav-link" data-toggle="collapse" href="#ui-faculty" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-icon">
-                  <i class="mdi mdi-account-star"></i>
-                </span>
-                <span class="menu-title">Faculties</span>
-                <i class="menu-arrow"></i>
-              </a>
-            <div class="collapse" id="ui-faculty">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_faculty' %}">Add Faculty</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'view_faculties' %}">View Faculties</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item menu-items">
-              <a class="nav-link" data-toggle="collapse" href="#ui-courses" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-icon">
-                  <i class="mdi mdi-book-multiple"></i>
-                </span>
-                <span class="menu-title">Courses</span>
-                <i class="menu-arrow"></i>
-              </a>
-            <div class="collapse" id="ui-courses">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_course' %}">Add Course</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'view_course' %}">View Course</a></li>
-<!--                <li class="nav-item"> <a class="nav-link" href="{% static 'pages/ui-features/typography.html' %}">Typography</a></li>-->
-              </ul>
-            </div>
-          </li>
+<!--          <li class="nav-item menu-items">-->
+<!--            <a class="nav-link" href="{% url 'statussearch' %}">-->
+<!--              <span class="menu-icon">-->
+<!--                <i class="mdi mdi-speedometer"></i>-->
+<!--              </span>-->
+<!--              <span class="menu-title">Dashboard</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item menu-items">-->
+<!--            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">-->
+<!--              <span class="menu-icon">-->
+<!--                <i class="mdi mdi-account-multiple"></i>-->
+<!--              </span>-->
+<!--              <span class="menu-title">Students</span>-->
+<!--              <i class="menu-arrow"></i>-->
+<!--            </a>-->
+<!--            <div class="collapse" id="ui-basic">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_student' %}" >Add Students</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_student2' %}">Add Students using Excel</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'view_students' %}">View Students</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li class="nav-item menu-items">-->
+<!--              <a class="nav-link" data-toggle="collapse" href="#ui-faculty" aria-expanded="false" aria-controls="ui-basic">-->
+<!--                <span class="menu-icon">-->
+<!--                  <i class="mdi mdi-account-star"></i>-->
+<!--                </span>-->
+<!--                <span class="menu-title">Faculties</span>-->
+<!--                <i class="menu-arrow"></i>-->
+<!--              </a>-->
+<!--            <div class="collapse" id="ui-faculty">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_faculty' %}">Add Faculty</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'view_faculties' %}">View Faculties</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li class="nav-item menu-items">-->
+<!--              <a class="nav-link" data-toggle="collapse" href="#ui-courses" aria-expanded="false" aria-controls="ui-basic">-->
+<!--                <span class="menu-icon">-->
+<!--                  <i class="mdi mdi-book-multiple"></i>-->
+<!--                </span>-->
+<!--                <span class="menu-title">Courses</span>-->
+<!--                <i class="menu-arrow"></i>-->
+<!--              </a>-->
+<!--            <div class="collapse" id="ui-courses">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_course' %}">Add Course</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'view_course' %}">View Course</a></li>-->
+<!--&lt;!&ndash;                <li class="nav-item"> <a class="nav-link" href="{% static 'pages/ui-features/typography.html' %}">Typography</a></li>&ndash;&gt;-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
           <li class="nav-item menu-items">
               <a class="nav-link" data-toggle="collapse" href="#ui-courses2" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-icon">
@@ -174,53 +174,53 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item menu-items">
-              <a class="nav-link" data-toggle="collapse" href="#ui-dept" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-icon">
-                  <i class="mdi mdi-grid"></i>
-                </span>
-                <span class="menu-title">Department</span>
-                <i class="menu-arrow"></i>
-              </a>
-            <div class="collapse" id="ui-dept">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_dept' %}">Add New Department</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'view_dept' %}">List Departments</a></li>
-              </ul>
-            </div>
-          </li>
+<!--          <li class="nav-item menu-items">-->
+<!--              <a class="nav-link" data-toggle="collapse" href="#ui-dept" aria-expanded="false" aria-controls="ui-basic">-->
+<!--                <span class="menu-icon">-->
+<!--                  <i class="mdi mdi-grid"></i>-->
+<!--                </span>-->
+<!--                <span class="menu-title">Department</span>-->
+<!--                <i class="menu-arrow"></i>-->
+<!--              </a>-->
+<!--            <div class="collapse" id="ui-dept">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_dept' %}">Add New Department</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'view_dept' %}">List Departments</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
 
-          <li class="nav-item menu-items">
-              <a class="nav-link" data-toggle="collapse" href="#ui-jobportal" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-icon">
-                  <i class="mdi mdi-briefcase"></i>
-                </span>
-                <span class="menu-title">Job Portal</span>
-                <i class="menu-arrow"></i>
-              </a>
-            <div class="collapse" id="ui-jobportal">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_job' %}">Add Job Post</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'view_jobs' %}">View Jobs</a></li>
-              </ul>
-            </div>
-          </li>
+<!--          <li class="nav-item menu-items">-->
+<!--              <a class="nav-link" data-toggle="collapse" href="#ui-jobportal" aria-expanded="false" aria-controls="ui-basic">-->
+<!--                <span class="menu-icon">-->
+<!--                  <i class="mdi mdi-briefcase"></i>-->
+<!--                </span>-->
+<!--                <span class="menu-title">Job Portal</span>-->
+<!--                <i class="menu-arrow"></i>-->
+<!--              </a>-->
+<!--            <div class="collapse" id="ui-jobportal">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_job' %}">Add Job Post</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'view_jobs' %}">View Jobs</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
 
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-jobportal3" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-briefcase"></i>
-              </span>
-              <span class="menu-title">Training</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-jobportal3">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_news' %}">Add Training</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'news_view' %}">View Training</a></li>
-              </ul>
-            </div>
-          </li>
+<!--          <li class="nav-item menu-items">-->
+<!--            <a class="nav-link" data-toggle="collapse" href="#ui-jobportal3" aria-expanded="false" aria-controls="ui-basic">-->
+<!--              <span class="menu-icon">-->
+<!--                <i class="mdi mdi-briefcase"></i>-->
+<!--              </span>-->
+<!--              <span class="menu-title">Training</span>-->
+<!--              <i class="menu-arrow"></i>-->
+<!--            </a>-->
+<!--            <div class="collapse" id="ui-jobportal3">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_news' %}">Add Training</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'news_view' %}">View Training</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
 
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-jobportal1" aria-expanded="false" aria-controls="ui-basic">
@@ -238,37 +238,37 @@
             </div>
           </li>
 
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-jobportal4" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-briefcase"></i>
-              </span>
-              <span class="menu-title">Alerts</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-jobportal4">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_marquee' %}">Add Alerts</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'marquee_list' %}">View Alerts</a></li>
-              </ul>
-            </div>
-          </li>
+<!--          <li class="nav-item menu-items">-->
+<!--            <a class="nav-link" data-toggle="collapse" href="#ui-jobportal4" aria-expanded="false" aria-controls="ui-basic">-->
+<!--              <span class="menu-icon">-->
+<!--                <i class="mdi mdi-briefcase"></i>-->
+<!--              </span>-->
+<!--              <span class="menu-title">Alerts</span>-->
+<!--              <i class="menu-arrow"></i>-->
+<!--            </a>-->
+<!--            <div class="collapse" id="ui-jobportal4">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_marquee' %}">Add Alerts</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'marquee_list' %}">View Alerts</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
 
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-jobportal5" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-briefcase"></i>
-              </span>
-              <span class="menu-title">News</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-jobportal5">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_news2' %}">Add News</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'news_view2' %}">View News</a></li>
-              </ul>
-            </div>
-          </li>
+<!--          <li class="nav-item menu-items">-->
+<!--            <a class="nav-link" data-toggle="collapse" href="#ui-jobportal5" aria-expanded="false" aria-controls="ui-basic">-->
+<!--              <span class="menu-icon">-->
+<!--                <i class="mdi mdi-briefcase"></i>-->
+<!--              </span>-->
+<!--              <span class="menu-title">News</span>-->
+<!--              <i class="menu-arrow"></i>-->
+<!--            </a>-->
+<!--            <div class="collapse" id="ui-jobportal5">-->
+<!--              <ul class="nav flex-column sub-menu">-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'add_news2' %}">Add News</a></li>-->
+<!--                <li class="nav-item"> <a class="nav-link" href="{% url 'news_view2' %}">View News</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
 
           {% else %}
           <li class="nav-item menu-items">

@@ -222,33 +222,33 @@
     <div class="col-lg-9">
        <div class="section-heading">
         <h2 class="text-black">Training</h2>
-        <a href="{% url 'stud_notification' %}">Show All</a>
+        <a href="#">Show All</a>
       </div>
       <div class="row">
         <div class="col-lg-6">
           <div class="post-entry-big">
-            <a href="{% url 'notification_single' news_ids=last_post.newsId %}" class="img-link"><img src="{{last_post.news_image.url}}" alt="Image" class="img-fluid"></a>
+            <a href="#" class="img-link"><img src="{{last_post.news_image.url}}" alt="Image" class="img-fluid"></a>
             <div class="post-content">
               <div class="post-meta">
-                <a href="{% url 'notification_single' news_ids=last_post.newsId %}">{{last_post.news_date}}</a>
+                <a href="#">{{last_post.news_date}}</a>
                 <span class="mx-1">/</span>
-                <a href="{% url 'notification_single' news_ids=last_post.newsId %}">{{last_post.news_Location}}</a>,
+                <a href="#">{{last_post.news_Location}}</a>,
               </div>
-              <h3 class="post-heading"><a href="{% url 'notification_single' news_ids=last_post.newsId %}">{{last_post.news_Title}}</a></h3>
+              <h3 class="post-heading"><a href="#">{{last_post.news_Title}}</a></h3>
             </div>
           </div>
         </div>
         <div class="col-lg-6">
           {% for i in recent_posts %}
           <div class="post-entry-big horizontal d-flex mb-4">
-            <a href="{% url 'notification_single' news_ids=i.newsId %}" class="img-link mr-4"><img src="{{i.news_image.url}}" alt="Image" class="img-fluid"></a>
+            <a href="#" class="img-link mr-4"><img src="{{i.news_image.url}}" alt="Image" class="img-fluid"></a>
             <div class="post-content">
               <div class="post-meta">
-                <a href="{% url 'notification_single' news_ids=i.newsId %}">{{i.news_date}}</a>
+                <a href="#">{{i.news_date}}</a>
                 <span class="mx-1">/</span>
-                <a href="{% url 'notification_single' news_ids=i.newsId %}">{{i.news_Location}}</a>,
+                <a href="#">{{i.news_Location}}</a>,
               </div>
-              <h3 class="post-heading"><a href="{% url 'notification_single' news_ids=i.newsId %}">{{i.news_Title}}</a></h3>
+              <h3 class="post-heading"><a href="#">{{i.news_Title}}</a></h3>
             </div>
           </div>
           {% endfor %}
@@ -274,7 +274,7 @@
             {% for i in job_data %}
               <div class="course-1-item">
                 <figure class="thumnail">
-                  <a href="{% url 'jobs_view_single' job_id=i.JobId %}"><img src="{{i.image_job.url}}" alt="Image" class="img-fluid" style="width:500px;height:250px;" ></a>
+                  <a href="#"><img src="{{i.image_job.url}}" alt="Image" class="img-fluid" style="width:500px;height:250px;" ></a>
                   <div class="price">APPLY</div>
                   <div class="category"><h3>{{i.Title}}</h3></div>
                 </figure>
@@ -296,33 +296,33 @@
     <div class="col-lg-9">
        <div class="section-heading">
         <h2 class="text-black">News</h2>
-        <a href="{% url 'stud_notification2' %}">Show All</a>
+        <a href="#">Show All</a>
       </div>
       <div class="row">
         <div class="col-lg-6">
           <div class="post-entry-big">
-            <a href="{% url 'notification_single2' news_id=last_post2.newsId %}" class="img-link"><img src="{{last_post2.news_image.url}}" alt="Image" class="img-fluid"></a>
+            <a href="#" class="img-link"><img src="{{last_post2.news_image.url}}" alt="Image" class="img-fluid"></a>
             <div class="post-content">
               <div class="post-meta">
-                <a href="{% url 'notification_single2' news_id=last_post2.newsId %}">{{last_post2.news_date}}</a>
+                <a href="#">{{last_post2.news_date}}</a>
                 <span class="mx-1">/</span>
-                <a href="{% url 'notification_single2' news_id=last_post2.newsId %}">{{last_post2.news_Location}}</a>,
+                <a href="#">{{last_post2.news_Location}}</a>,
               </div>
-              <h3 class="post-heading"><a href="{% url 'notification_single2' news_id=last_post2.newsId %}">{{last_post2.news_Title}}</a></h3>
+              <h3 class="post-heading"><a href="#">{{last_post2.news_Title}}</a></h3>
             </div>
           </div>
         </div>
         <div class="col-lg-6">
           {% for i in recent_posts2 %}
           <div class="post-entry-big horizontal d-flex mb-4">
-            <a href="{% url 'notification_single2' news_id=i.newsId %}" class="img-link mr-4"><img src="{{i.news_image.url}}" alt="Image" class="img-fluid"></a>
+            <a href="#" class="img-link mr-4"><img src="{{i.news_image.url}}" alt="Image" class="img-fluid"></a>
             <div class="post-content">
               <div class="post-meta">
-                <a href="{% url 'notification_single2' news_id=i.newsId %}">{{i.news_date}}</a>
+                <a href="#">{{i.news_date}}</a>
                 <span class="mx-1">/</span>
-                <a href="{% url 'notification_single2' news_id=i.newsId %}">{{i.news_Location}}</a>,
+                <a href="#">{{i.news_Location}}</a>,
               </div>
-              <h3 class="post-heading"><a href="{% url 'notification_single2' news_id=i.newsId %}">{{i.news_Title}}</a></h3>
+              <h3 class="post-heading"><a href="#">{{i.news_Title}}</a></h3>
             </div>
           </div>
           {% endfor %}
