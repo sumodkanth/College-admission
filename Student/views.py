@@ -28,8 +28,7 @@ from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
 from django.template.loader import render_to_string
 from django.views.generic import View
-from wkhtmltopdf.views import PDFTemplateView
-import pdfkit
+
 
 # Create your views here.x
 def redirect_authenticated_user(view_func):
