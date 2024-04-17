@@ -28,7 +28,7 @@ from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
 from django.template.loader import render_to_string
 from django.views.generic import View
-
+from django.utils import timezone
 
 # Create your views here.x
 def redirect_authenticated_user(view_func):
@@ -148,17 +148,18 @@ def indexpage(request):
 def stud_profile(request):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
-    course = CourseDB.objects.get(CourseId=name.CourseId.CourseId)
-    dept = DepartmentDB.objects.get(DeptId=course.DeptId.DeptId)
-    return render(request, "student_profile.html", {'name': name, 'course': course, 'dept': dept})
+
+
+    return render(request, "student_profile.html", {'name': name})
 
 
 def stud_edit(request):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
-    course = CourseDB.objects.get(CourseId=name.CourseId.CourseId)
-    dept = DepartmentDB.objects.get(DeptId=course.DeptId.DeptId)
-    return render(request, "student_edit.html", {'name': name, 'course': course, 'dept': dept})
+
+
+
+    return render(request, "student_edit.html", {'name': name})
 
 
 def stud_save(request):
@@ -286,22 +287,37 @@ def jobs_view_single(request, job_id):
         messages.error(request, 'Please log in to view this page.')
         return render(request, "main_login.html")
 
+from django.core.exceptions import ObjectDoesNotExist
 
 def course_view_single(request, course_id):
     if 'username' in request.session:
         stud_id = request.session["username"]
         name = StudentDB.objects.get(Email=stud_id)
+        print(stud_id)
         course_data = CourseDB.objects.get(CourseId=course_id)
 
 
-        applied = CourseenrollmentDB.objects.filter(Email=stud_id).exists()
+        applied = CourseenrollmentDB.objects.filter(Email=stud_id,CourseId=course_id).exists()
         course_data2 = CourseenrollmentDB.objects.filter(CourseId=course_id, Email=stud_id).first()
-        # booking_id = Booking.objects.get(user=applied)
-        # bus_id = BusBooking.objects.all()
-
+        try:
+            data = CourseenrollmentDB.objects.get(Email=stud_id)
+        except CourseenrollmentDB.DoesNotExist:
+            data = None
         payed = Payment.objects.filter(student=course_data2,course=course_id).exists()
-        # payed2 = Payment.objects.filter(student=course_data2,rooms=booking_id).exists()
-        # payed3 = Payment.objects.filter(student=course_data2,bus=bus_id).exists()
+        payed2 = Payment.objects.filter(student=data).exists()
+        try:
+            room = Booking.objects.get(user=data)
+            room_id = room.id
+        except Booking.DoesNotExist:
+            room_id= None
+
+        payed4 = Payment.objects.filter(student=data, rooms=room_id).exists()
+        try:
+            booking = BusBooking.objects.get(student_id=name)
+            booking_id = booking.id
+            payed3 = Payment.objects.filter(student=data, bus=booking_id).exists()
+        except ObjectDoesNotExist:
+            payed3 = False
 
 
 
@@ -318,7 +334,9 @@ def course_view_single(request, course_id):
             'applied': applied,
             'score': score,
             'payed': payed,
-
+            'payed2':payed2,
+            'payed3':payed3,
+            'payed4':payed4
         })
     else:
         messages.error(request, 'Please log in to view this page.')
@@ -758,14 +776,14 @@ def available_rooms(request):
     return render(request, 'available_rooms.html', {'available_rooms': available_rooms,'name':name})
 
 
-def book_room(request, room_id):
-    room = HostelRoom.objects.get(pk=room_id)
-
-    # Update room availability
-    room.is_available = False
-    room.save()
-
-    return redirect('available_rooms')
+# def book_room(request, room_id):
+#     room = HostelRoom.objects.get(pk=room_id)
+#
+#     # Update room availability
+#     room.is_available = False
+#     room.save()
+#
+#     return redirect('available_rooms')
 
 
 def make_payment(request, room_id):
@@ -797,6 +815,12 @@ def make_payment(request, room_id):
         # Update room availability
         room.is_available = False
         room.save()
+        # Create Booking instance
+        booking = Booking.objects.create(
+            room=room,
+            user=name1,  # Assuming 'name' refers to the user
+            booking_date=timezone.now()
+        )
         messages.success(request, 'Payment done successfully!')
         # Redirect to a success page or do further processing
         return redirect('receipt2', payment_id=payment.id)  # Redirect to a success page

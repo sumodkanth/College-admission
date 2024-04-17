@@ -58,7 +58,7 @@ urlpatterns = [
 
     path('select-room/', views.selectroom, name='select_room'),
     path('available-rooms/', views.available_rooms, name='available_rooms'),
-    path('book_room/<int:room_id>/', views.book_room, name='book_room'),
+
     path('make_payment/<int:room_id>/', views.make_payment, name='make_payment'),
     path('receipt2/<int:payment_id>/', views.receipt_page2, name='receipt2'),
     path('bus_booking/', views.bus_booking, name='bus_booking'),

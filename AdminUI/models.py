@@ -44,7 +44,7 @@ class StudentDB(models.Model):
     adhaar = models.CharField(max_length=50, null=True, blank=True)
     password = models.CharField(max_length=50, null=True, blank=True)
     def __str__(self):
-        return self.FirstName
+        return self.Email
 
 
 class FacultyEnrollmentDB(models.Model):
@@ -221,21 +221,18 @@ class HostelRoom(models.Model):
     room_rent = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"  {self.room_type} room number {self.room_number}"
+        return f"{self.room_number}"
 
 
 class Booking(models.Model):
     user = models.ForeignKey(CourseenrollmentDB, on_delete=models.CASCADE, null=True, blank=True)
     room = models.ForeignKey(HostelRoom, on_delete=models.CASCADE, null=True, blank=True)
     booking_date = models.DateField()
-
-    def save(self, *args, **kwargs):
-        self.room.is_available = False  # Set room availability to False when booked
-        self.room.save()
-        super().save(*args, **kwargs)
-
     def __str__(self):
-        return f"{self.user.username} - {self.room.room_number}"
+        return f"{self.room}"
+
+
+
 
 class BusBooking(models.Model):
     student_id = models.ForeignKey(StudentDB, on_delete=models.CASCADE, null=True, blank=True)
@@ -246,5 +243,3 @@ class BusBooking(models.Model):
     bus_timing = models.CharField(max_length=20)
     bus_fair = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return f"{self.student_id} "

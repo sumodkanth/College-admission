@@ -17,7 +17,13 @@
             <p class="card-description"></p>
             <form class="forms-sample" >
                 <div style="text-align:center;">
-                    <img src="{{name.Image.url}}" alt="" class="img-lg rounded-circle" >
+                   {% if name.Image %}
+                    <img class="img-lg rounded-circle" src="{{name.Image.url}}" alt="">
+                    {% else %}
+                  <div style="display: flex;justify-content: center;align-items: center;">
+                    <img class="img-xs rounded-circle " src="{% static 'assets/images/faces/face28.jpg' %}" alt="">
+                </div>
+                    {% endif %}
                     <p class="card-description" style="color:#ffffff;"> Student Id : {{name.StudentId}} </p>
                 </div>
                 <div class="card-body">

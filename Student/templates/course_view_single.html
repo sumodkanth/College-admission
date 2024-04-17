@@ -53,10 +53,13 @@
                             <p style="font-size:15px;">{{ course_data.AdmissionFee }}</p>
                         </div>
                     </div>
+                    {% if not payed2 %}
                     {% if applied %}
                     <button class="btn btn-success mr-2 btn-rounded" disabled>Applied</button>
                     {% else %}
                     <button class="btn btn-primary mr-2 btn-rounded">Apply course</button>
+                    {% endif %}
+
                     {% endif %}
                 </div>
             </form>
@@ -74,15 +77,19 @@
                 <!-- <button class="btn btn-primary mr-2 btn-rounded" disabled>Not Passed</button> -->
                 {% endif %}
                 {% if payed %}
-                {% if not room %}
+                {% if payed4 %}
                 <a href="{% url 'select_room' %}">
                     <button class="btn btn-primary mr-2 btn-rounded">Select room</button>
                 </a>
+                {% else %}
+                <button class="btn btn-success mr-2 btn-rounded" disabled>hostel room booking completed</button>
                 {% endif %}
-                {% if not bus %}
+                {% if not payed3 %}
                 <a href="{% url 'bus_booking' %}">
                     <button class="btn btn-primary mr-2 btn-rounded">Bus booking</button>
                 </a>
+                {% else %}
+                <button class="btn btn-success mr-2 btn-rounded" disabled>bus booking completed</button>
                 {% endif %}
                 {% endif %}
             </div>
