@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from AdminUI.models import DepartmentDB, CourseDB, StudentDB, FacultyEnrollmentDB, JobsDB, JobApplications, newsDB, \
-    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice,CourseenrollmentDB
+    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice,CourseenrollmentDB,TestResult
 from FacultyUI.models import FacultyDB
 from .forms import MarqueeForm
 import pandas as pd
@@ -695,11 +695,7 @@ def statussearch(request):
         data = CourseDB.objects.all()
         data2 = TrainingDB.objects.all()
         stud_data = StudentDB.objects.all()
-        years = []
-        for i in stud_data:
-            year = i.EnrollDate.year
-            years.append(year)
-        print(years)
+
         return render(request, "dashboard.html", {"data": data,"data2":data2,'name':name})
     else:
         return redirect('main_page')
@@ -708,26 +704,29 @@ def statussearch(request):
 def search_studentstatus(request):
     if request.method == 'POST':
         course_name = request.POST.get('course')
-        fac_name = request.session["username"]
-        name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+
+        # courses = CourseDB.objects.get(CourseName=course_name)
+
 
         # Filter job statuses based on the selected course
         job_statuses = CourseenrollmentDB.objects.filter(CourseId__CourseName=course_name)
-
+        # test_results = TestResult.objects.get(course=job_statuses)
         context = {
             'course_name': course_name,
             'job_statuses': job_statuses,
-            'name':name
+            # 'name':name,
+            # 'test_results':test_results
         }
         return render(request, 'Viewstudentstatus.html', context)
     else:
         courses = CourseDB.objects.all()
         return render(request, 'dashboard.html', {'data': courses})
+
 from django.db.models import Max
 
 def delete_status(request, status_id):
     # Retrieve the JobStatus2 object to be deleted
-    status = get_object_or_404(JobStatus2, pk=status_id)
+    status = get_object_or_404(CourseenrollmentDB, pk=status_id)
 
     # Delete the status
     status.delete()
