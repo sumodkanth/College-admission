@@ -198,12 +198,12 @@ class Payment(models.Model):
     course = models.ForeignKey(CourseDB, on_delete=models.CASCADE,null=True, blank=True)
     rooms = models.ForeignKey('HostelRoom', on_delete=models.CASCADE,null=True, blank=True)
     bus = models.ForeignKey('BusBooking', on_delete=models.CASCADE,null=True, blank=True)
-    amount_received = models.DecimalField(max_digits=10, decimal_places=2)
+    amount_received = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
     cardholder_name = models.CharField(max_length=100)
     card_type = models.CharField(max_length=100, null=True, blank=True)
-    card_number = models.CharField(max_length=16)
-    expiration_date = models.CharField(max_length=7)  # You might want to store this as a DateField if you need to perform date-related operations
-    cvv = models.CharField(max_length=4)
+    card_number = models.CharField(max_length=16,null=True, blank=True)
+    expiration_date = models.CharField(max_length=7,null=True, blank=True)  # You might want to store this as a DateField if you need to perform date-related operations
+    cvv = models.CharField(max_length=4,null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -243,3 +243,14 @@ class BusBooking(models.Model):
     bus_timing = models.CharField(max_length=20)
     bus_fair = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+class AdmissionDB(models.Model):
+    StudentName = models.CharField(max_length=100)
+    DateOfBirth = models.CharField(max_length=10)
+    Gender = models.CharField(max_length=10)
+    Email = models.EmailField()
+    ContactNo = models.CharField(max_length=20)
+    CourseName = models.CharField(max_length=20)
+    # Add other fields as needed
+    def __str__(self):
+        return self.StudentName

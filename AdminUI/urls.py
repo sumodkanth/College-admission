@@ -71,6 +71,8 @@ urlpatterns = [
     path('add_question/', views.add_question, name='add_question'),
     path('question_list/', views.question_list, name='question_list'),
     path('questions/delete/<int:question_id>/', views.delete_question, name='delete_question'),
+    path('student_details/<int:student_id>/', views.student_details, name='student_details'),
+    path('confirm_admission/', views.confirm_admission, name='confirm_admission'),
 
 ]
 

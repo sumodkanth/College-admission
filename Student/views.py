@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from AdminUI.models import StudentDB, DepartmentDB, CourseDB, JobsDB, JobApplications, newsDB, placed_studdb, Marquee, \
-    newsDB2, InterviewStep, JobStatus2,TrainingDB,FacultyEnrollmentDB,CourseenrollmentDB, MultipleChoiceQuestion, Choice, TestResult,Payment,HostelRoom, Booking,BusBooking
+    newsDB2, InterviewStep, JobStatus2,TrainingDB,FacultyEnrollmentDB,CourseenrollmentDB, MultipleChoiceQuestion, Choice, TestResult,Payment,HostelRoom, Booking,BusBooking,AdmissionDB
 from .forms import SelectionStatusForm,BookingForm
 from django.contrib.auth.decorators import login_required
 import FacultyUI.views
@@ -295,7 +295,7 @@ def course_view_single(request, course_id):
         name = StudentDB.objects.get(Email=stud_id)
         print(stud_id)
         course_data = CourseDB.objects.get(CourseId=course_id)
-
+        print(course_data)
 
         applied = CourseenrollmentDB.objects.filter(Email=stud_id,CourseId=course_id).exists()
         course_data2 = CourseenrollmentDB.objects.filter(CourseId=course_id, Email=stud_id).first()
@@ -319,15 +319,16 @@ def course_view_single(request, course_id):
         except ObjectDoesNotExist:
             payed3 = False
 
-
-
-
         try:
             score = TestResult.objects.get(StudentName=name, course=course_data)
         except TestResult.DoesNotExist:
             score = None
 
-
+        try:
+            placed = AdmissionDB.objects.get(Email=stud_id,CourseName=course_data)
+        except AdmissionDB.DoesNotExist:
+            placed = False
+            print(placed)
         return render(request, "course_view_single.html", {
             'course_data': course_data,
             'name': name,
@@ -336,7 +337,8 @@ def course_view_single(request, course_id):
             'payed': payed,
             'payed2':payed2,
             'payed3':payed3,
-            'payed4':payed4
+            'payed4':payed4,
+            'placed':placed
         })
     else:
         messages.error(request, 'Please log in to view this page.')
@@ -666,8 +668,9 @@ def take_test(request, course_id):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
 
-
+    name2 = CourseenrollmentDB.objects.get(Email=stud_id)
     course = CourseDB.objects.get(CourseName=course_id)
+
     questions = list(MultipleChoiceQuestion.objects.filter(course=course))
     random.shuffle(questions)
     questions = questions[:15]  # Select five random questions
@@ -681,19 +684,19 @@ def take_test(request, course_id):
                 if selected_choice.is_correct:
                     score += 1
 
-
-        # Get or create the test result object for the student and course
-        test_result, created = TestResult.objects.get_or_create(
-            StudentName=name,
-            course=course,
-            defaults={'score': score}  # If creating, set default values
-        )
-        if not created:
-            test_result.score = score
-            test_result.save()
+        if score >= 12:
+            # Get or create the test result object for the student and course
+            test_result, created = TestResult.objects.get_or_create(
+                StudentName=name,
+                course=course,
+                defaults={'score': score}  # If creating, set default values
+            )
+            if not created:
+                test_result.score = score
+                test_result.save()
 
         # Send email to the user
-        if score >= 12:
+
             subject = 'Test Result'
             message = f'Hello {name},\n\nCongratulations! Your score for the {course.CourseName} test is: {score}. You have successfully qualified for the interview scheduled for April 25th at 10:30 am in the college office. Keep up the good work!'
             from_email = settings.EMAIL_HOST_USER
@@ -706,6 +709,7 @@ def take_test(request, course_id):
             to_email = [name.Email]  # Assuming email is stored in the Email field of the StudentDB model
             send_mail(subject, message, from_email, to_email, fail_silently=False)
 
+            CourseenrollmentDB.objects.filter(StudentName=name2, CourseId=course).delete()
         return redirect(course_view)
 
     context = {

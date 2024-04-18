@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'adminindex.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Student Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #dbdbd9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        img.profile-pic {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            object-position: center;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .confirm-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .confirm-button button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="profile-pic" src="{{ student.Image.url }}" alt="Student Image"><br>
+
+        <ul>
+            <li><strong>Name         :</strong> {{ student.StudentName }}</li>
+            <li><strong>Date of Birth:</strong> {{ student.DateOfBirth }}</li>
+            <li><strong>Gender       :</strong> {{ student.Gender }}</li>
+            <li><strong>Email        :</strong> {{ student.Email }}</li>
+            <li><strong>Contact No   :</strong> {{ student.ContactNo }}</li>
+            <li><strong>Address      :</strong> {{ student.Address }}</li>
+            <li><strong>Religion     :</strong> {{ student.Religion }}</li>
+            <li><strong>District     :</strong> {{ student.District }}</li>
+            <li><strong>Guardian Name:</strong> {{ student.GuardianName }}</li>
+            <li><strong>Course       :</strong> {{ student.CourseId }}</li>
+            <li><strong>Plus Two Mark:</strong> {{ student.Plustwomark }}</li>
+            <li><strong>SSLC Mark    :</strong> {{ student.SSLCMark }}</li>
+            <li><strong>MCQ Test score:</strong> {{ score.score }} out of 15</li>
+            <!-- Links to download/uploaded documents -->
+            <li><strong>Plus Two Document:</strong> <a href="{{ student.Plustwo.url }}" target="_blank">View</a></li>
+            <li><strong>SSLC Document:</strong> <a href="{{ student.SSLC.url }}" target="_blank">View</a></li>
+        </ul>
+        <div class="confirm-button">
+            {% if not placed %}
+            <form action="{% url 'confirm_admission' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="student_name" value="{{ student.StudentName }}">
+                <input type="hidden" name="date_of_birth" value="{{ student.DateOfBirth }}">
+                <input type="hidden" name="gender" value="{{ student.Gender }}">
+                <input type="hidden" name="email" value="{{ student.Email }}">
+                <input type="hidden" name="contact_no" value="{{ student.ContactNo }}">
+                <input type="hidden" name="Course" value="{{ student.CourseId }}">
+                <button type="submit" class="btn btn-danger">Confirm Admission</button>
+            </form>
+            {% else %}
+            <button type="button" class="btn btn-success " disabled>Admission Confirmed</button>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

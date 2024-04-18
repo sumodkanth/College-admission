@@ -16,11 +16,12 @@
                       <table class="table table-striped">
                             <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Student</th>
                                 <th>Course</th>
                                 <th>Plus Two Mark</th>
                                 <th>SSLC Mark</th>
-<!--                                <th>Score</th>-->
+                                <th>Know More</th>
 
                                 <th>Actions</th> <!-- New column for delete button -->
                             </tr>
@@ -28,13 +29,14 @@
                             <tbody>
                             {% for status in job_statuses %}
                             <tr>
+                                <td>{{ forloop.counter }}</td>
                                 <td>{{ status.StudentName }}</td>
                                 <td>{{ status.CourseId }}</td>
                                 <td>{{ status.Plustwomark  }}</td>
                                 <td>{{ status.SSLCMark  }}</td>
-<!--                                <td>{{ test_results.score  }}</td>-->
-
-<!--                                <td>{{ status.date_time }}</td>-->
+                                <td>
+                                    <a href="{% url 'student_details' status.pk %}">More details...</i></a>&nbsp;&nbsp;
+                                </td>
 
                                 <td>
                                     <form action="{% url 'delete_status' status.pk %}" method="post">

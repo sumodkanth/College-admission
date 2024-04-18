@@ -6,7 +6,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
 
+
+.congratulations h4 {
+    color: #28a745; /* Green color */
+}
+
+</style>
 </head>
 <body>
 {% block content %}
@@ -53,17 +60,21 @@
                             <p style="font-size:15px;">{{ course_data.AdmissionFee }}</p>
                         </div>
                     </div>
-                    {% if not payed2 %}
+
                     {% if applied %}
                     <button class="btn btn-success mr-2 btn-rounded" disabled>Applied</button>
                     {% else %}
+                    {% if not payed2 %}
+                    {% if not placed %}
                     <button class="btn btn-primary mr-2 btn-rounded">Apply course</button>
+                    {% endif %}
                     {% endif %}
 
                     {% endif %}
                 </div>
             </form>
             <div style="padding-top:0px;">
+                {% if not placed %}
                 {% if score.score > 12 %}
                 <button class="btn btn-success mr-2 btn-rounded" disabled>Passed</button>
                 {% if not payed %}
@@ -74,7 +85,13 @@
                 <button class="btn btn-success mr-2 btn-rounded" disabled>Course payment completed</button>
                 {% endif %}
                 {% else %}
-                <!-- <button class="btn btn-primary mr-2 btn-rounded" disabled>Not Passed</button> -->
+
+                {% if applied %}
+                <a href="{% url 'take_test' course_id=course_data.CourseId %}">
+                    <button class="btn btn-primary mr-2 btn-rounded">Try Again</button>
+                </a>
+                {% endif %}
+
                 {% endif %}
                 {% if payed %}
                 {% if payed4 %}
@@ -91,6 +108,11 @@
                 {% else %}
                 <button class="btn btn-success mr-2 btn-rounded" disabled>bus booking completed</button>
                 {% endif %}
+                {% endif %}
+                {% else %}
+                <div class="congratulations" style=" text-align: center; margin-top: 20px; color: #59eb3f   ;">
+                    <h4>Congratulations! You have been placed.</h4>
+                </div>
                 {% endif %}
             </div>
         </div>

@@ -9,11 +9,13 @@ from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from AdminUI.models import DepartmentDB, CourseDB, StudentDB, FacultyEnrollmentDB, JobsDB, JobApplications, newsDB, \
-    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice,CourseenrollmentDB,TestResult
+    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice,CourseenrollmentDB,TestResult,AdmissionDB,Payment
 from FacultyUI.models import FacultyDB
 from .forms import MarqueeForm
 import pandas as pd
 from .forms import MultipleChoiceQuestionForm, ChoiceForm
+from django.conf import settings
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -704,16 +706,19 @@ def statussearch(request):
 def search_studentstatus(request):
     if request.method == 'POST':
         course_name = request.POST.get('course')
-
+        fac_name = request.session["username"]
+        name = FacultyEnrollmentDB.objects.get(Email=fac_name)
         # courses = CourseDB.objects.get(CourseName=course_name)
 
 
         # Filter job statuses based on the selected course
         job_statuses = CourseenrollmentDB.objects.filter(CourseId__CourseName=course_name)
+
         # test_results = TestResult.objects.get(course=job_statuses)
         context = {
             'course_name': course_name,
             'job_statuses': job_statuses,
+            'name':name
             # 'name':name,
             # 'test_results':test_results
         }
@@ -795,3 +800,47 @@ def delete_question(request, question_id):
     question = MultipleChoiceQuestion.objects.get(id=question_id)
     question.delete()
     return redirect('question_list')
+
+def student_details(request, student_id):
+    # Retrieve the student object based on the provided student ID
+    student = get_object_or_404(CourseenrollmentDB, pk=student_id)
+    fac_name = request.session["username"]
+    name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+    try:
+        score = TestResult.objects.get(StudentName__Email=student.Email)
+    except TestResult.DoesNotExist:
+        score = None
+    try:
+        placed = AdmissionDB.objects.get(Email=student.Email)
+    except AdmissionDB.DoesNotExist:
+        placed = False
+        print(placed)
+    return render(request, 'student_details.html', {'student': student,'score':score,'placed':placed,'name':name})
+
+
+def confirm_admission(request):
+    if request.method == 'POST':
+        # Retrieve student details from the form
+        student_name = request.POST.get('student_name')
+        date_of_birth = request.POST.get('date_of_birth')
+        gender = request.POST.get('gender')
+        email = request.POST.get('email')
+        contact_no = request.POST.get('contact_no')
+        course = request.POST.get('Course')
+        student = get_object_or_404(CourseenrollmentDB, StudentName=student_name)
+        # Create a new instance of AdmissionDB and save it to the database
+        admission = AdmissionDB(StudentName=student_name, DateOfBirth=date_of_birth,
+                                Gender=gender, Email=email, ContactNo=contact_no,CourseName=course)
+        admission.save()
+        payment = Payment.objects.create(student=student)
+        # Associate the payment with the order
+        payment.save()
+        # Send an email to the student
+        subject = 'Admission Confirmation'
+        message = f'Dear {student_name},\n\nCongratulations! Your admission for the course {course} has been confirmed.'
+        from_email = settings.EMAIL_HOST_USER  # Update with your email
+        recipient_list = [email]
+        send_mail(subject, message, from_email, recipient_list)
+        # Redirect to a success page or render a success message
+        return redirect('student_details', student_id=student.pk)  # Redirect to a success page
+  # Redirect to an error page
