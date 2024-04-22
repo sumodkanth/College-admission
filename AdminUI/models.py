@@ -240,7 +240,7 @@ class BusBooking(models.Model):
 
     pickup_location = models.CharField(max_length=200)
     destination = models.CharField(max_length=200)
-    bus_timing = models.CharField(max_length=20)
+
     bus_fair = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
 

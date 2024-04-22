@@ -860,7 +860,7 @@ def booking_submission(request):
     if request.method == "POST":
 
         sname = request.POST.get("student_name")
-        btime = request.POST.get("bustime")
+        # btime = request.POST.get("bustime")
         pickloc = request.POST.get("picklocation")
         droploc = request.POST.get("droplocation")
         busfair = request.POST.get("busfee")
@@ -872,7 +872,7 @@ def booking_submission(request):
 
 
 
-        booking  = BusBooking(student=sname,  pickup_location=pickloc, destination=droploc,bus_timing=btime,
+        booking  = BusBooking(student=sname,  pickup_location=pickloc, destination=droploc,
                         bus_fair=busfair,student_id=user_info)
         booking.save()
 
