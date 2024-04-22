@@ -26,6 +26,7 @@
       <!--   register form   -->
       
       <form class="forms-sample" method="post" action="" enctype="multipart/form-data">
+          <h3 style="text-align:center">FACULTY SIGNUP</h3>
         {% csrf_token %}
       <div class="form-group">
         <label for="exampleInputName1"> Name</label>
@@ -68,9 +69,9 @@
         </div>
         <div class="form-group">
             <label class="form-check-label">
-                <input class="checkbox" type="checkbox"name="admin_status" value="True"> Is Admin(If Yes, Please tick checkbox) <i class="input-helper"></i></label>
+                <input class="checkbox" type="checkbox" name="admin_status" value="True"> Is Admin(If Yes, Please tick checkbox) <i class="input-helper"></i></label>
         </div>
-      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
     </form>
 
     </div>

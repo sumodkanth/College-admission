@@ -666,9 +666,11 @@ def course_submission(request):
 
 def take_test(request, course_id):
     stud_id = request.session["username"]
+    print(stud_id)
     name = StudentDB.objects.get(Email=stud_id)
 
     name2 = CourseenrollmentDB.objects.get(Email=stud_id)
+    print(name2)
     course = CourseDB.objects.get(CourseName=course_id)
 
     questions = list(MultipleChoiceQuestion.objects.filter(course=course))

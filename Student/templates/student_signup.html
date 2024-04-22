@@ -21,11 +21,12 @@
       <div class="formwarp">
   <div class="login-register">
     <div class="login form">
-      
-    
+
+
       <!--   register form   -->
-      
+
       <form class="forms-sample" method="post" action="{% url 'student_signup' %}"  >
+        <h3 style="text-align:center">STUDENT SIGNUP</h3>
         {% csrf_token %}
       <div class="form-group">
         <label for="exampleInputName1">First Name</label>
@@ -35,9 +36,9 @@
         <label for="exampleInputName1">Last Name</label>
         <input type="text" class="form-control" id="exampleInputName2" name="lname" style="background-color: gray; border: 1px solid black; color: white;">
       </div>
-        
-      
-       
+
+
+
         <div class="form-group">
         <label for="exampleInputName1">Date of Birth</label>
         <input type="date" class="form-control"  name="dob" style="background-color: gray; border: 1px solid black; color: white;">
@@ -57,15 +58,15 @@
         <label for="exampleInputName1">Password</label>
         <input type="tel" class="form-control"  name="password" style="background-color: gray; border: 1px solid black; color: white;">
       </div>
-       
-      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
     </form>
 
     </div>
-    
-    
+
+
   </div>
 </div>
-    
-  </body>
+
+  </body>
 </html>

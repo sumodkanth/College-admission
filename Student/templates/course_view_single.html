@@ -87,7 +87,7 @@
                 {% else %}
 
                 {% if applied %}
-                <a href="{% url 'take_test' course_id=course_data.CourseId %}">
+                <a href="{% url 'take_test' course_id=course_data.CourseName %}">
                     <button class="btn btn-primary mr-2 btn-rounded">Try Again</button>
                 </a>
                 {% endif %}
