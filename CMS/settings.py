@@ -140,7 +140,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'rosadavisc@gmail.com'
-EMAIL_HOST_PASSWORD = 'ojln gfti yldm jraw'
+EMAIL_HOST_PASSWORD = 'looy mpsj gxte rbpj'
 # EMAIL_DEBUG = True
 
 # EMAIL_USE_SSL = True
