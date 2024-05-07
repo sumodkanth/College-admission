@@ -51,7 +51,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for question in questions %}
+            {% for question in  questions reversed %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ question.question_text }}</td>

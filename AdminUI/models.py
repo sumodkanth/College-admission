@@ -20,7 +20,7 @@ class CourseDB(models.Model):
     Duration = models.CharField(max_length=50, null=True, blank=True)
     Cost = models.CharField(max_length=20, null=True, blank=True)
     AdmissionFee = models.CharField(max_length=20, null=True, blank=True)
-
+    Syllabus = models.FileField(upload_to='documents/', null=True, blank=True)
     def __str__(self):
         return self.CourseName
 

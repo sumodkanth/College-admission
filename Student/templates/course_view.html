@@ -16,7 +16,7 @@
                       <table class="table table-striped" style="color: black;">
                         <thead>
                           <tr>
-                              <th> Course Id</th>
+                              <th> No</th>
                             <th> Course </th>
                             <th> Department </th>
                           </tr>
@@ -24,7 +24,8 @@
                         <tbody>
                         {% for i in course_data %}
                           <tr>
-                            <td> {{i.CourseId}}</td>
+<!--                            <td> {{i.CourseId}}</td>-->
+                              <td>{{ forloop.counter }}</td>
                             <td> {{i.CourseName}}</td>
                             <td> {{i.DeptId.DeptName}}</td>
 

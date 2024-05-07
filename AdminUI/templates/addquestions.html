@@ -62,9 +62,9 @@
         <label for="course">Select Course:</label>
         <select id="course" name="course">
             <option value="">Select the course</option>
-            {% for course in data %}
-            <option value="{{ course.CourseName }}">{{ course.CourseName }}</option>
-            {% endfor %}
+
+            <option value="{{ data }}">{{ data }}</option>
+
         </select>
         <label for="question" >Question:</label>
         <textarea id="question" name="question" rows="4" cols="50"></textarea>

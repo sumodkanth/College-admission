@@ -703,29 +703,44 @@ def statussearch(request):
         return redirect('main_page')
 
 
+# def search_studentstatus(request):
+#     if request.method == 'POST':
+#         course_name = request.POST.get('course')
+#         fac_name = request.session["username"]
+#         name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+#         # courses = CourseDB.objects.get(CourseName=course_name)
+#
+#
+#         # Filter job statuses based on the selected course
+#         job_statuses = CourseenrollmentDB.objects.filter(CourseId__CourseName=course_name)
+#
+#         # test_results = TestResult.objects.get(course=job_statuses)
+#         context = {
+#             'course_name': course_name,
+#             'job_statuses': job_statuses,
+#             'name':name
+#             # 'name':name,
+#             # 'test_results':test_results
+#         }
+#         return render(request, 'Viewstudentstatus.html', context)
+#     else:
+#         courses = CourseDB.objects.all()
+#         return render(request, 'dashboard.html', {'data': courses})
+
 def search_studentstatus(request):
-    if request.method == 'POST':
-        course_name = request.POST.get('course')
-        fac_name = request.session["username"]
-        name = FacultyEnrollmentDB.objects.get(Email=fac_name)
-        # courses = CourseDB.objects.get(CourseName=course_name)
+    fac_name = request.session["username"]
+    name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+    print(name.DeptId)
+    courses = CourseDB.objects.get(DeptId=name.DeptId)
+    course_statuses = CourseenrollmentDB.objects.filter(CourseId__DeptId=name.DeptId)
 
+    context = {
+        'course_name': courses,
+        'course_statuses': course_statuses,
+        'name': name
 
-        # Filter job statuses based on the selected course
-        job_statuses = CourseenrollmentDB.objects.filter(CourseId__CourseName=course_name)
-
-        # test_results = TestResult.objects.get(course=job_statuses)
-        context = {
-            'course_name': course_name,
-            'job_statuses': job_statuses,
-            'name':name
-            # 'name':name,
-            # 'test_results':test_results
-        }
-        return render(request, 'Viewstudentstatus.html', context)
-    else:
-        courses = CourseDB.objects.all()
-        return render(request, 'dashboard.html', {'data': courses})
+    }
+    return render(request, 'Viewstudentstatus.html', context)
 
 from django.db.models import Max
 
@@ -789,12 +804,18 @@ def add_question(request):
 
         return redirect('question_list')  # Redirect to a success page
     else:
-        data = CourseDB.objects.all()
-        return render(request, 'addquestions.html', {'data': data})
+        fac_name = request.session["username"]
+        name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+        data = CourseDB.objects.get(DeptId=name.DeptId)
+        # data = CourseDB.objects.all()
+        return render(request, 'addquestions.html', {'data': data,'name':name})
 
 def question_list(request):
-    questions = MultipleChoiceQuestion.objects.all()
-    return render(request, 'question_list.html', {'questions': questions})
+    fac_name = request.session["username"]
+    name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+    data = CourseDB.objects.get(DeptId=name.DeptId)
+    questions = MultipleChoiceQuestion.objects.filter(course=data)
+    return render(request, 'question_list.html', {'questions': questions,'name':name})
 
 def delete_question(request, question_id):
     question = MultipleChoiceQuestion.objects.get(id=question_id)

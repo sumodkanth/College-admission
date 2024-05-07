@@ -649,6 +649,7 @@ def course_submission(request):
         sslc = request.FILES["sslc_certificate"]
         sslcmark = request.POST.get("sslcmark")
         im = request.FILES['img']
+
         course_data1 = CourseDB.objects.get(CourseId=courseid)
 
 

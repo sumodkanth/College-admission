@@ -60,6 +60,16 @@
                             <p style="font-size:15px;">{{ course_data.AdmissionFee }}</p>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Syllabus:</label>
+                        <div class="col-sm-9">
+                            {% if course_data.Syllabus %}
+                                <a href="{{ course_data.Syllabus.url }}" style="color: white;" download>View Syllabus</a>
+                            {% else %}
+                                <p style="color: red;">No syllabus available</p>
+                            {% endif %}
+                        </div>
+                    </div>
 
                     {% if applied %}
                     <button class="btn btn-success mr-2 btn-rounded" disabled>Applied</button>

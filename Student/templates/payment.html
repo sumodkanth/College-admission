@@ -44,10 +44,12 @@
                             <div class="row mb-4">
                                 <div class="col-7">
                                     <div class="form-outline">
-                                        <input class="form-control form-control-lg" type="text" id="formControlLgXM" name="card_number" style=" border: 1px solid black; color: white;" placeholder="1111 2222 3333 4444" required maxlength="16" >
+                                        <input class="form-control form-control-lg" type="text" id="formControlLgXM" name="card_number" style="border: 1px solid black; color: white;" placeholder="1111 2222 3333 4444" required maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit card number" >
                                         <label class="form-label" for="formControlLgXM" style="color: black;">Card Number</label>
                                     </div>
                                 </div>
+
+
                                 <div class="col-3">
                                     <div class="form-outline">
                                         <input class="form-control form-control-lg" type="text" id="formControlLgExpk" name="expiration_date" style=" border: 1px solid black; color: white;" placeholder="MM/YYYY" required pattern="\d{2}/\d{2}" title="Enter date in MM/YY format">
@@ -57,7 +59,7 @@
 
                                 <div class="col-2">
                                     <div class="form-outline">
-                                        <input class="form-control form-control-lg" type="text" id="formControlLgcvv" name="cvv" style=" border: 1px solid black; color: white;" placeholder="CVV" required maxlength="3">
+                                        <input class="form-control form-control-lg" type="text" id="formControlLgcvv" name="cvv" style=" border: 1px solid black; color: white;" placeholder="CVV" required maxlength="3" pattern="[0-9]{3}" title="Please enter a 3-digit CVV">
                                         <label class="form-label" for="formControlLgcvv" style="color: black;">CVV</label>
                                     </div>
                                 </div>
