@@ -242,11 +242,12 @@ def faculty_logout(request):
         del request.session["username"]
         del request.session["password"]
         messages.success(request, "Log Out Success")
-        if get_f_data.is_admin != True:
+        if not get_f_data.is_admin:
             return redirect(Student.views.main_page)
         else:
             return redirect(Student.views.main_page)
     else:
         del request.session["username"]
         del request.session["password"]
+        messages.success(request, "Logout successfully")
         return redirect(Student.views.main_page)
