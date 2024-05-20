@@ -68,29 +68,63 @@ def main_login(request):
 
 
 
+# @redirect_authenticated_user
+# def main_page(request):
+#
+#             stud_email = request.session.get("username")
+#             last_post = newsDB.objects.latest('newsId')
+#             recent_posts = newsDB.objects.order_by('newsId')[0:5]
+#             last_post2 = newsDB2.objects.latest('newsId')
+#             recent_posts2 = newsDB2.objects.order_by('newsId')[0:5]
+#             job_data = JobsDB.objects.all()
+#             placed_posts = placed_studdb.objects.order_by('p_id')[0:30]
+#             marquee_texts = Marquee.objects.all()
+#
+#             if  stud_email:
+#                 name = StudentDB.objects.get(Email=stud_email)
+#                 return render(request, "main_home.html",
+#                               {"name": name, "job_data": job_data, "last_post": last_post, "last_post2": last_post2,
+#                                "recent_posts": recent_posts, "recent_posts2": recent_posts2,
+#                                "placed_posts": placed_posts, 'marquee_texts': marquee_texts})
+#             elif stud_email:
+#                 FacultyEnrollmentDB.objects.get(Email=stud_email)
+#                 return redirect("admin_indexpage")
+#             else:
+#                 return render(request, "main_home.html",
+#                               {"job_data": job_data, "last_post": last_post, "last_post2": last_post2,
+#                                "recent_posts": recent_posts, "recent_posts2": recent_posts2,
+#                                "placed_posts": placed_posts, 'marquee_texts': marquee_texts})
+
+
 @redirect_authenticated_user
 def main_page(request):
+    stud_email = request.session.get("username")
+    last_post = newsDB.objects.latest('newsId')
+    recent_posts = newsDB.objects.order_by('newsId')[0:5]
+    last_post2 = newsDB2.objects.latest('newsId')
+    recent_posts2 = newsDB2.objects.order_by('newsId')[0:5]
+    job_data = JobsDB.objects.all()
+    placed_posts = placed_studdb.objects.order_by('p_id')[0:30]
+    marquee_texts = Marquee.objects.all()
 
-            stud_email = request.session.get("username")
-            last_post = newsDB.objects.latest('newsId')
-            recent_posts = newsDB.objects.order_by('newsId')[0:5]
-            last_post2 = newsDB2.objects.latest('newsId')
-            recent_posts2 = newsDB2.objects.order_by('newsId')[0:5]
-            job_data = JobsDB.objects.all()
-            placed_posts = placed_studdb.objects.order_by('p_id')[0:30]
-            marquee_texts = Marquee.objects.all()
+    if stud_email:
+        try:
+            name = StudentDB.objects.get(Email=stud_email)
+            return render(request, "main_home.html",
+                          {"name": name, "job_data": job_data, "last_post": last_post, "last_post2": last_post2,
+                           "recent_posts": recent_posts, "recent_posts2": recent_posts2,
+                           "placed_posts": placed_posts, 'marquee_texts': marquee_texts})
+        except StudentDB.DoesNotExist:
+            try:
+                FacultyEnrollmentDB.objects.get(Email=stud_email)
+                return redirect("admin_indexpage")
+            except FacultyEnrollmentDB.DoesNotExist:
+                pass
 
-            if  stud_email:
-                name = StudentDB.objects.get(Email=stud_email)
-                return render(request, "main_home.html",
-                              {"name": name, "job_data": job_data, "last_post": last_post, "last_post2": last_post2,
-                               "recent_posts": recent_posts, "recent_posts2": recent_posts2,
-                               "placed_posts": placed_posts, 'marquee_texts': marquee_texts})
-            else:
-                return render(request, "main_home.html",
-                              {"job_data": job_data, "last_post": last_post, "last_post2": last_post2,
-                               "recent_posts": recent_posts, "recent_posts2": recent_posts2,
-                               "placed_posts": placed_posts, 'marquee_texts': marquee_texts})
+    return render(request, "main_home.html",
+                  {"job_data": job_data, "last_post": last_post, "last_post2": last_post2,
+                   "recent_posts": recent_posts, "recent_posts2": recent_posts2,
+                   "placed_posts": placed_posts, 'marquee_texts': marquee_texts})
 
 
 def recruiter(request):

@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.db.models import Count
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
@@ -13,6 +13,8 @@ from AdminUI.models import DepartmentDB, CourseDB, StudentDB, FacultyEnrollmentD
 from FacultyUI.models import FacultyDB
 from .forms import MarqueeForm
 import pandas as pd
+from django.utils import timezone
+
 from .forms import MultipleChoiceQuestionForm, ChoiceForm
 from django.conf import settings
 from django.core.mail import send_mail
@@ -782,18 +784,50 @@ def add_question2(request):
     course = CourseDB.objects.filter(CourseName=course_name)
 
     return render(request, 'add_question.html', {'course': course})
-def add_question(request):
+# def add_question(request):
+#
+#     if request.method == 'POST':
+#         course_name = request.POST.get('course')
+#         course = CourseDB.objects.get(CourseName=course_name)
+#
+#
+#         question_text = request.POST.get('question')
+#         question = MultipleChoiceQuestion.objects.create(question_text=question_text, course=course)
+#
+#         choices = request.POST.getlist('choice[]')
+#         correct_choice =int(request.POST.get('correct_choice'))
+#         print(choices)
+#         print(correct_choice)
+#         for i, choice_text in enumerate(choices):
+#             choice = Choice.objects.create(question=question, choice_text=choice_text)
+#             if i == correct_choice:
+#                 choice.is_correct = True
+#                 choice.save()
+#
+#         return redirect('question_list')  # Redirect to a success page
+#     else:
+#         fac_name = request.session["username"]
+#         name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+#         data = CourseDB.objects.get(DeptId=name.DeptId)
+#         # data = CourseDB.objects.all()
+#         return render(request, 'addquestions.html', {'data': data,'name':name})
 
+
+def add_question(request):
     if request.method == 'POST':
         course_name = request.POST.get('course')
         course = CourseDB.objects.get(CourseName=course_name)
 
-
         question_text = request.POST.get('question')
-        question = MultipleChoiceQuestion.objects.create(question_text=question_text, course=course)
+        created_at = timezone.now()
+        question = MultipleChoiceQuestion.objects.create(
+            question_text=question_text,
+            course=course,
+            created_at=created_at
+        )
 
         choices = request.POST.getlist('choice[]')
-        correct_choice =int(request.POST.get('correct_choice'))
+        correct_choice = int(request.POST.get('correct_choice'))
         print(choices)
         print(correct_choice)
         for i, choice_text in enumerate(choices):
@@ -807,16 +841,29 @@ def add_question(request):
         fac_name = request.session["username"]
         name = FacultyEnrollmentDB.objects.get(Email=fac_name)
         data = CourseDB.objects.get(DeptId=name.DeptId)
-        # data = CourseDB.objects.all()
-        return render(request, 'addquestions.html', {'data': data,'name':name})
+        return render(request, 'addquestions.html', {'data': data, 'name': name})
+# def question_list(request):
+#     fac_name = request.session["username"]
+#     name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+#     data = CourseDB.objects.get(DeptId=name.DeptId)
+#     questions = MultipleChoiceQuestion.objects.filter(course=data)
+#     return render(request, 'question_list.html', {'questions': questions,'name':name})
+
+
 
 def question_list(request):
-    fac_name = request.session["username"]
+    fac_name = request.session.get("username")
     name = FacultyEnrollmentDB.objects.get(Email=fac_name)
-    data = CourseDB.objects.get(DeptId=name.DeptId)
-    questions = MultipleChoiceQuestion.objects.filter(course=data)
-    return render(request, 'question_list.html', {'questions': questions,'name':name})
+    courses = CourseDB.objects.filter(DeptId=name.DeptId)
 
+    # Get unique dates from the created_at field
+    unique_dates = MultipleChoiceQuestion.objects.filter(course__in=courses) \
+        .values_list('created_at', flat=True) \
+        .distinct().order_by('created_at')
+
+    questions = MultipleChoiceQuestion.objects.filter(course__in=courses).select_related('course')
+
+    return render(request, 'question_list.html', {'questions': questions, 'name': name,'unique_dates':unique_dates})
 def delete_question(request, question_id):
     question = MultipleChoiceQuestion.objects.get(id=question_id)
     question.delete()

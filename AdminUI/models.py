@@ -169,11 +169,14 @@ class CourseenrollmentDB(models.Model):
 
 
 class MultipleChoiceQuestion(models.Model):
-    question_text = models.CharField(max_length=200)
-    course = models.ForeignKey(CourseDB, on_delete=models.CASCADE)
-
+    question_text = models.CharField(max_length=200, verbose_name="Question Text")
+    course = models.ForeignKey(CourseDB, on_delete=models.CASCADE, verbose_name="Course")
+    created_at = models.DateField(verbose_name="Created At",null=True, blank=True)
     def __str__(self):
         return self.question_text
+    class Meta:
+        verbose_name = "Multiple Choice Question"
+        verbose_name_plural = "Multiple Choice Questions"
 
 
 class Choice(models.Model):
@@ -182,7 +185,7 @@ class Choice(models.Model):
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.choice_text
+        return f"{self.choice_text} ({'Correct' if self.is_correct else 'Incorrect'})"
 
 
 class TestResult(models.Model):

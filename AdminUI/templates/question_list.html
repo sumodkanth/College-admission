@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 {% extends 'adminindex.html' %}
 
 {% block content %}
@@ -9,67 +10,139 @@
     <title>Question List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-                .delete-btn {
+        .delete-btn {
             background: none;
             border: none;
-            color: red; /* You can change the color as needed */
+            color: red;
             cursor: pointer;
         }
 
         .delete-btn:hover {
-            color: darkred; /* Change the color on hover if desired */
+            color: darkred;
         }
-                .add-btn {
+
+        .add-btn {
             background: none;
             border: none;
-            color: green; /* You can change the color as needed */
+            color: green;
             cursor: pointer;
         }
 
         .add-btn:hover {
-            color: darkgreen; /* Change the color on hover if desired */
+            color: darkgreen;
+        }
+
+        .sort-btn {
+            background: none;
+            border: none;
+            color: blue;
+            cursor: pointer;
+        }
+
+        .sort-btn:hover {
+            color: darkblue;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .card-title,
+            .add-btn {
+                margin-bottom: 10px;
+            }
+
+            .card-body {
+                padding: 10px;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
         }
     </style>
+
 </head>
 <body>
 <div class="card" style="background-color: #afbbc4;">
     <div class="card-body">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 class="card-title" style="color: black;">Uploaded Questions</h4>
+            <button class="add-btn" onclick="location.href='{% url 'add_question' %}'"><i class="fas fa-plus-circle"></i> Add Question</button>
+        </div>
 
-<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-    <h4 class="card-title" style="color: black;">Uploaded Questions</h4>
-    <button class="add-btn" onclick="location.href='{% url 'add_question' %}'"><i class="fas fa-plus-circle"></i> Add Question</button>
-</div>
+        <div style="margin-bottom: 10px; text-align: left;">
+            <select id="dateSelect" name="dateSelect" onchange="filterQuestions()" style="width: 200px;">
+                <option value="">Sort by date</option>
+                {% for date in unique_dates %}
+                    <option value="{{ date }}">{{ date }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
         <div class="table-responsive">
-    <table class="table table-striped" style="color: black;">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Question</th>
-                <th>Course</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for question in  questions reversed %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ question.question_text }}</td>
-                <td>{{ question.course }}</td>
-                <td>
-                    <form action="{% url 'delete_question' question.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <table class="table table-striped" style="color: black;">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Question</th>
+                        <th>Course</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="questionTableBody">
+                    {% for question in questions %}
+                    <tr class="questionRow" data-date="{{ question.created_at }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ question.question_text }}</td>
+                        <td>{{ question.course }}</td>
+                        <td class="question-date">{{ question.created_at }}</td>
+                        <td>
+                            <form action="{% url 'delete_question' question.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-         <button class="add-btn" onclick="location.href='{% url 'add_question' %}'"><i class="fas fa-plus-circle"></i> Add Question</button>
+        <button class="add-btn" onclick="location.href='{% url 'add_question' %}'"><i class="fas fa-plus-circle"></i> Add Question</button>
     </div>
 </div>
+
+<script>
+    function filterQuestions() {
+        var selectedDate = document.getElementById("dateSelect").value;
+        var questionRows = document.getElementsByClassName("questionRow");
+        for (var i = 0; i < questionRows.length; i++) {
+            var questionDate = questionRows[i].getAttribute("data-date");
+            if (selectedDate === "" || selectedDate === questionDate) {
+                questionRows[i].style.display = "table-row";
+            } else {
+                questionRows[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
 </body>
 {% endblock %}
 </html>
