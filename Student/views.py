@@ -605,27 +605,59 @@ def applytraining(request,trainID):
     obj.save()
     return redirect(stud_notification)
 
+# def student_registration(request):
+#     users = StudentDB.objects.all()
+#     existing_emails = [user.Email for user in users]
+#     if request.method == "POST":
+#         fname = request.POST.get("fname")
+#         lname = request.POST.get("lname")
+#
+#         dob = request.POST.get("dob")
+#         gender = request.POST.get("gender")
+#         email = request.POST.get("email")
+#         contact = request.POST.get("contact")
+#
+#         password = request.POST.get("password")
+#
+#         obj = StudentDB(FirstName=fname, LastName=lname,
+#                         DateOfBirth=dob, Gender=gender, Email=email, ContactNo=contact, password=password)
+#         obj.save()
+#         return redirect('main_login')
+#
+#     return render(request,'student_signup.html',{'existing_emails': existing_emails})
+
 def student_registration(request):
-  
+    # Retrieve all users from the database
+    users = StudentDB.objects.all()
+
+    # Extract all email addresses from the users
+    existing_emails = [user.Email for user in users]
+
     if request.method == "POST":
         fname = request.POST.get("fname")
         lname = request.POST.get("lname")
-      
         dob = request.POST.get("dob")
         gender = request.POST.get("gender")
         email = request.POST.get("email")
         contact = request.POST.get("contact")
-       
         password = request.POST.get("password")
-       
-        obj = StudentDB(FirstName=fname, LastName=lname, 
-                        DateOfBirth=dob, Gender=gender, Email=email, ContactNo=contact, password=password)
-        obj.save()
-        return redirect('main_login')
 
-    return render(request,'student_signup.html')
+        # Check if the email already exists in the database
+        if email in existing_emails:
+            # If email exists, return with an error message
+            messages.error(request, "Entered email already exists.")
+            return render(request, 'student_signup.html',
+                          {'existing_emails': existing_emails,'error_message': 'Entered email already exists.'})
 
+        # Creating a new StudentDB object with the provided data
+        obj = StudentDB(FirstName=fname, LastName=lname,
+                        DateOfBirth=dob, Gender=gender, Email=email,
+                        ContactNo=contact, password=password)
+        obj.save()  # Saving the object to the database
 
+        return redirect('main_login')  # Redirecting to the main login page after successful registration
+
+    return render(request, 'student_signup.html', {'existing_emails': existing_emails})
 
 
 def faculty_registration(request):
