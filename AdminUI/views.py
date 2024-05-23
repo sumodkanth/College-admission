@@ -851,19 +851,47 @@ def add_question(request):
 
 
 
+# def question_list(request):
+#     fac_name = request.session.get("username")
+#     name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+#     courses = CourseDB.objects.filter(DeptId=name.DeptId)
+#
+#     # Get unique dates from the created_at field
+#     unique_dates = MultipleChoiceQuestion.objects.filter(course__in=courses) \
+#         .values_list('created_at', flat=True) \
+#         .distinct().order_by('created_at')
+#
+#     questions = MultipleChoiceQuestion.objects.filter(course__in=courses).select_related('course')
+#
+#     return render(request, 'question_list.html', {'questions': questions, 'name': name,'unique_dates':unique_dates})
+
 def question_list(request):
     fac_name = request.session.get("username")
-    name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+
+    # Retrieve the faculty member; handle the case where the faculty member is not found
+    name = get_object_or_404(FacultyEnrollmentDB, Email=fac_name)
+
+    # Retrieve courses related to the faculty member's department
     courses = CourseDB.objects.filter(DeptId=name.DeptId)
 
-    # Get unique dates from the created_at field
+    # Get unique creation dates from questions related to these courses
     unique_dates = MultipleChoiceQuestion.objects.filter(course__in=courses) \
-        .values_list('created_at', flat=True) \
-        .distinct().order_by('created_at')
+        .values_list('created_at', flat=True).distinct().order_by('created_at')
 
+    # Retrieve questions related to these courses
     questions = MultipleChoiceQuestion.objects.filter(course__in=courses).select_related('course')
 
-    return render(request, 'question_list.html', {'questions': questions, 'name': name,'unique_dates':unique_dates})
+    # Extract unique years for the drop-down
+    years = list(set(date.year for date in unique_dates))
+    years.sort()
+
+    # Render the template with the context data
+    return render(request, 'question_list.html', {
+        'questions': questions,
+        'name': name,
+        'unique_dates': unique_dates,
+        'years': years
+    })
 def delete_question(request, question_id):
     question = MultipleChoiceQuestion.objects.get(id=question_id)
     question.delete()

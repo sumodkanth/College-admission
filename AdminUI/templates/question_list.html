@@ -87,11 +87,27 @@
         </div>
 
         <div style="margin-bottom: 10px; text-align: left;">
-            <select id="dateSelect" name="dateSelect" onchange="filterQuestions()" style="width: 200px;">
-                <option value="">Sort by date</option>
-                {% for date in unique_dates %}
-                    <option value="{{ date }}">{{ date }}</option>
+            <select id="yearSelect" name="yearSelect" onchange="filterQuestions()" style="width: 100px;">
+                <option value="">Sort by year</option>
+                {% for year in years %}
+                    <option value="{{ year }}">{{ year }}</option>
                 {% endfor %}
+            </select>
+
+            <select id="monthSelect" name="monthSelect" onchange="filterQuestions()" style="width: 100px;">
+                <option value="">Sort by month</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
             </select>
         </div>
 
@@ -130,11 +146,15 @@
 
 <script>
     function filterQuestions() {
-        var selectedDate = document.getElementById("dateSelect").value;
+        var selectedYear = document.getElementById("yearSelect").value;
+        var selectedMonth = document.getElementById("monthSelect").value;
         var questionRows = document.getElementsByClassName("questionRow");
         for (var i = 0; i < questionRows.length; i++) {
-            var questionDate = questionRows[i].getAttribute("data-date");
-            if (selectedDate === "" || selectedDate === questionDate) {
+            var questionDate = new Date(questionRows[i].getAttribute("data-date"));
+            var questionYear = questionDate.getFullYear();
+            var questionMonth = ('0' + (questionDate.getMonth() + 1)).slice(-2);  // months are zero-based, so add 1
+            if ((selectedYear === "" || selectedYear == questionYear) &&
+                (selectedMonth === "" || selectedMonth == questionMonth)) {
                 questionRows[i].style.display = "table-row";
             } else {
                 questionRows[i].style.display = "none";
