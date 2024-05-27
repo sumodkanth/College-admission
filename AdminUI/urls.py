@@ -72,6 +72,7 @@ urlpatterns = [
     path('question_list/', views.question_list, name='question_list'),
     path('questions/delete/<int:question_id>/', views.delete_question, name='delete_question'),
     path('student_details/<int:student_id>/', views.student_details, name='student_details'),
+    path('student/<int:student_id>/update_status/', views.update_interview_status, name='update_interview_status'),
     path('confirm_admission/', views.confirm_admission, name='confirm_admission'),
 
 ]

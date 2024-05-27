@@ -9,8 +9,10 @@ from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from AdminUI.models import DepartmentDB, CourseDB, StudentDB, FacultyEnrollmentDB, JobsDB, JobApplications, newsDB, \
-    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice,CourseenrollmentDB,TestResult,AdmissionDB,Payment
+    placed_studdb, Marquee, newsDB2, InterviewStep, JobStatus2,TrainingDB, MultipleChoiceQuestion, Choice,CourseenrollmentDB,TestResult,AdmissionDB,Payment,InterviewDB
 from FacultyUI.models import FacultyDB
+from django.views.decorators.csrf import csrf_protect
+from django.urls import reverse
 from .forms import MarqueeForm
 import pandas as pd
 from django.utils import timezone
@@ -781,9 +783,8 @@ def search_trainings(request):
 def add_question2(request):
     if request.method == 'POST':
         course_name = request.POST.get('course')
-    course = CourseDB.objects.filter(CourseName=course_name)
-
-    return render(request, 'add_question.html', {'course': course})
+        course = CourseDB.objects.filter(CourseName= course_name)
+        return render(request, 'add_question.html', {'course': course})
 # def add_question(request):
 #
 #     if request.method == 'POST':
@@ -842,28 +843,7 @@ def add_question(request):
         name = FacultyEnrollmentDB.objects.get(Email=fac_name)
         data = CourseDB.objects.get(DeptId=name.DeptId)
         return render(request, 'addquestions.html', {'data': data, 'name': name})
-# def question_list(request):
-#     fac_name = request.session["username"]
-#     name = FacultyEnrollmentDB.objects.get(Email=fac_name)
-#     data = CourseDB.objects.get(DeptId=name.DeptId)
-#     questions = MultipleChoiceQuestion.objects.filter(course=data)
-#     return render(request, 'question_list.html', {'questions': questions,'name':name})
 
-
-
-# def question_list(request):
-#     fac_name = request.session.get("username")
-#     name = FacultyEnrollmentDB.objects.get(Email=fac_name)
-#     courses = CourseDB.objects.filter(DeptId=name.DeptId)
-#
-#     # Get unique dates from the created_at field
-#     unique_dates = MultipleChoiceQuestion.objects.filter(course__in=courses) \
-#         .values_list('created_at', flat=True) \
-#         .distinct().order_by('created_at')
-#
-#     questions = MultipleChoiceQuestion.objects.filter(course__in=courses).select_related('course')
-#
-#     return render(request, 'question_list.html', {'questions': questions, 'name': name,'unique_dates':unique_dates})
 
 def question_list(request):
     fac_name = request.session.get("username")
@@ -902,18 +882,48 @@ def student_details(request, student_id):
     student = get_object_or_404(CourseenrollmentDB, pk=student_id)
     fac_name = request.session["username"]
     name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+
     try:
         score = TestResult.objects.get(StudentName__Email=student.Email)
     except TestResult.DoesNotExist:
         score = None
     try:
+        status = InterviewDB.objects.get(Email=student.Email)
+    except InterviewDB.DoesNotExist:
+        status = None
+    try:
+        passed = InterviewDB.objects.filter(CourseName=student.CourseId,InterviewStatus="Passed")
+        print("passed")
+    except InterviewDB.DoesNotExist:
+        passed = False
+        print("not passed")
+    try:
+        failed = InterviewDB.objects.filter(CourseName=student.CourseId, InterviewStatus="Failed")
+    except InterviewDB.DoesNotExist:
+        failed = False
+    try:
         placed = AdmissionDB.objects.get(Email=student.Email)
     except AdmissionDB.DoesNotExist:
         placed = False
         print(placed)
-    return render(request, 'student_details.html', {'student': student,'score':score,'placed':placed,'name':name})
+    return render(request, 'student_details.html', {'student': student,'score':score,'placed':placed,'name':name,'passed':passed,'failed':failed,'status':status})
 
 
+
+def update_interview_status(request, student_id):
+    if request.method == 'POST':
+        student = get_object_or_404(CourseenrollmentDB, pk=student_id)
+        status = request.POST.get('interview_status')
+        course = request.POST.get('Course')
+        InterviewDB.objects.update_or_create(
+            Email=student.Email,
+            StudentName=student.StudentName,
+            CourseName=course,
+            defaults={'InterviewStatus': status}
+        )
+
+        messages.success(request, 'Interview status updated successfully.')
+        return redirect(reverse('student_details', args=[student_id]))
 def confirm_admission(request):
     if request.method == 'POST':
         # Retrieve student details from the form
@@ -931,12 +941,13 @@ def confirm_admission(request):
         payment = Payment.objects.create(student=student)
         # Associate the payment with the order
         payment.save()
-        # Send an email to the student
+        # To send email to the student
         subject = 'Admission Confirmation'
         message = f'Dear {student_name},\n\nCongratulations! Your admission for the course {course} has been confirmed.'
         from_email = settings.EMAIL_HOST_USER  # Update with your email
         recipient_list = [email]
         send_mail(subject, message, from_email, recipient_list)
         # Redirect to a success page or render a success message
+        messages.success(request, 'Admission confirmed.')
         return redirect('student_details', student_id=student.pk)  # Redirect to a success page
   # Redirect to an error page

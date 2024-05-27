@@ -247,13 +247,23 @@ class BusBooking(models.Model):
     bus_fair = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+class InterviewDB(models.Model):
+    Email = models.EmailField(null=True, blank=True)
+    StudentName = models.CharField(max_length=100,null=True, blank=True)
+    CourseName = models.CharField(max_length=20,null=True, blank=True)
+    InterviewStatus = models.CharField(max_length=10, choices=[('Passed', 'Passed'), ('Failed', 'Failed')], null=True, blank=True)
+    # other fields
+
+    def __str__(self):
+        return self.Email
+
 class AdmissionDB(models.Model):
-    StudentName = models.CharField(max_length=100)
-    DateOfBirth = models.CharField(max_length=10)
-    Gender = models.CharField(max_length=10)
-    Email = models.EmailField()
-    ContactNo = models.CharField(max_length=20)
-    CourseName = models.CharField(max_length=20)
+    StudentName = models.CharField(max_length=100,null=True, blank=True)
+    DateOfBirth = models.CharField(max_length=10,null=True, blank=True)
+    Gender = models.CharField(max_length=10,null=True, blank=True)
+    Email = models.EmailField(null=True, blank=True)
+    ContactNo = models.CharField(max_length=20,null=True, blank=True)
+    CourseName = models.CharField(max_length=20,null=True, blank=True)
     # Add other fields as needed
     def __str__(self):
         return self.StudentName

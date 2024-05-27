@@ -2,6 +2,7 @@
 <html lang="en">
 {% extends 'adminindex.html' %}
 {% block content %}
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Student Resume</title>
@@ -11,11 +12,10 @@
             background-color: #f2f2f2;
             color: #333;
             margin: 0;
-            padding: 0;
+
         }
         .container {
             max-width: 800px;
-            margin: 20px auto;
             background-color: #dbdbd9;
             padding: 20px;
             border-radius: 8px;
@@ -57,6 +57,36 @@
             border-radius: 5px;
             cursor: pointer;
         }
+                .interview-status {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .interview-status h4 {
+            margin-bottom: 15px;
+            color: #444;
+        }
+        .interview-status label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .interview-status input[type="radio"] {
+            margin-right: 10px;
+        }
+        .interview-status button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .interview-status button:hover {
+            background-color: #0056b3;
+        }
 
     </style>
 </head>
@@ -81,7 +111,12 @@
             <!-- Links to download/uploaded documents -->
             <li><strong>Plus Two Document:</strong> <a href="{{ student.Plustwo.url }}" target="_blank">View</a></li>
             <li><strong>SSLC Document:</strong> <a href="{{ student.SSLC.url }}" target="_blank">View</a></li>
+            <li><strong>Interview status:</strong> {{ status.InterviewStatus }} </li>
         </ul>
+
+
+
+    {% if passed %}
         <div class="confirm-button">
             {% if not placed %}
             <form action="{% url 'confirm_admission' %}" method="post">
@@ -98,8 +133,48 @@
             <button type="button" class="btn btn-success " disabled>Admission Confirmed</button>
             {% endif %}
         </div>
+    {% else %}
+        {% if not failed %}
+            <div class="interview-status">
+
+                <form action="{% url 'update_interview_status' student.id %}" method="post">
+                    {% csrf_token %}
+                    <h4 >Interview Status Update</h4>
+                    <label>
+                        <input type="radio" name="interview_status" value="Passed" required> Passed
+                    </label>
+                    <label>
+                        <input type="radio" name="interview_status" value="Failed" required> Failed
+                    </label>
+                    <input type="hidden" name="Course" value="{{ student.CourseId }}">
+                    <button type="submit" class="btn btn-primary">Update Status</button>
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}
     </div>
 </body>
+  <script src="{% static 'home/js/main.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    {% if messages %}
+      {% for i in messages %}
+           {% if i.tags == 'warning' %}
+               <script>
+                    swal('{{i}}','','warning');
+               </script>
+           {% elif i.tags == 'error' %}
+               <script>
+                    swal('{{i}}','','error');
+               </script>
+           {% else %}
+               <script>
+                    swal('{{i}}','','success');
+               </script>
+           {% endif %}
+        {% endfor %}
+    {% endif %}
 </html>
 
 {% endblock %}

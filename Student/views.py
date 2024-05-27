@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from AdminUI.models import StudentDB, DepartmentDB, CourseDB, JobsDB, JobApplications, newsDB, placed_studdb, Marquee, \
-    newsDB2, InterviewStep, JobStatus2,TrainingDB,FacultyEnrollmentDB,CourseenrollmentDB, MultipleChoiceQuestion, Choice, TestResult,Payment,HostelRoom, Booking,BusBooking,AdmissionDB
+    newsDB2, InterviewStep, JobStatus2,TrainingDB,FacultyEnrollmentDB,CourseenrollmentDB, MultipleChoiceQuestion, Choice, TestResult,Payment,HostelRoom, Booking,BusBooking,AdmissionDB,InterviewDB
 from .forms import SelectionStatusForm,BookingForm
 from django.contrib.auth.decorators import login_required
 import FacultyUI.views
@@ -282,6 +282,7 @@ def stud_login(request):
 def stud_logout(request):
     del request.session['username']
     del request.session['password']
+    messages.success(request, "Logout successful")
     return redirect(main_page)
 
 
@@ -337,6 +338,20 @@ def course_view_single(request, course_id):
             data = CourseenrollmentDB.objects.get(Email=stud_id)
         except CourseenrollmentDB.DoesNotExist:
             data = None
+        try:
+            status = InterviewDB.objects.get(Email=name.Email)
+        except InterviewDB.DoesNotExist:
+            status = None
+        try:
+            passed = InterviewDB.objects.filter(CourseName=name.CourseId, InterviewStatus="Passed")
+            print("passed")
+        except InterviewDB.DoesNotExist:
+            passed = False
+            print("not passed")
+        try:
+            failed = InterviewDB.objects.filter(CourseName=name.CourseId, InterviewStatus="Failed")
+        except InterviewDB.DoesNotExist:
+            failed = False
         payed = Payment.objects.filter(student=course_data2,course=course_id).exists()
         payed2 = Payment.objects.filter(student=data).exists()
         try:
@@ -372,7 +387,11 @@ def course_view_single(request, course_id):
             'payed2':payed2,
             'payed3':payed3,
             'payed4':payed4,
-            'placed':placed
+            'placed':placed,
+            'status':status,
+            'passed':passed,
+            'failed':failed
+
         })
     else:
         messages.error(request, 'Please log in to view this page.')

@@ -70,6 +70,12 @@
                             {% endif %}
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Interview status:</label>
+                        <div class="col-sm-9">
+                            <p style="font-size:15px;">{{ status.InterviewStatus }}</p>
+                        </div>
+                    </div>
 
                     {% if applied %}
                     <button class="btn btn-success mr-2 btn-rounded" disabled>Applied</button>
@@ -87,12 +93,14 @@
                 {% if not placed %}
                 {% if score.score > 12 %}
                 <button class="btn btn-success mr-2 btn-rounded" disabled>Passed</button>
+                {% if passed %}
                 {% if not payed %}
                 <a href="{% url 'payment_page' course_id=course_data.CourseId %}">
                     <button class="btn btn-danger mr-2 btn-rounded">Course Payment</button>
                 </a>
                 {% else %}
                 <button class="btn btn-success mr-2 btn-rounded" disabled>Course payment completed</button>
+                {% endif %}
                 {% endif %}
                 {% else %}
 
