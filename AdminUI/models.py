@@ -26,11 +26,16 @@ class CourseDB(models.Model):
 
 
 class StudentDB(models.Model):
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),  # For rooms that can be shared by any gender
+    ]
     StudentId = models.AutoField(primary_key=True)
     FirstName = models.CharField(max_length=200, null=True, blank=True)
     LastName = models.CharField(max_length=200, null=True, blank=True)
     DateOfBirth = models.DateField(null=True, blank=True)
-    Gender = models.CharField(max_length=1, null=True, blank=True)
+    Gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
     Email = models.EmailField(max_length=200, null=True, blank=True,unique=True)
     ContactNo = models.IntegerField(blank=True, null=True)
     Address = models.TextField(null=True, blank=True)
@@ -146,22 +151,27 @@ class TrainingDB(models.Model):
 
 
 class CourseenrollmentDB(models.Model):
-    StudentName = models.CharField(max_length=100)
-    CourseId = models.ForeignKey(CourseDB, on_delete=models.CASCADE)
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),  # For rooms that can be shared by any gender
+    ]
+    StudentName = models.CharField(max_length=100,null=True, blank=True)
+    CourseId = models.ForeignKey(CourseDB, on_delete=models.CASCADE,null=True, blank=True)
 
-    Religion = models.CharField(max_length=100)
-    District = models.CharField(max_length=100)
-    DateOfBirth = models.DateField()
-    Gender = models.CharField(max_length=10)
+    Religion = models.CharField(max_length=100,null=True, blank=True)
+    District = models.CharField(max_length=100,null=True, blank=True)
+    DateOfBirth = models.DateField(null=True, blank=True)
+    Gender = models.CharField(max_length=10,choices=GENDER_CHOICES,null=True, blank=True)
     Email = models.EmailField()
-    ContactNo = models.CharField(max_length=20)
-    Address = models.TextField()
-    GuardianName = models.CharField(max_length=100)
-    Image = models.ImageField(upload_to='images/')
-    Plustwo = models.FileField(upload_to='documents/')
-    SSLC = models.FileField(upload_to='documents/')
-    Plustwomark = models.CharField(max_length=20)
-    SSLCMark = models.CharField(max_length=20)
+    ContactNo = models.CharField(max_length=20,null=True, blank=True)
+    Address = models.TextField(null=True, blank=True)
+    GuardianName = models.CharField(max_length=100,null=True, blank=True)
+    Image = models.ImageField(upload_to='images/',null=True, blank=True)
+    Plustwo = models.FileField(upload_to='documents/',null=True, blank=True)
+    SSLC = models.FileField(upload_to='documents/',null=True, blank=True)
+    Plustwomark = models.CharField(max_length=20,null=True, blank=True)
+    SSLCMark = models.CharField(max_length=20,null=True, blank=True)
     # Add other fields as needed
 
     def __str__(self):

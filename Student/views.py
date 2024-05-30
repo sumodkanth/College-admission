@@ -865,8 +865,16 @@ def available_rooms(request):
     name = StudentDB.objects.get(Email=stud_id)
     room_type = request.GET.get('room_type')
     available_rooms = HostelRoom.objects.filter(room_type=room_type, is_available=True,gender=name.Gender)
-    return render(request, 'available_rooms.html', {'available_rooms': available_rooms,'name':name})
+    context = {
+        'available_rooms': available_rooms,
+        'name': name
+    }
+    if name.Gender == "Male":
+        context['men'] = 'mens'  # Add appropriate data for men
+    elif name.Gender == "Female":
+        context['women'] = 'womens'  # Add appropriate data for women
 
+    return render(request, 'available_rooms.html', context)
 
 # def book_room(request, room_id):
 #     room = HostelRoom.objects.get(pk=room_id)

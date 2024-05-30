@@ -47,18 +47,30 @@
 
 </head>
 <body>
-<div class="hostel-image-container">
-    <img src="{% static 'images/gents.jpg' %}" class="hostel-image" alt="Hostel Image">
-    <div class="overlay">
-        <h2>Christ Gents Hostel</h2>
-        <p>Location: Irinjalakuda North, 680125</p>
-        <p>Capacity: 200 students</p>
-        <p>Facilities: Wi-Fi, Laundry, Dining Hall</p>
+    <div class="hostel-image-container">
+        {% if men %}
+        <img src="{% static 'images/gents.jpg' %}" class="hostel-image" alt="Hostel Image">
+        <div class="overlay">
+            <h2>Christ Gents Hostel</h2>
+            <p>Location: Irinjalakuda North, 680125</p>
+            <p>Capacity: 200 students</p>
+            <p>Contact :9605991402 (Warden)</p>
+    <!--        <p>Facilities: Wi-Fi, Laundry, Dining Hall</p>-->
+        </div>
+        {% endif %}
+        {% if women %}
+        <img src="{% static 'images/ladies.jpg' %}" class="hostel-image" alt="Hostel Image">
+        <div class="overlay">
+            <h2>Christ Women's Hostel</h2>
+            <p>Location: Irinjalakuda North, 680125</p>
+            <p>Capacity: 300 students</p>
+            <p>Contact : 8075339102 (Warden)</p>
+    <!--        <p>Facilities: Wi-Fi, Laundry, Dining Hall</p>-->
+        </div>
+        {% endif %}
     </div>
-</div>
 <div class="card" style="background-color: gray;">
   <div class="card-body">
-
     <h4 class="card-title" style="color: white;">Available Rooms</h4>
     <div class="table-responsive">
     <table  class="table table-striped" style="color: black;">
