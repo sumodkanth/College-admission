@@ -2,18 +2,63 @@
 <html lang="en">
 {% extends 'studentindex.html' %}
 {% block content %}
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Rooms</title>
 
     <style>
-
+        .hostel-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 350px; /* Adjust height as needed */
+            overflow: hidden;
+        }
+        .hostel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the container */
+        }
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            color: #fff;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+        .card {
+            background-color: gray;
+            margin-top: 20px;
+        }
+        .card-title {
+            color: white;
+        }
+        .table-striped {
+            color: black;
+        }
+        .btn {
+            border-radius: 12px;
+        }
     </style>
+
 </head>
 <body>
+<div class="hostel-image-container">
+    <img src="{% static 'images/gents.jpg' %}" class="hostel-image" alt="Hostel Image">
+    <div class="overlay">
+        <h2>Christ Gents Hostel</h2>
+        <p>Location: Irinjalakuda North, 680125</p>
+        <p>Capacity: 200 students</p>
+        <p>Facilities: Wi-Fi, Laundry, Dining Hall</p>
+    </div>
+</div>
 <div class="card" style="background-color: gray;">
   <div class="card-body">
+
     <h4 class="card-title" style="color: white;">Available Rooms</h4>
     <div class="table-responsive">
     <table  class="table table-striped" style="color: black;">
