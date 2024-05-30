@@ -23,11 +23,11 @@
                             <div class="card-types">
                                 <label class="card-type">
                                     <input type="radio" name="card_type" value="mastercard" checked>
-                                    <img src="{% static 'images/mastercard.png' %}" alt="Mastercard" style="max-width: 100%; height: auto;">
+                                    <img src="{% static 'images/mastercard.png' %}" alt="Mastercard" style="width: 200px; height: 180px;">
                                 </label>
                                 <label class="card-type">
                                     <input type="radio" name="card_type" value="visa" required>
-                                    <img src="{% static 'images/visa.png' %}" alt="Visa" style="max-width: 100%; height: auto;">
+                                    <img src="{% static 'images/visa.png' %}" alt="Visa" style="width: 200px; height: 100px;">
                                 </label>
                             </div>
                             <div class="form-outline mb-4">
@@ -52,7 +52,7 @@
 
                                 <div class="col-3">
                                     <div class="form-outline">
-                                        <input class="form-control form-control-lg" type="text" id="formControlLgExpk" name="expiration_date" style=" border: 1px solid black; color: white;" placeholder="MM/YYYY" required pattern="\d{2}/\d{2}" title="Enter date in MM/YY format">
+                                        <input class="form-control form-control-lg" type="text" id="formControlLgExpk" name="expiration_date" style=" border: 1px solid black; color: white;" placeholder="MM/YY" required pattern="\d{2}/\d{2}" title="Enter date in MM/YY format">
                                         <label class="form-label" for="formControlLgExpk" style="color: black;">Expire</label>
                                     </div>
                                 </div>

@@ -1,7 +1,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-{% load static%}
+
+    {% load static %}
 
 <head>
   <title>CMS PORTAL</title>
@@ -62,20 +63,22 @@
     </div>
 
 
-      {% comment %} <div class="py-2 bg-light">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-lg-9 d-none d-lg-block">
-              <a href="#" class="small mr-3"><span class="icon-question-circle-o mr-2"></span> Have a questions?</a>
-              <a href="#" class="small mr-3"><span class="icon-phone2 mr-2"></span> 10 20 123 456</a>
-              <a href="#" class="small mr-3"><span class="icon-envelope-o mr-2"></span> info@mydomain.com</a>
-            </div>
-            <div class="col-lg-3 text-right">
-              <a href="{% url 'main_login' %}" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-users"></span> Login/Register</a>
-            </div>
-          </div>
-        </div>
-      </div> {% endcomment %}
+<!--      {% comment %}-->
+<!--    <div class="py-2 bg-light">-->
+<!--        <div class="container">-->
+<!--          <div class="row align-items-center">-->
+<!--            <div class="col-lg-9 d-none d-lg-block">-->
+<!--              <a href="#" class="small mr-3"><span class="icon-question-circle-o mr-2"></span> Have a questions?</a>-->
+<!--              <a href="#" class="small mr-3"><span class="icon-phone2 mr-2"></span> 10 20 123 456</a>-->
+<!--              <a href="#" class="small mr-3"><span class="icon-envelope-o mr-2"></span> info@mydomain.com</a>-->
+<!--            </div>-->
+<!--            <div class="col-lg-3 text-right">-->
+<!--              <a href="{% url 'main_login' %}" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-users"></span> Login/Register</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    {% endcomment %}-->
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
 
       <div class="container">
@@ -94,27 +97,28 @@
                 <li class="has-children">
                   <a href="{% url 'jobs_view' %}" class="nav-link text-left">Announcement</a>
                   <ul class="dropdown">
-                    <li><a href="{% url 'jobs_view' %}">Placements</a></li>
-                    <li><a href="{% url 'stud_notification' %}">Training</a></li>
+<!--                    <li><a href="{% url 'jobs_view' %}">Placements</a></li>-->
+<!--                    <li><a href="{% url 'stud_notification' %}">Training</a></li>-->
+                            <li><a href="{% url 'course_view' %}">Courses</a></li>
                   </ul>
                 </li>
                 <li>
                   <a href="{% url 'gallery' %}" class="nav-link text-left">Gallery</a>
                 </li>
                 <li>
-                  <a href="{% url 'help' %}"class="nav-link text-left">Help</a>
+                  <a href="{% url 'help' %}" class="nav-link text-left">Help</a>
                 </li>
                 <li>
                     <a href="{% url 'contact' %}" class="nav-link text-left">Contact Us</a>
                   </li>
-              </ul>                                                                                                                                                                                                                                                                                          </ul>
+              </ul>
             </nav>
 
           </div>
           <div class="ml-auto">
             {% if request.session.username %}
-            <a href="{% url 'stud_profile' %}" class="small btn btn-primary px-4 py-2 rounded-0">{{name.FirstName}}</a>
-              <a href="{% url 'stud_logout' %}" class="small btn btn-primary px-4 py-2 rounded-0">Logout</a>
+<!--              <a href="{% url 'stud_profile' %}" class="small btn btn-primary px-4 py-2 rounded-0.5">{{name.FirstName}}</a>-->
+<!--              <a href="{% url 'stud_logout' %}" class="small btn btn-primary px-4 py-2 rounded-0">Logout</a>-->
 
               <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black"><span
                 class="icon-menu h3"></span></a>
@@ -136,7 +140,7 @@
 
     </header>
   </div>
-</div>
+
 
 {% block content %}
 
@@ -146,7 +150,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-          {% comment %} <h1>Bridging Your Career Path</h1> {% endcomment %}
+            <h1>We are here to help you</h1>
         </div>
       </div>
     </div>
@@ -156,7 +160,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-          {% comment %} <h1>Your Job, Our Mission</h1> {% endcomment %}
+         <h1>Ask Questions</h1>
         </div>
       </div>
     </div>
@@ -176,7 +180,7 @@
     <div id="basicAccordionCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
       data-mdb-parent="#basicAccordion" style="">
       <div class="accordion-body">
-        <strong>A: You can apply for placements through our online portal. Visit the "Career" section on our website to find and apply for current job openings.
+        <strong>A: You can apply for placements through our online portal. Visit the "Career" section on our website to find and apply for current job openings.</strong>
       </div>
     </div>
   </div>
@@ -247,7 +251,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-3">
-            <p class="mb-4"><img src="{% static 'home/images/logo.png' %}" alt="Image" class="img-fluid"></p>
+            <p class="mb-4"><img src="{% static 'home/images/logo1.png' %}" alt="Image" class="img-fluid"></p>
 
 
           </div>
@@ -317,10 +321,7 @@
 
 
   <script src="{% static 'home/js/main.js' %}"></script>
-  <script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
-></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 
 </body>
 

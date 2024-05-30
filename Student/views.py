@@ -170,7 +170,13 @@ def contact(request):
     else:
         return render(request, "6_contact.html")
 
-
+def help(request):
+    # if 'username' in request.session:
+    #     stud_id = request.session["username"]
+    #     name = StudentDB.objects.get(Email=stud_id)
+    #     return render(request, '5_help.html',{'name':name})
+    # else:
+        return render(request, '5_help.html')
 def indexpage(request):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
@@ -427,13 +433,7 @@ def notification_single2(request, news_id):
     return render(request, "notification_single2.html", {"news_data": news_data})
 
 
-def help(request):
-    # if 'username' in request.session:
-    #     stud_id = request.session["username"]
-    #     name = StudentDB.objects.get(StudentId=stud_id)
-    #     return render(request, '5_help.html',{'name':name})
-    # else:
-        return render(request, '5_help.html')
+
 
 
 def entermail1(request):
@@ -864,7 +864,7 @@ def available_rooms(request):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
     room_type = request.GET.get('room_type')
-    available_rooms = HostelRoom.objects.filter(room_type=room_type, is_available=True)
+    available_rooms = HostelRoom.objects.filter(room_type=room_type, is_available=True,gender=name.Gender)
     return render(request, 'available_rooms.html', {'available_rooms': available_rooms,'name':name})
 
 

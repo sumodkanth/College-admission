@@ -116,7 +116,7 @@
     <div class="invoice-wrapper">
         <div class="invoice-details">
             <p><span>Hi </span><strong>{{ user_info.StudentName }}</strong>,</p>
-            <p>This is the receipt for a payment of <strong>{{ payment.amount_received }}</strong> RS for your hostel room number {{ payment.rooms }}</p>
+            <p>This is the receipt for a payment of <strong>{{ payment.amount_received }}</strong> RS for your hostel room number {{ payment.rooms.room_number }}</p>
         </div>
 <div class="invoice-details">
     <div style="display: flex; justify-content: space-between;">
@@ -192,4 +192,25 @@
         </script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
+  <script src="{% static 'home/js/main.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    {% if messages %}
+      {% for i in messages %}
+           {% if i.tags == 'warning' %}
+               <script>
+                    swal('{{i}}','','warning');
+               </script>
+           {% elif i.tags == 'error' %}
+               <script>
+                    swal('{{i}}','','error');
+               </script>
+           {% else %}
+               <script>
+                    swal('{{i}}','','success');
+               </script>
+           {% endif %}
+        {% endfor %}
+    {% endif %}
 </html>

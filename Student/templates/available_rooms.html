@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Rooms</title>
+
     <style>
 
     </style>
@@ -32,7 +33,7 @@
                 <td>{{ room.get_room_type_display }}</td>
                 <td>{{ room.room_rent }}</td>
                 <td>
-                    <a href="{% url 'make_payment' room_id=room.id %}">pay</a> <!-- Link to book room -->
+                    <a href="{% url 'make_payment' room_id=room.id %}" class="btn btn-primary rounded">Book</a>
                 </td>
             </tr>
             {% empty %}
