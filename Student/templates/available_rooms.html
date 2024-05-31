@@ -32,7 +32,7 @@
         }
         .card {
             background-color: gray;
-            margin-top: 20px;
+            margin-top: 5px;
         }
         .card-title {
             color: white;
@@ -42,6 +42,61 @@
         }
         .btn {
             border-radius: 12px;
+        }
+
+        .image-grid-section {
+            margin-top: 0px; /* Space between hostel image and grid */
+            background: #d4d9d8;
+            color:black;
+            padding-top:10px;
+        }
+        .image-grid-heading {
+            text-align: center;
+            margin-top: 0px;
+            margin-bottom: 20px; /* Space between heading and image grid */
+        }
+        .image-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 200px; /* Space between images */
+            justify-content: center; /* Center the grid items */
+        }
+        .image-item {
+            text-align: center; /* Center text below images */
+        }
+        .image-grid img {
+            width: 230px; /* Set width to make images square */
+            height: 230px; /* Set height to make images square */
+            border-radius: 15px; /* Rounded corners */
+            object-fit: cover; /* Ensure images cover the entire area */
+            margin-bottom: 10px; /* Space between image and text */
+        }
+        .menu-section {
+            margin-top: 0px;
+            text-align: center;
+            background: #d4d9d8;
+            color:black;
+
+
+        }
+        .menu-table {
+            margin: 0 auto; /* Center the table */
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+
+        }
+        .menu-table th, .menu-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            color: black;
+        }
+        .menu-table th {
+
+            text-align: center;
+        }
+        .menu-table td {
+            text-align: left;
         }
     </style>
 
@@ -53,56 +108,141 @@
         <div class="overlay">
             <h2>Christ Gents Hostel</h2>
             <p>Location: Irinjalakuda North, 680125</p>
-            <p>Capacity: 200 students</p>
-            <p>Contact :9605991402 (Warden)</p>
-    <!--        <p>Facilities: Wi-Fi, Laundry, Dining Hall</p>-->
+            <p>Capacity: 500 students</p>
+            <p>Contact: 9605991402 (Warden)</p>
         </div>
-        {% endif %}
-        {% if women %}
+        {% elif women %}
         <img src="{% static 'images/ladies.jpg' %}" class="hostel-image" alt="Hostel Image">
         <div class="overlay">
             <h2>Christ Women's Hostel</h2>
             <p>Location: Irinjalakuda North, 680125</p>
             <p>Capacity: 300 students</p>
-            <p>Contact : 8075339102 (Warden)</p>
-    <!--        <p>Facilities: Wi-Fi, Laundry, Dining Hall</p>-->
+            <p>Contact: 8075339102 (Warden)</p>
         </div>
         {% endif %}
     </div>
-<div class="card" style="background-color: gray;">
-  <div class="card-body">
-    <h4 class="card-title" style="color: white;">Available Rooms</h4>
-    <div class="table-responsive">
-    <table  class="table table-striped" style="color: black;">
-        <thead>
-            <tr>
-                <th>Room Number</th>
-                <th>Room Type</th>
-                <th>Room Rent</th>
-                <th>Action</th> <!-- New column for booking action -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for room in available_rooms %}
-            <!-- Table body rows -->
-            <tr>
-                <td>{{ room.room_number }}</td>
-                <td>{{ room.get_room_type_display }}</td>
-                <td>{{ room.room_rent }}</td>
-                <td>
-                    <a href="{% url 'make_payment' room_id=room.id %}" class="btn btn-primary rounded">Book</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3">No available rooms.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="image-grid-section">
+        <h3 class="image-grid-heading" ><strong>Services</strong></h3>
+        <div class="image-grid">
+       {% if men %}
+            <div class="image-item">
+                <img src="{% static 'images/hostel.jpg' %}" class="shadow-1-strong" alt="Furnished rooms">
+                <p>Furnished Rooms</p>
+            </div>
+            <div class="image-item">
+                <img src="{% static 'images/wifi.jpg' %}" class="shadow-1-strong" alt="Free wifi">
+                <p>Free Wi-Fi</p>
+            </div>
+            <div class="image-item">
+                <img src="{% static 'images/canteen.jpg' %}" class="shadow-1-strong" alt="Canteen">
+                <p>Canteen</p>
+            </div>
+        {% elif women %}
+                        <div class="image-item">
+                <img src="{% static 'images/hostel2.jpg' %}" class="shadow-1-strong" alt="Furnished rooms">
+                <p>Furnished Rooms</p>
+            </div>
+            <div class="image-item">
+                <img src="{% static 'images/wifi.jpg' %}" class="shadow-1-strong" alt="Free wifi">
+                <p>Free Wi-Fi</p>
+            </div>
+            <div class="image-item">
+                <img src="{% static 'images/canteen2.jpg' %}" class="shadow-1-strong" alt="Canteen">
+                <p>Canteen</p>
+            </div>
+        {% endif %}
+        </div>
     </div>
+    <div class="menu-section">
+        <h4>Weekly Food Menu</h4>
+        <table class="menu-table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Breakfast</th>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monday</td>
+                    <td>Idli with Sambar and Chutney</td>
+                    <td>Rice, Sambar, Avial, Thoran, Pappadam</td>
+                    <td>Chapati, Chicken Curry, Salad</td>
+                </tr>
+                <tr>
+                    <td>Tuesday</td>
+                    <td>Uppumavu with Banana and Sugar</td>
+                    <td>Rice, Fish Curry, Kootu Curry, Pickle</td>
+                    <td>Dosa with Coconut Chutney and Sambar</td>
+                </tr>
+                <tr>
+                    <td>Wednesday</td>
+                    <td>Masala Dosa with Sambar and Chutney</td>
+                    <td>Rice, Rasam, Pulissery, Cabbage Thoran, Pappadam</td>
+                    <td>Chapati, Beef Fry, Cucumber Raita</td>
+                </tr>
+                <tr>
+                    <td>Thursday</td>
+                    <td>Puttu with Kadala Curry</td>
+                    <td>Rice, Moru Curry, Beans Thoran, Pickle</td>
+                    <td>Appam with Egg Curry</td>
+                </tr>
+                <tr>
+                    <td>Friday</td>
+                    <td>Poori with Potato Masala</td>
+                    <td>Rice, Fish Fry, Olan, Pappadam</td>
+                    <td>Chapati, Vegetable Kurma, Salad</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>Idiyappam with Coconut Milk and Sugar</td>
+                    <td>Rice, Parippu Curry, Cabbage Thoran, Pickle</td>
+                    <td>Biriyani, Raita, Pickle</td>
+                </tr>
+                <tr>
+                    <td>Sunday</td>
+                    <td>Pathiri with Chicken Curry</td>
+                    <td>Rice, Mutton Curry, Avial, Pappadam</td>
+                    <td>Dosa with Tomato Chutney and Sambar</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Available Rooms</h4>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Room Type</th>
+                        <th>Room Rent</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room in available_rooms %}
+                    <tr>
+                        <td>{{ room.room_number }}</td>
+                        <td>{{ room.get_room_type_display }}</td>
+                        <td>{{ room.room_rent }}</td>
+                        <td>
+                            <a href="{% url 'make_payment' room_id=room.id %}" class="btn btn-primary rounded">Book</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No available rooms.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
 {% endblock %}
