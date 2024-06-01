@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
             <label for="dob">Date of Birth</label>
-            <input type="date" class="form-control" id="dob" name="dob" style="background-color: gray; border: 1px solid black; color: white;" required pattern="\d{2}-\d{2}-\d{2}\">
+            <input type="date" class="form-control" id="dob" name="dob" style="background-color: gray; border: 1px solid black; color: white;" required >
         </div>
         <div class="form-group">
         <label for="Course">Course</label>
@@ -133,21 +133,32 @@ function checkFileSize(input) {
         }
     }
 }
-function validateImage(fileInput) {
-    const file = fileInput.files[0];
+    function validateImage(fileInput) {
+        const file = fileInput.files[0];
 
-    if (file) {
-        const fileSizeMB = file.size / (1024 * 1024); // Convert bytes to MB
+        if (file) {
+            const fileSizeMB = file.size / (1024 * 1024); // Convert bytes to MB
 
-        if (fileSizeMB <= 1) {
-            // File meets requirements
-            console.log("File meets requirements.");
-        } else {
-            console.log("File size should not exceed 1 MB.");
+            if (fileSizeMB <= 1) {
+                // File meets requirements
+                console.log("File meets requirements.");
+            } else {
+                console.log("File size should not exceed 1 MB.");
+            }
         }
     }
-}
+        document.getElementById('dob').addEventListener('input', function () {
+        const input = this.value;
+        const year = new Date(input).getFullYear();
+        const currentYear = new Date().getFullYear();
 
+        // Assuming a valid year is between 1900 and the current year
+        if (year < 1900 || year > currentYear) {
+            this.setCustomValidity('Please enter a valid year between 1900 and ' + currentYear);
+        } else {
+            this.setCustomValidity('');
+        }
+    });
 </script>
 </html>
 {% endblock %}

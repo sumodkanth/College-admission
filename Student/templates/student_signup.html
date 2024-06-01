@@ -83,7 +83,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-<!--<script>-->
+
     document.getElementById('password').addEventListener('input', function (e) {
         const password = e.target.value;
         const passwordHelp = document.querySelector('#passwordHelp');
@@ -116,6 +116,18 @@
                 text: 'Entered email already exists.'
             });
             e.preventDefault(); // Prevent form submission
+        }
+    });
+        document.getElementById('dob').addEventListener('input', function () {
+        const input = this.value;
+        const year = new Date(input).getFullYear();
+        const currentYear = new Date().getFullYear();
+
+        // Assuming a valid year is between 1900 and the current year
+        if (year < 1900 || year > currentYear) {
+            this.setCustomValidity('Please enter a valid year between 1900 and ' + currentYear);
+        } else {
+            this.setCustomValidity('');
         }
     });
 </script>
