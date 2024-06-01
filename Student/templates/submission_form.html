@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Submission Form</title>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <div class="card-body" style="background-color: gray;">
     <h4 class="card-title">Submission Form for {{course_data.CourseName}}</h4><br>
-    <form  class="forms-sample" method="post" action="{% url 'course_submission'%}"  enctype="multipart/form-data">
+    <form class="forms-sample" method="post" action="{% url 'course_submission' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="student_name" class="form-label" style="color: white;">Student Name:</label>
@@ -18,32 +18,36 @@
             <div class="invalid-feedback">Please enter a valid student name.</div>
         </div>
 
+        <input type="hidden" id="course_id" name="course_id" value="{{course_data.CourseId}}">
+
         <div class="form-group">
-                    <input type="hidden" class="form-control" id="course_id" style="background-color: gray; border: 1px solid black; color: white;" name="course_id" value="{{course_data.CourseId}}">
+            <label for="phone_number" class="form-label">Phone Number:</label>
+            <input type="text" class="form-control" id="phone_number" style="background-color: gray; border: 1px solid black; color: white;" name="phone_number" value="{{name.ContactNo}}" pattern="\d{10}" title="Please enter a valid 10-digit phone number." required>
+            <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
         </div>
-        <div class="form-group">
-            <label for="phone_number" class="form-label" >Phone Number:</label>
-            <input type="text" class="form-control" id="phone_number" style="background-color: gray; border: 1px solid black; color: white;" name="phone_number" required maxlength="10">
-        </div>
+
         <div class="form-group">
             <label for="email" class="form-label" style="color: white;">Email:</label>
-            <input type="email" class="form-control" id="email" style="background-color: gray; border: 1px solid black; color: white;" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+            <input type="email" class="form-control" id="email" style="background-color: gray; border: 1px solid black; color: white;" name="email" value="{{name.Email}}" required>
             <div class="invalid-feedback">Please enter a valid email address.</div>
         </div>
+
         <div class="form-group">
-            <label for="dob">Date of Birth</label>
-            <input type="date" class="form-control" id="dob" name="dob" style="background-color: gray; border: 1px solid black; color: white;" required >
+            <label for="dob">Date of Birth:</label>
+            <input type="date" class="form-control" id="dob" name="dob" style="background-color: gray; border: 1px solid black; color: white;" value="{{name.DateOfBirth|date:'Y-m-d'}}" required>
         </div>
+
         <div class="form-group">
-        <label for="Course">Course</label>
-        <select class="form-control"  id="Course" name="course" style="background-color: gray; border: 1px solid black; color: white;">
+            <label for="Course">Course:</label>
+            <select class="form-control" id="Course" name="course" style="background-color: gray; border: 1px solid black; color: white;" required>
                 <option value="">Select course</option>
                 <option value="{{course_data.CourseName}}">{{course_data.CourseName}}</option>
-
-        </select>
+            </select>
+            <div class="invalid-feedback">Please select a course.</div>
         </div>
+
         <div class="form-group">
-            <label style="color: white;">Gender</label>
+            <label for="gender" style="color: white;">Gender:</label>
             <select name="gender" id="gender" class="form-control" style="background-color: gray; border: 1px solid black; color: white;" required>
                 <option value="">Select gender</option>
                 <option value="Male">Male</option>
@@ -53,112 +57,122 @@
             <div class="invalid-feedback">Please select a gender.</div>
         </div>
 
-          <div class="form-group">
-            <label >Religion</label>
-            <input type="text" class="form-control"  name="rname" style="background-color: gray; border: 1px solid black; color: white;" required >
-          </div>
         <div class="form-group">
-            <label >District</label>
-                <select name="dictname" class="form-control" style="background-color: gray; border: 1px solid black; color: white;" required>
-                    <option value="">Select District</option>
-                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
-                    <option value="Kollam">Kollam</option>
-                    <option value="Pathanamthitta">Pathanamthitta</option>
-                    <option value="Alappuzha">Alappuzha</option>
-                    <option value="Kottayam">Kottayam</option>
-                    <option value="Idukki">Idukki</option>
-                    <option value="Ernakulam">Ernakulam</option>
-                    <option value="Thrissur">Thrissur</option>
-                    <option value="Palakkad">Palakkad</option>
-                    <option value="Malappuram">Malappuram</option>
-                    <option value="Kozhikode">Kozhikode</option>
-                    <option value="Wayanad">Wayanad</option>
-                    <option value="Kannur">Kannur</option>
-                    <option value="Kasaragod">Kasaragod</option>
-
-                </select>
-
+            <label>Religion:</label>
+            <input type="text" class="form-control" name="rname" style="background-color: gray; border: 1px solid black; color: white;" required>
         </div>
+
         <div class="form-group">
-            <label>Address</label>
+            <label>District:</label>
+            <select name="dictname" class="form-control" style="background-color: gray; border: 1px solid black; color: white;" required>
+                <option value="">Select District</option>
+                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                <option value="Kollam">Kollam</option>
+                <option value="Pathanamthitta">Pathanamthitta</option>
+                <option value="Alappuzha">Alappuzha</option>
+                <option value="Kottayam">Kottayam</option>
+                <option value="Idukki">Idukki</option>
+                <option value="Ernakulam">Ernakulam</option>
+                <option value="Thrissur">Thrissur</option>
+                <option value="Palakkad">Palakkad</option>
+                <option value="Malappuram">Malappuram</option>
+                <option value="Kozhikode">Kozhikode</option>
+                <option value="Wayanad">Wayanad</option>
+                <option value="Kannur">Kannur</option>
+                <option value="Kasaragod">Kasaragod</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Address:</label>
             <textarea class="form-control" name="address" style="background-color: gray; border: 1px solid black; color: white;" pattern="[A-Za-z0-9\s.,'-]+" title="Please enter a valid address (only letters, digits, spaces, and common punctuation marks are allowed)." required></textarea>
             <div class="invalid-feedback">Please enter a valid address.</div>
         </div>
+
         <div class="form-group">
-            <label >Guardian Name</label>
-            <input type="text" class="form-control"  name="gname" style="background-color: gray; border: 1px solid black; color: white;" pattern="[A-Za-z\s]+" title="Please enter a valid name (only alphabets and spaces are allowed)." required>
-        </div>
-        <div class="form-group">
-            <label for="plus_two_certificate" class="form-label" style="color: white;">Plus Two Certificate:</label>
-            <input type="file" class="form-control" id="plus_two_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="plus_two_certificate" required accept=".pdf" onchange="checkFileSize(this)">
-            <div class="invalid-feedback">Please upload a PDF file with below size of 5MB.</div>
-            <small class="form-text text-muted">Please upload a pdf file with file size up to 5MB.</small>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputName1">Plus Two mark %</label>
-            <input type="number" class="form-control" name="plustwomark" style="background-color: gray; border: 1px solid black; color: white;" pattern="[0-9]+" title="Please enter only numeric values." min="1" max="100" required>
-            <div class="invalid-feedback">Please enter a Plus Two mark percentage between 1 and 100.</div>
-        </div>
-        <div class="form-group">
-            <label for="sslc_certificate" class="form-label" style="color: white;">SSLC Certificate:</label>
-            <input type="file" class="form-control" id="sslc_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="sslc_certificate" required accept=".pdf" onchange="checkFileSize(this)">
-            <div class="invalid-feedback">Please upload a PDF file with below size of 5MB.</div>
-            <small class="form-text text-muted">Please upload a pdf file with file size up to 5MB.</small>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputName1">SSLC mark %</label>
-            <input type="number" class="form-control" id="exampleInputName1" name="sslcmark" style="background-color: gray; border: 1px solid black; color: white;" pattern="[0-9]+" title="Please enter only numeric values." min="1" max="100" required>
-            <div class="invalid-feedback">Please enter a SSLC mark percentage between 0 and 100.</div>
+            <label>Guardian Name:</label>
+            <input type="text" class="form-control" name="gname" style="background-color: gray; border: 1px solid black; color: white;" pattern="[A-Za-z\s]+" title="Please enter a valid name (only alphabets and spaces are allowed)." required>
         </div>
 
         <div class="form-group">
-            <label for="exampleInputName1">Upload passport size photo</label>
-            <input type="file" class="form-control" name="img" style="background-color: gray; border: 1px solid black; color: white;" accept="image/jpeg, image/png" onchange="validateImage(this)" required>
-            <small class="form-text text-muted">Please upload a color image file (JPEG, JPG, PNG, etc.) with file size up to 1MB.</small>
+            <label for="plus_two_certificate" class="form-label" style="color: white;">Plus Two Certificate:</label>
+            <input type="file" class="form-control" id="plus_two_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="plus_two_certificate" required accept=".pdf" onchange="checkFileSize(this, 5)">
+            <div class="invalid-feedback">Please upload a PDF file with a size below 5MB.</div>
+            <small class="form-text text-muted">Please upload a PDF file with a size up to 5MB.</small>
         </div>
+
+        <div class="form-group">
+            <label for="plustwomark">Plus Two Mark %:</label>
+            <input type="number" class="form-control" id="plustwomark" name="plustwomark" style="background-color: gray; border: 1px solid black; color: white;" min="1" max="100" required>
+            <div class="invalid-feedback">Please enter a Plus Two mark percentage between 1 and 100.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="sslc_certificate" class="form-label" style="color: white;">SSLC Certificate:</label>
+            <input type="file" class="form-control" id="sslc_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="sslc_certificate" required accept=".pdf" onchange="checkFileSize(this, 5)">
+            <div class="invalid-feedback">Please upload a PDF file with a size below 5MB.</div>
+            <small class="form-text text-muted">Please upload a PDF file with a size up to 5MB.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="sslcmark">SSLC Mark %:</label>
+            <input type="number" class="form-control" id="sslcmark" name="sslcmark" style="background-color: gray; border: 1px solid black; color: white;" min="1" max="100" required>
+            <div class="invalid-feedback">Please enter a SSLC mark percentage between 1 and 100.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="img">Upload Passport Size Photo:</label>
+            <input type="file" class="form-control" id="img" name="img" style="background-color: gray; border: 1px solid black; color: white;" accept="image/jpeg, image/png" onchange="validateImage(this, 1)" required>
+            <small class="form-text text-muted">Please upload a color image file (JPEG, JPG, PNG, etc.) with a size up to 1MB.</small>
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 
-</body>
 <script>
-function checkFileSize(input) {
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+function checkFileSize(input, maxSizeMB) {
+    const maxSize = maxSizeMB * 1024 * 1024; // Convert MB to bytes
     if (input.files.length > 0) {
-        const fileSize = input.files[0].size;
-        if (fileSize > maxSize) {
-            input.setCustomValidity('File size exceeds the maximum limit of 5MB.');
+        const file = input.files[0];
+        const fileSize = file.size;
+        const fileType = file.type;
+
+        if (fileType !== 'application/pdf') {
+            input.setCustomValidity('Please upload a PDF file.');
+        } else if (fileSize > maxSize) {
+            input.setCustomValidity('File size exceeds the maximum limit of ' + maxSizeMB + 'MB.');
         } else {
             input.setCustomValidity('');
         }
     }
 }
-    function validateImage(fileInput) {
-        const file = fileInput.files[0];
 
-        if (file) {
-            const fileSizeMB = file.size / (1024 * 1024); // Convert bytes to MB
-
-            if (fileSizeMB <= 1) {
-                // File meets requirements
-                console.log("File meets requirements.");
-            } else {
-                console.log("File size should not exceed 1 MB.");
-            }
+function validateImage(fileInput, maxSizeMB) {
+    const file = fileInput.files[0];
+    if (file) {
+        const fileSizeMB = file.size / (1024 * 1024); // Convert bytes to MB
+        if (fileSizeMB <= maxSizeMB) {
+            fileInput.setCustomValidity('');
+        } else {
+            fileInput.setCustomValidity('File size should not exceed ' + maxSizeMB + ' MB.');
         }
     }
-        document.getElementById('dob').addEventListener('input', function () {
-        const input = this.value;
-        const year = new Date(input).getFullYear();
-        const currentYear = new Date().getFullYear();
+}
 
-        // Assuming a valid year is between 1900 and the current year
-        if (year < 1900 || year > currentYear) {
-            this.setCustomValidity('Please enter a valid year between 1900 and ' + currentYear);
-        } else {
-            this.setCustomValidity('');
-        }
-    });
+document.getElementById('dob').addEventListener('input', function () {
+    const input = this.value;
+    const year = new Date(input).getFullYear();
+    const currentYear = new Date().getFullYear();
+
+    // Assuming a valid year is between 1900 and the current year
+    if (year < 1900 || year > currentYear) {
+        this.setCustomValidity('Please enter a valid year between 1900 and ' + currentYear);
+    } else {
+        this.setCustomValidity('');
+    }
+});
 </script>
+</body>
 </html>
 {% endblock %}
