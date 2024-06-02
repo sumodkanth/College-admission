@@ -349,13 +349,13 @@ def course_view_single(request, course_id):
         except InterviewDB.DoesNotExist:
             status = None
         try:
-            passed = InterviewDB.objects.filter(CourseName=name.CourseId, InterviewStatus="Passed")
+            passed = InterviewDB.objects.filter(Email=name.Email, InterviewStatus="Passed")
             print("passed")
         except InterviewDB.DoesNotExist:
             passed = False
             print("not passed")
         try:
-            failed = InterviewDB.objects.filter(CourseName=name.CourseId, InterviewStatus="Failed")
+            failed = InterviewDB.objects.filter(Email=name.Email, InterviewStatus="Failed")
         except InterviewDB.DoesNotExist:
             failed = False
         payed = Payment.objects.filter(student=course_data2,course=course_id).exists()

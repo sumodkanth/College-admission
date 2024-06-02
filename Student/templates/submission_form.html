@@ -152,13 +152,22 @@ function validateImage(fileInput, maxSizeMB) {
     const file = fileInput.files[0];
     if (file) {
         const fileSizeMB = file.size / (1024 * 1024); // Convert bytes to MB
-        if (fileSizeMB <= maxSizeMB) {
-            fileInput.setCustomValidity('');
-        } else {
+        const fileType = file.type;
+
+        const validTypes = ['image/jpeg', 'image/png'];
+        if (!validTypes.includes(fileType)) {
+            fileInput.setCustomValidity('Please upload a valid image file (JPEG or PNG).');
+        } else if (fileSizeMB > maxSizeMB) {
             fileInput.setCustomValidity('File size should not exceed ' + maxSizeMB + ' MB.');
+        } else {
+            fileInput.setCustomValidity('');
         }
     }
 }
+
+document.getElementById('img').addEventListener('change', function () {
+    validateImage(this, 1);
+});
 
 document.getElementById('dob').addEventListener('input', function () {
     const input = this.value;

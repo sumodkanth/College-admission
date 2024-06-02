@@ -892,13 +892,14 @@ def student_details(request, student_id):
     except InterviewDB.DoesNotExist:
         status = None
     try:
-        passed = InterviewDB.objects.filter(CourseName=student.CourseId,InterviewStatus="Passed")
+        passed = InterviewDB.objects.filter(Email=student.Email,InterviewStatus="Passed").exists()
         print("passed")
     except InterviewDB.DoesNotExist:
         passed = False
         print("not passed")
     try:
-        failed = InterviewDB.objects.filter(CourseName=student.CourseId, InterviewStatus="Failed")
+        failed = InterviewDB.objects.filter(Email=student.Email, InterviewStatus="Failed").exists()
+
     except InterviewDB.DoesNotExist:
         failed = False
     try:
@@ -907,6 +908,40 @@ def student_details(request, student_id):
         placed = False
         print(placed)
     return render(request, 'student_details.html', {'student': student,'score':score,'placed':placed,'name':name,'passed':passed,'failed':failed,'status':status})
+
+# def student_details(request, student_id):
+#     # Retrieve the student object based on the provided student ID
+#     student = get_object_or_404(CourseenrollmentDB, pk=student_id)
+#     print(student)
+#     fac_name = request.session["username"]
+#     name = FacultyEnrollmentDB.objects.get(Email=fac_name)
+#
+#     # Get the test score for the student
+#     score = TestResult.objects.filter(StudentName__Email=student.Email).first()
+#
+#     # Get the interview status for the student
+#     status = InterviewDB.objects.filter(Email=student.Email).first()
+#
+#     # Check if the student has passed the interview for their course
+#     passed = InterviewDB.objects.filter(CourseName=student.CourseId, InterviewStatus="Passed").exists()
+#
+#     # Check if the student has failed the interview for their course
+#     failed = InterviewDB.objects.filter(CourseName=student.CourseId, InterviewStatus="Failed").exists()
+#
+#     # Check if the student has been placed in admission
+#     placed = AdmissionDB.objects.filter(Email=student.Email).exists()
+#
+#     context = {
+#         'student': student,
+#         'score': score,
+#         'placed': placed,
+#         'name': name,
+#         'passed': passed,
+#         'failed': failed,
+#         'status': status,
+#     }
+#
+#     return render(request, 'student_details.html', context)
 
 
 

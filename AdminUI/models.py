@@ -269,7 +269,7 @@ class InterviewDB(models.Model):
     Email = models.EmailField(null=True, blank=True)
     StudentName = models.CharField(max_length=100,null=True, blank=True)
     CourseName = models.CharField(max_length=20,null=True, blank=True)
-    InterviewStatus = models.CharField(max_length=10, choices=[('Passed', 'Passed'), ('Failed', 'Failed')], null=True, blank=True)
+    InterviewStatus = models.CharField(max_length=10, choices=[('Passed', 'Passed'), ('Failed', 'Failed')])
     # other fields
 
     def __str__(self):
