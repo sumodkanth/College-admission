@@ -21,6 +21,7 @@ class CourseDB(models.Model):
     Cost = models.CharField(max_length=20, null=True, blank=True)
     AdmissionFee = models.CharField(max_length=20, null=True, blank=True)
     Syllabus = models.FileField(upload_to='documents/', null=True, blank=True)
+    Eligibility = models.TextField(null=True, blank=True)
     def __str__(self):
         return self.CourseName
 

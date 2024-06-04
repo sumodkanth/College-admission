@@ -734,20 +734,33 @@ def course_submission(request):
         sslc = request.FILES["sslc_certificate"]
         sslcmark = request.POST.get("sslcmark")
         im = request.FILES['img']
-
-        course_data1 = CourseDB.objects.get(CourseId=courseid)
-
-
+        course_data1 = get_object_or_404(CourseDB, CourseId=courseid)
+        if int(plustwomark) > 60:
 
 
+            obj = CourseenrollmentDB(
+                StudentName=sname,
+                CourseId=course_data1,
+                Religion=religion,
+                District=district,
+                DateOfBirth=dob,
+                Gender=gender,
+                Email=email,
+                ContactNo=contacts,
+                Address=address,
+                GuardianName=gname,
+                Image=im,
+                Plustwo=plustwo,
+                SSLC=sslc,
+                Plustwomark=plustwomark,
+                SSLCMark=sslcmark
+            )
+            obj.save()
+            return redirect("take_test", course_id=course_data1.CourseName)
+        else:
+            messages.warning(request, 'You are not Eligible')
+            return redirect("course_view_single", course_id=course_data1.pk)
 
-        obj = CourseenrollmentDB(StudentName=sname,  CourseId=course_data1, Religion=religion,District=district,
-                        DateOfBirth=dob, Gender=gender, Email=email, ContactNo=contacts, Address=address,
-                        GuardianName=gname, Image=im,Plustwo=plustwo, SSLC=sslc, Plustwomark= plustwomark, SSLCMark= sslcmark)
-        obj.save()
-        return redirect("take_test",course_id=course_data1.CourseName)
-
-    # views.py
 
 
 def take_test(request, course_id):

@@ -103,7 +103,7 @@
 
         <div class="form-group">
             <label for="plustwomark">Plus Two Mark %:</label>
-            <input type="number" class="form-control" id="plustwomark" name="plustwomark" style="background-color: gray; border: 1px solid black; color: white;" min="1" max="100" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="number" class="form-control" id="plustwomark" name="plustwomark" style="background-color: gray; border: 1px solid black; color: white;" min="1" max="100" maxlength="3" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <div class="invalid-feedback">Please enter a Plus Two mark percentage between 1 and 100.</div>
         </div>
 
@@ -116,7 +116,7 @@
 
         <div class="form-group">
             <label for="sslcmark">SSLC Mark %:</label>
-            <input type="number" class="form-control" id="sslcmark" name="sslcmark" style="background-color: gray; border: 1px solid black; color: white;" min="1" max="100" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="number" class="form-control" id="sslcmark" name="sslcmark" style="background-color: gray; border: 1px solid black; color: white;" min="1" max="100" maxlength="3" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <div class="invalid-feedback">Please enter a SSLC mark percentage between 1 and 100.</div>
         </div>
 
