@@ -222,6 +222,14 @@ class Payment(models.Model):
     def __str__(self):
         return f" {self.amount_received} Paid"
 
+
+class HostelRoomManager(models.Manager):
+    def save(self, *args, **kwargs):
+        instance = super().save(*args, **kwargs)
+        if instance.occupancy == 0:
+            instance.is_available = False
+            instance.save()
+        return instance
 class HostelRoom(models.Model):
     ROOM_TYPES = (
         ('single', 'Single'),
@@ -237,6 +245,7 @@ class HostelRoom(models.Model):
     is_available = models.BooleanField(default=True)
     room_rent = models.DecimalField(max_digits=10, decimal_places=2)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
+    occupancy = models.PositiveIntegerField(help_text="Available number of occupancy",null=True, blank=True)
     def __str__(self):
         return f"{self.room_type} Room no {self.room_number} for {self.gender}"
 
@@ -245,6 +254,7 @@ class HostelRoom(models.Model):
         indexes = [
             models.Index(fields=['room_number', 'gender']),
         ]
+    objects = HostelRoomManager()
 class Booking(models.Model):
     user = models.ForeignKey(CourseenrollmentDB, on_delete=models.CASCADE, null=True, blank=True)
     room = models.ForeignKey(HostelRoom, on_delete=models.CASCADE, null=True, blank=True)

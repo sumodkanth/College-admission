@@ -873,7 +873,8 @@ def available_rooms(request):
         context['men'] = 'mens'  # Add appropriate data for men
     elif name.Gender == "Female":
         context['women'] = 'womens'  # Add appropriate data for women
-
+    else:
+        context['other'] = 'others'
     return render(request, 'available_rooms.html', context)
 
 # def book_room(request, room_id):
@@ -913,7 +914,7 @@ def make_payment(request, room_id):
         )
 
         # Update room availability
-        room.is_available = False
+        room.occupancy = room.occupancy - 1
         room.save()
         # Create Booking instance
         booking = Booking.objects.create(
