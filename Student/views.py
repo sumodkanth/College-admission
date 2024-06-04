@@ -786,7 +786,7 @@ def take_test(request, course_id):
         # Send email to the user
 
             subject = 'Test Result'
-            message = f'Hello {name},\n\nCongratulations! Your score for the {course.CourseName} test is: {score}. You have successfully qualified for the interview scheduled for April 25th at 10:30 am in the college office. Keep up the good work!'
+            message = f'Hello {name},\n\nCongratulations! Your score for the {course.CourseName} test is: {score}. You have successfully qualified for the interview scheduled for June 25th at 10:30 am in the college office. Keep up the good work!'
             from_email = settings.EMAIL_HOST_USER
             to_email = [name.Email]  # Assuming email is stored in the Email field of the StudentDB model
             send_mail(subject, message, from_email, to_email, fail_silently=False)
