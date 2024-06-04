@@ -267,12 +267,12 @@ class Booking(models.Model):
 
 class BusBooking(models.Model):
     student_id = models.ForeignKey(StudentDB, on_delete=models.CASCADE, null=True, blank=True)
-    student = models.CharField(max_length=100)
+    student = models.CharField(max_length=100,null=True, blank=True)
 
-    pickup_location = models.CharField(max_length=200)
-    destination = models.CharField(max_length=200)
+    pickup_location = models.CharField(max_length=200,null=True, blank=True)
+    destination = models.CharField(max_length=200,null=True, blank=True)
 
-    bus_fair = models.CharField(max_length=20)
+    bus_fair = models.CharField(max_length=20,null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class InterviewDB(models.Model):

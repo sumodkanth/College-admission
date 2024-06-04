@@ -38,7 +38,7 @@
                                 <label class="form-label" for="formControlLgXsd" style="color: black;">Admission Amount to be paid</label>
                             </div>
                             <div class="form-outline mb-4">
-                                <input class="form-control form-control-lg" type="text" id="formControlLgXsd" name="cardholder_name"  style=" border: 1px solid black; color: white;" placeholder="Rosa Davis" pattern="[A-Za-z\s]+" required>
+                                <input class="form-control form-control-lg" type="text" id="formControlLgXsd" name="cardholder_name"  style=" border: 1px solid black; color: white;" placeholder="Rosa Davis" maxlength="25" pattern="[A-Za-z\s]+" required>
                                 <label class="form-label" for="formControlLgXsd" style="color: black;">Cardholder's Name</label>
                             </div>
                             <div class="row mb-4">
@@ -52,7 +52,7 @@
 
                                 <div class="col-3">
                                     <div class="form-outline">
-                                        <input class="form-control form-control-lg" type="text" id="formControlLgExpk" name="expiration_date" style=" border: 1px solid black; color: white;" placeholder="MM/YY" required pattern="\d{2}/\d{2}" title="Enter date in MM/YY format">
+                                        <input class="form-control form-control-lg" type="text" id="formControlLgExpk" name="expiration_date" style=" border: 1px solid black; color: white;" placeholder="MM/YY" required maxlength="5" pattern="\d{2}/\d{2}" title="Enter date in MM/YY format">
                                         <label class="form-label" for="formControlLgExpk" style="color: black;">Expire</label>
                                     </div>
                                 </div>
